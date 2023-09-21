@@ -11,6 +11,9 @@ import { AppComponent } from './app.component';
   declarations: [
     AppComponent
   ],
+
+  //si
+  
   imports: [
     BrowserModule,
     AppRoutingModule,
