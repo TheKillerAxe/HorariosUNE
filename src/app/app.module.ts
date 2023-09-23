@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
   ],
 
   //si
+  //xd
   
   imports: [
     BrowserModule,
