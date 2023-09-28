@@ -13,7 +13,8 @@ import { AppComponent } from './app.component';
   ],
 
   //si
-  //xd
+  
+  //ramon
   
   imports: [
     BrowserModule,
