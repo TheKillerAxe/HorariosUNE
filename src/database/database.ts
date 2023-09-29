@@ -1,4 +1,3 @@
-import { collection, query } from "firebase/firestore";
 
 /* Almacena todos los datos del usuario. */
 export class Usuario {
@@ -13,6 +12,7 @@ export class Usuario {
     public txtFechaNacimiento : string = "";                                   //Fecha de nacimiento del usuario (formato texto).
     public Correo : string = "";                                               //Correo del usuario.
     public Contraseña : string = "";                                           //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
+    public Horas : number = 0;                                                 //Horas disponibles del maestro.
 
     constructor() { }
 
@@ -25,6 +25,7 @@ export class Usuario {
         this.txtFechaNacimiento = data.txtFechaNacimiento;
         this.Correo = data.Correo;
         this.Contraseña = data.Contraseña;
+        this.Horas = data.Horas;
     }
 }
 
@@ -74,6 +75,9 @@ export class Materia {
     public Nombre : string = "";                                               //Nombre de la materia.
     public Grupo : string = "";                                                //Grupo de alumnos al que se imparte la materia.
     public Aula : string = "";                                                 //Aula en la que se imparte la materia.
+    public txtDia : string = "";                                               //Día en el que se imparte la materia (Lunes - Viernes).
+    public numDia : number = 0;                                                //Día en el que se imparte la materia (0 - 4).
+    public Hora : number = 0;                                                  //Hora en la que se imparte la materia.
 
     constructor() { }
 
@@ -84,5 +88,26 @@ export class Materia {
         this.Nombre = data.Nombre;
         this.Grupo = data.Grupo;
         this.Aula = data.Aula;
+        this.txtDia = data.txtDia;
+        this.numDia = data.numDia;
+        this.Hora = data.Hora;
+    }
+}
+
+/* Almacena los datos de un horario */
+export class Horario {
+    //ID
+    public IdHorario : string = "";                                            //ID del horario (ISCE-R-7-Horario).
+    public IdPeriodo : string = "";                                            //ID del periodo al que pertenece la materia.
+
+    //Objetos
+    public Materias : Materia[][] = [];                                        //Materias del horario [Hora][Día].
+
+    constructor() {}
+
+    setData(data : any) {
+        this.IdHorario = data.IdHorario;
+        this.IdPeriodo = data.IdPeriodo;
+        this.Materias = data.Materias;
     }
 }
