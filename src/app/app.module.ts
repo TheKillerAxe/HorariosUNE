@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
   ],
 
   //si
-  
+  //xdd
   //ramon
   
   imports: [
