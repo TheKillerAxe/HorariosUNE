@@ -20,7 +20,7 @@ export class Usuario {
         this.Nombre = data.Nombre;
         this.NombreUsuario = data.NombreUsuario;
         this.Contraseña = data.Contraseña;
-    }
+    } 
 } 
 
 /* Almacena todos los datos de una carrera */ 
