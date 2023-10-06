@@ -11,10 +11,6 @@ import { AppComponent } from './app.component';
   declarations: [
     AppComponent
   ],
-
-  //si
-  //xdd
-  //ramon
   
   imports: [
     BrowserModule,
