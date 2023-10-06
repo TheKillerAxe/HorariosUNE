@@ -21,7 +21,7 @@ export class Usuario {
         this.NombreUsuario = data.NombreUsuario;
         this.Contraseña = data.Contraseña;
     }
-}
+} 
 
 /* Almacena todos los datos de una carrera */ 
 export class Carrera {
@@ -119,5 +119,3 @@ export class Horario {
         this.HorarioIrregular = data.HorarioIrregular;
     }
 }
-
-//x
