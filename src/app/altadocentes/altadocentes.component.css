@@ -26,6 +26,16 @@
     margin-top: 3%;
 }
 
+.cuadros2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: auto;
+    width: 85%;
+    margin: 0 auto; 
+    margin-top: 2%;
+}
+
 .cuadro {
     display: flex;
     flex-direction: column; 
@@ -84,4 +94,8 @@
     .cuadro {
         width: 100%;
     }
+}
+
+.inpts{
+
 }
