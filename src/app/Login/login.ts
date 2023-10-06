@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 @Component({
   selector: 'login',
@@ -6,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class loginComponent {
-  title = 'login';
+
+    usuario = {
+        NombreUsuario: '',
+        Contraseña: ''
+    }
+
+    Ingresar() {
+        console.log(this.usuario)
+    }
+    
 }
