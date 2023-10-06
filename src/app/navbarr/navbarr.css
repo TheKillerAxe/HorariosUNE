@@ -1,0 +1,18 @@
+.color-fondo{
+    background-color: black;
+}
+
+.une{
+    border-width: 2px;
+    border-color: #B60D44;
+    background-color: #F2F2F2;
+    border-radius: 6px;
+    width: 150px;
+    height: 35px;
+    font-weight: bold;
+    font-family: 'Roboto Slab', serif;
+}
+
+.une-font{
+    font-family: 'Roboto Slab', serif;
+}

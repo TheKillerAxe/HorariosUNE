@@ -6,10 +6,14 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { menuComponent } from './menu/menu';
+import { navbarComponent } from './navbarr/navbarr';
+import { LoginComponent } from './login/login.component';
+import { AltadocentesComponent } from './altadocentes/altadocentes.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, menuComponent, navbarComponent, LoginComponent, AltadocentesComponent
   ],
 
   //si
