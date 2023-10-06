@@ -119,3 +119,5 @@ export class Horario {
         this.HorarioIrregular = data.HorarioIrregular;
     }
 }
+
+//x

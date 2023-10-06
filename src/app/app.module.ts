@@ -11,9 +11,13 @@ import { navbarComponent } from './navbarr/navbarr';
 import { LoginComponent } from './login/login.component';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
 
+import { loginComponent } from './login/login';
+
+
 @NgModule({
   declarations: [
-    AppComponent, menuComponent, navbarComponent, LoginComponent, AltadocentesComponent
+    AppComponent,
+    loginComponent
   ],
 
   //si
@@ -24,7 +28,7 @@ import { AltadocentesComponent } from './altadocentes/altadocentes.component';
     BrowserModule,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent]

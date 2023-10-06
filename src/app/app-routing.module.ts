@@ -5,7 +5,12 @@ import { navbarComponent } from './navbarr/navbarr';
 import { LoginComponent } from './login/login.component';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
 
-const routes: Routes = [{path:"inicio", component: menuComponent}, {path:"navb", component: navbarComponent}, {path:"login", component: LoginComponent}, {path:"registro", component: AltadocentesComponent}];
+import { loginComponent } from './login/login';
+
+
+const routes: Routes = [
+  {path:"login",component:loginComponent},
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
