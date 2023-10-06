@@ -7,9 +7,13 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { loginComponent } from './login/login';
+
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    loginComponent
   ],
 
   //si
@@ -20,7 +24,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent]
