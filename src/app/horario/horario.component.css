@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.titulo
+{
+    height: auto;
+    width: 100%;
+    margin-top: 3%;
+    display: flex;
+    justify-content: center;
+}
+
+.titulotxt
+{
+    font-family: 'Roboto Slab';
+    font-size: 45px;
+    font-weight: bold;
+    color: rgb(4, 30, 66);
+}
+
+.horario-container {
+    display: flex;
+    max-height: 500px; 
+    overflow-x: hidden; 
+}
+
+.horario {
+    display: grid;
+    grid-template-columns: 150px repeat(6, 1fr); /* Aumenta el ancho de las columnas */
+    grid-gap: 3px;
+    max-width: 2000px; /* Aumenta el ancho máximo del horario */
+    margin: 0 auto;
+    padding: 20px;
+    overflow-y: auto; 
+}
+
+.dias {
+    grid-column: 1;
+    background-color: rgb(188,32,75);
+    text-align: center;
+    color: white;
+    font-family: 'Roboto Slab';
+}
+
+.hora {
+    background-color: #f2f2f2;
+    align-items: center; 
+    justify-content: center; 
+    border: 1px solid #ccc;
+    font-family: 'Roboto Slab';
+    display: flex;
+}
+
+.dia {
+    grid-column: span 1;
+    background-color: rgb(188,32,75);
+    text-align: center;
+    color: white;
+    font-family: 'Roboto Slab';
+
+}
+
+.celda {
+    grid-column: span 1;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    width: 150px;
+    height: 60px;
+}
+
+.celda:hover{
+background-color: #eceaea;
+
+}
