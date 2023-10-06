@@ -6,17 +6,24 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { menuComponent } from './menu/menu';
+import { navbarComponent } from './navbarr/navbarr';
+import { loginComponent } from './login/login';
+import { AltadocentesComponent } from './altadocentes/altadocentes.component';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    loginComponent, navbarComponent
   ],
   
   imports: [
     BrowserModule,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent]
