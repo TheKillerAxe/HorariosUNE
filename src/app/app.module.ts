@@ -8,16 +8,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { menuComponent } from './menu/menu';
 import { navbarComponent } from './navbarr/navbarr';
-import { LoginComponent } from './login/login.component';
+import { loginComponent } from './login/login';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
 
-import { loginComponent } from './login/login';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    loginComponent
+    loginComponent, navbarComponent
   ],
 
   //si
