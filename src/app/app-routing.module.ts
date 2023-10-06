@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'Menu', component: menuComponent },
   { path: 'Horario', component: HorarioComponent },
   { path: 'RegistroDocentes', component: AltadocentesComponent },
-  { path: 'Navbar', component:navbarComponent }
+  { path: 'Navbar', component: navbarComponent }
 ];
 
 @NgModule({
