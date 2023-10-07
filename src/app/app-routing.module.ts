@@ -8,7 +8,7 @@ import { HorarioComponent } from './horario/horario.component';
 import { RegistroHorario } from 'src/database/database';
 
 const routes: Routes = [
-  { path: '', component: loginComponent },
+  { path: 'login', component: loginComponent },
   { path: 'Menu', component: menuComponent },
   { path: 'Horario', component: HorarioComponent },
   { path: 'RegistroDocentes', component: AltadocentesComponent },
