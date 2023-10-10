@@ -24,7 +24,8 @@ import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.comp
     navbarComponent,
     menuComponent,
     HorarioComponent,
-    AltadocentesComponent
+    AltadocentesComponent,
+    ImprimirhorarioComponent
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,7 @@ import { Firestore } from "@angular/fire/firestore";
 import { Usuario } from 'src/database/database';
 import { collection, query, where, collectionData, getDocs } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import swal from 'sweetalert2'
+//import swal from 'sweetalert2'
 
 @Component({
     selector: 'login',
@@ -28,7 +28,7 @@ export class loginComponent {
             if (flag) {
                 if (snapUser.length > 0) {
                     flag = false;
-                    swal.fire({
+                    /*swal.fire({
                         position: 'center',
                         icon: 'success',
                         title: 'Sesion iniciada.',
@@ -37,14 +37,14 @@ export class loginComponent {
                     }).then(() => {
                         this.Usuario.setData(snapUser[0]);
                         this.router.navigate(['menu'], { state: this.Usuario })
-                    })
+                    })*/
                 }
                 else {
-                    swal.fire({
+                    /*swal.fire({
                         icon: 'error',
                         title: 'Usuario o Contraseña Incorrectos',
                         text: 'Usuario o Contraseña Incorrectos'
-                    })
+                    })*/
                 }
             }
         });

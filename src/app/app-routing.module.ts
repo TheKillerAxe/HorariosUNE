@@ -5,13 +5,12 @@ import { navbarComponent } from './navbarr/navbarr';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
 import { loginComponent } from './Login/login';
 import { HorarioComponent } from './horario/horario.component';
-import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.component';
 
 const routes: Routes = [
   { path: "", component: loginComponent },
   { path: "registro", component: AltadocentesComponent },
   { path: "navbarr", component: navbarComponent },
-  { path: "horario", component: HorarioComponent },
+  { path: "horarios", component: HorarioComponent },
   { path: "menu", component: menuComponent }
 ];
 

@@ -5,62 +5,12 @@
     <div class="div5"></div>
     <div class="div6"></div>
     <div style="display: flex;">
-
-
-
-      <!--div de la chica-->
-
-
-      <img style="width:48%;" src="https://i.imgur.com/oSjoRGS.png" alt="">
-
-
-      <div style="width:30%;">
-        <div class="container">
-          <div style="height: 120%;">
-            <img style="height: auto ;width:80%; margin-left: 10%; margin-top: 10%; margin-bottom: 10%;"
-              src="https://i.imgur.com/ynuYUHq.png" alt="">
-            <form method="POST">
-              <div class="form-group">
-                <div style="margin-left: 10%;color: #aaa8a8;margin-top: 5%;"><label for="usuario">Usuario</label></div>
-                <div style="display: flex;">
-                  <div style="width: 70%;margin-left: 10%;">
-                    <input type="text" id="usuario" name="usuario" required autocomplete="off"
-                      [(ngModel)]="this.Usuario.NombreUsuario">
-                  </div>
-
-                  <div style="margin-left: 5%;"><button class="btn1">
-                      <svg style="margin-bottom: 20%;" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" class="bi bi-question-lg" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                          d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z" />
-                      </svg>
-                    </button>
-
-                  </div>
-                </div>
-              </div>
-              <label style="margin-left: 10%;color: #aaa8a8;margin-top: 5%;" for="contrasena">Contraseña</label>
-              <div style="width: 70%;margin-left: 10%;">
-                <input type="password" id="contrasena" name="contrasena" required [(ngModel)]="this.Usuario.Contrasena">
-              </div>
-
-
-              <div class="form-group">
-                <button type="submit" class="btn" style="font-size: 150%;" (click)="login()">Entrar</button>
-              </div>
-
-            </form>
-          </div>
-
-        </div>
-      </div>
-
+      <img style="width: 99.8%;" src="https://i.imgur.com/ZyPngZT.jpg" alt="">
     </div>
     <div class="div2"></div>
-
+ 
     <form>
-      <div style="align-items: center;justify-content: center;display: flex;"><img style="width:80%;margin-top: 10%;"
-          src="https://i.imgur.com/3AWjxyB.png" alt=""></div>
+      <div style="align-items: center;justify-content: center;display: flex;"><img style="width:80%;margin-top: 10%;" src="https://i.imgur.com/3AWjxyB.png" alt=""></div>
       <h4 style="text-align: center;padding-bottom: 5%;"><b>Generación de Horarios</b></h4>
       <div class="group">
         <input type="text"><span class="highlight"></span><span class="bar"></span>
@@ -69,15 +19,15 @@
       <div class="group">
         <input type="email"><span class="highlight"></span><span class="bar"></span>
         <label>Contraseña</label>
-        <a href="menu"><button type="button" class="button buttonBlue">Entrar</button></a>
+          <button type="button" class="button buttonBlue">Entrar</button>
       </div>
-
+    
     </form>
   </div>
 </div>
-<!--HTML de Login-->
-
-
+    <!--HTML de Login-->
+  
+   
 
 
 
@@ -95,18 +45,16 @@
   }
 
   .div6 {
-    height: 39%;
-    width: 12%;
-    position: absolute;
-    top: 0;
-    left: 18.2%;
-    z-index: 3;
-    /* Asegura que div6 esté por encima de otros elementos */
-    background: linear-gradient(to top right, #B60D44, #B60D44, #460080);
-    /* Degradado de rojo a morado */
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-  }
+  height: 39%;
+  width: 12%;
+  position: absolute;
+  top: 0;
+  left: 18.2%;
+  z-index: 3; /* Asegura que div6 esté por encima de otros elementos */
+  background: linear-gradient(to top right, #B60D44,#B60D44, #460080); /* Degradado de rojo a morado */
+  background-size:100% 100% ;
+  background-repeat: no-repeat;
+}
 
   .div5 {
     height: 39%;
@@ -115,8 +63,7 @@
     top: 0;
     left: 30.2%;
     background-color: #ffffff;
-    z-index: 3;
-    /* Asegura que div3 esté por encima de otros elementos */
+    z-index: 3; /* Asegura que div3 esté por encima de otros elementos */
   }
 
   .div4 {
@@ -126,10 +73,9 @@
     top: 39%;
     left: 30.2%;
     background-color: #B60D44;
-    z-index: 3;
-    /* Asegura que div3 esté por encima de otros elementos */
+    z-index: 3; /* Asegura que div3 esté por encima de otros elementos */
   }
-
+  
   .div3 {
     height: 45%;
     width: 13%;
@@ -137,10 +83,9 @@
     top: 55%;
     left: 42.2%;
     background-color: #B60D44;
-    z-index: 2;
-    /* Asegura que div3 esté por encima de otros elementos */
+    z-index: 2; /* Asegura que div3 esté por encima de otros elementos */
   }
-
+  
   .div2 {
     height: 55%;
     width: 13.5%;
@@ -148,203 +93,177 @@
     top: 0;
     left: 42.2%;
     background-color: #ffffff;
-    z-index: 1;
-    /* Asegura que div2 esté por debajo de otros elementos */
+    z-index: 1; /* Asegura que div2 esté por debajo de otros elementos */
   }
-</style>
+  </style>
 
-<!--css del login-->
-<style>
-  body {
-
-    font-family: Helvetica;
-    background: #eee;
-    -webkit-font-smoothing: antialiased;
-    border-radius: 5%;
-  }
-
-  hgroup {
-    text-align: center;
-    margin-top: 4em;
-  }
-
-  h1,
-  h3 {
-    font-weight: 300;
-  }
-
-  h1 {
-    color: #636363;
-  }
-
-  h3 {
-    color: #B60D44;
-  }
-
-  form {
-    margin-top: 8%;
-    margin-left: 15%;
-    width: 30%;
-    height: 65%;
-    padding: 2em 2em 2em 2em;
-    background: #fafafa;
-    border: 1px solid #ebebeb;
-    box-shadow: rgba(0, 0, 0, 0.14902) 2px 2px 2px 2px, rgba(0, 0, 0, 0.09804) 2px 2px 2px 2px;
-    border-radius: 5%;
-  }
-
-  .group {
-    position: relative;
-    margin-bottom: 45px;
-  }
-
-  input {
-    font-size: 18px;
-    padding: 10px 10px 10px 5px;
-    -webkit-appearance: none;
-    display: block;
-    background: #fafafa;
-    color: #636363;
-    width: 100%;
-    border: none;
-    border-radius: 0;
-    border-bottom: 1px solid #757575;
-  }
-
-  input:focus {
-    outline: none;
-  }
+  <!--css del login-->
+  <style>
 
 
-  /* Label */
+body {
 
-  label {
-    color: #999;
-    font-size: 18px;
-    font-weight: normal;
-    position: absolute;
-    pointer-events: none;
-    left: 5px;
-    top: 10px;
-    transition: all 0.2s ease;
-  }
+	font-family: Helvetica;
+	background: #eee;
+  -webkit-font-smoothing: antialiased;
+  border-radius: 5%;
+}
 
+hgroup { 
+	text-align:center;
+	margin-top: 4em;
+}
 
-  /* active */
+h1, h3 { font-weight: 300; }
 
-  input:focus~label,
-  input.used~label {
-    top: -20px;
-    transform: scale(.75);
-    left: -2px;
-    /* font-size: 14px; */
-    color: #B60D44;
-  }
+h1 { color: #636363; }
 
+h3 { color: #B60D44; }
 
-  /* Underline */
+form {
+  margin-top: 8%;
+  margin-left: 15%;
+	width: 30%;
+  height: 65%;
+	padding: 2em 2em 2em 2em;
+	background: #fafafa;
+	border: 1px solid #ebebeb;
+	box-shadow: rgba(0,0,0,0.14902) 2px 2px 2px 2px,rgba(0,0,0,0.09804) 2px 2px 2px 2px;
+  border-radius: 5%;
+}
 
-  .bar {
-    position: relative;
-    display: block;
-    width: 100%;
-  }
+.group { 
+	position: relative; 
+	margin-bottom: 45px; 
+}
 
-  .bar:before,
-  .bar:after {
-    content: '';
-    height: 2px;
-    width: 0;
-    bottom: 1px;
-    position: absolute;
-    background: #B60D44;
-    transition: all 0.2s ease;
-  }
+input {
+	font-size: 18px;
+	padding: 10px 10px 10px 5px;
+	-webkit-appearance: none;
+	display: block;
+	background: #fafafa;
+	color: #636363;
+	width: 100%;
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid #757575;
+}
 
-  .bar:before {
-    left: 50%;
-  }
-
-  .bar:after {
-    right: 50%;
-  }
+input:focus { outline: none; }
 
 
-  /* active */
+/* Label */
 
-  input:focus~.bar:before,
-  input:focus~.bar:after {
-    width: 50%;
-  }
-
-
-  /* Highlight */
-
-  .highlight {
-    position: absolute;
-    height: 60%;
-    width: 100px;
-    top: 25%;
-    left: 0;
-    pointer-events: none;
-    opacity: 0.5;
-  }
+label {
+	color: #999; 
+	font-size: 18px;
+	font-weight: normal;
+	position: absolute;
+	pointer-events: none;
+	left: 5px;
+	top: 10px;
+	transition: all 0.2s ease;
+}
 
 
-  /* active */
+/* active */
 
-  input:focus~.highlight {
-    animation: inputHighlighter 0.3s ease;
-  }
-
-
-  /* Animations */
-
-  @keyframes inputHighlighter {
-    from {
-      background: #B60D44;
-    }
-
-    to {
-      width: 0;
-      background: transparent;
-    }
-  }
+input:focus ~ label, input.used ~ label {
+	top: -20px;
+  transform: scale(.75); left: -2px;
+	/* font-size: 14px; */
+	color: #B60D44;
+}
 
 
-  /* Button */
+/* Underline */
 
-  .button {
-    height: 25%;
-    position: relative;
-    display: block;
-    margin: 8% auto 0;
-    /* Cambiado el margen superior a 5% */
-    padding: 12px 24px;
-    width: auto;
-    vertical-align: middle;
-    color: #fff;
-    font-size: 16px;
-    line-height: 100%;
-    text-align: center;
-    letter-spacing: 1px;
-    background: transparent;
-    border: 0;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
+.bar {
+	position: relative;
+	display: block;
+	width: 100%;
+}
 
-  .button:focus {
-    outline: 0;
-  }
+.bar:before, .bar:after {
+	content: '';
+	height: 2px; 
+	width: 0;
+	bottom: 1px; 
+	position: absolute;
+	background: #B60D44; 
+	transition: all 0.2s ease;
+}
 
-  .buttonBlue {
-    background: #B60D44;
+.bar:before { left: 50%; }
 
-  }
+.bar:after { right: 50%; }
 
-  .buttonBlue:hover {
-    background: #c02659;
-  }
-</style>
+
+/* active */
+
+input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
+
+
+/* Highlight */
+
+.highlight {
+	position: absolute;
+	height: 60%; 
+	width: 100px; 
+	top: 25%; 
+	left: 0;
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+
+/* active */
+
+input:focus ~ .highlight {
+	animation: inputHighlighter 0.3s ease;
+}
+
+
+/* Animations */
+
+@keyframes inputHighlighter {
+	from { background: #B60D44; }
+	to 	{ width: 0; background: transparent; }
+}
+
+
+/* Button */
+
+.button {
+  height: 25%;
+  position: relative;
+  display: block;
+  margin: 8% auto 0; /* Cambiado el margen superior a 5% */
+  padding: 12px 24px;
+  width: auto;
+  vertical-align: middle;
+  color: #fff;
+  font-size: 16px;
+  line-height: 100%;
+  text-align: center;
+  letter-spacing: 1px;
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.button:focus { outline: 0; }
+
+.buttonBlue {
+  background: #B60D44;
+
+}
+
+.buttonBlue:hover { background: #c02659; }
+
+
+
+  </style>
