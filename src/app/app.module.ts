@@ -11,13 +11,14 @@ import { navbarComponent } from './navbarr/navbarr';
 import { loginComponent } from './Login/login';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
 import { HorarioComponent } from './horario/horario.component';
+import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    loginComponent, navbarComponent, HorarioComponent
+    loginComponent, navbarComponent, HorarioComponent, AltadocentesComponent, menuComponent, ImprimirhorarioComponent
   ],
   
   imports: [
