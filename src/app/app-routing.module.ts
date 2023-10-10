@@ -8,11 +8,10 @@ import { HorarioComponent } from './horario/horario.component';
 
 const routes: Routes = [
   { path: "login", component: loginComponent },
-  { path: "navbarr", component: navbarComponent },
   { path: "registro", component: AltadocentesComponent },
-  { path: "menu", component: menuComponent }, 
-  { path: "horario", component: HorarioComponent }
-]
+  { path: "horario", component: HorarioComponent },
+  { path: "menu", component: menuComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
