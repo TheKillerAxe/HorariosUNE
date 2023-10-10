@@ -1,5 +1,5 @@
 .color-fondo{
-    background-color: black;
+    background-color: rgb(2, 15, 34);
 }
 
 .une{
@@ -14,5 +14,6 @@
 }
 
 .une-font{
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Roboto Slab';
 }
+
