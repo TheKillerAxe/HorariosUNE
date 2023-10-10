@@ -1,4 +1,3 @@
-
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
   </style>
@@ -7,6 +6,94 @@
     <div class="titulotxt">
         GENERACIÓN DE HORARIOS
     </div>
+</div>
+
+<div class="contenedor-grid">
+    <div class="contenedor">
+        <div class="txtcuadro">
+            Ciclo<br>Escolar
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-button" style="font-family: 'Roboto Slab';">
+                Seleccionar opción
+                <span class="arrow-down">&#9660;</span>
+            </button>
+            <ul class="dropdown-list">
+                <li>Opción 1</li>
+                <li>Opción 2</li>
+                <li>Opción 3</li>
+            </ul>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="txtcuadro">
+            Carrera
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-button" style="font-family: 'Roboto Slab';">
+                Seleccionar opción
+                <span class="arrow-down">&#9660;</span>
+            </button>
+            <ul class="dropdown-list">
+                <li>Opción 1</li>
+                <li>Opción 2</li>
+                <li>Opción 3</li>
+            </ul>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="txtcuadro">
+            Periodo
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-button" style="font-family: 'Roboto Slab';">
+                Seleccionar opción
+                <span class="arrow-down">&#9660;</span>
+            </button>
+            <ul class="dropdown-list">
+                <li>Opción 1</li>
+                <li>Opción 2</li>
+                <li>Opción 3</li>
+            </ul>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="txtcuadro">
+            Materia
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-button" style="font-family: 'Roboto Slab';">
+                Seleccionar opción
+                <span class="arrow-down">&#9660;</span>
+            </button>
+            <ul class="dropdown-list">
+                <li>Opción 1</li>
+                <li>Opción 2</li>
+                <li>Opción 3</li>
+            </ul>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="txtcuadro">
+            Maestro
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-button" style="font-family: 'Roboto Slab';">
+                Seleccionar opción
+                <span class="arrow-down">&#9660;</span>
+            </button>
+            <ul class="dropdown-list">
+                <li>Opción 1</li>
+                <li>Opción 2</li>
+                <li>Opción 3</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="contenedor-botones">
+    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+    <button  type="submit" class="btn btn-primary btn-block">Sign in</button>
 </div>
 
 <div class="horario-container">
@@ -19,8 +106,19 @@
         <div class="dia">Viernes</div>
         <div class="dia">Sabado</div>
       
-    
+        <div *ngFor="let columna of horario; index as i" >
+            <div *ngFor="let fila of columna; index as j">
+                <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
+                <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}" >
+                    {{fila.maestro}} <br>
+                    {{fila.texto}} <br>
+                    {{fila.salon}}
+                </div>
+            </div>
+        </div>
+        <!--
         <div class="hora">8:00 am</div>
+        
         <div class="celda"></div>
         <div class="celda"></div>
         <div class="celda"></div>
@@ -124,8 +222,9 @@
         <div class="celda"></div>
         <div class="celda"></div>
         <div class="celda"></div>
-        <div class="celda"></div>
+        <div class="celda"></div>-->
     
+        <!-- Repite esta estructura para cada día de la semana -->
     
-    </div>
+    </div>
 </div>
