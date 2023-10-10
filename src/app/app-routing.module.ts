@@ -7,8 +7,9 @@ import { loginComponent } from './Login/login';
 import { HorarioComponent } from './horario/horario.component';
 
 const routes: Routes = [
-  { path: "login", component: loginComponent },
+  { path: "", component: loginComponent },
   { path: "registro", component: AltadocentesComponent },
+  { path: "navbarr", component: navbarComponent },
   { path: "horario", component: HorarioComponent },
   { path: "menu", component: menuComponent }
 ];

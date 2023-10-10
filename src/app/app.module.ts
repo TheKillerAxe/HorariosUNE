@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 
@@ -20,11 +21,14 @@ import { HorarioComponent } from './horario/horario.component';
     AppComponent,
     loginComponent,
     navbarComponent,
-    HorarioComponent
+    menuComponent,
+    HorarioComponent,
+    AltadocentesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
