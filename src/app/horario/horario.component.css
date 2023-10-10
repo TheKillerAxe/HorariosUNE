@@ -13,13 +13,100 @@ body {
     justify-content: center;
 }
 
-.titulotxt
-{
+.contenedor-grid {
+  
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center; 
+    margin: 0 auto; 
+    max-width: 1600px; 
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.titulotxt {
     font-family: 'Roboto Slab';
     font-size: 45px;
     font-weight: bold;
     color: rgb(4, 30, 66);
 }
+
+.txtcuadro {
+    font-family: 'Roboto Slab';
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(4, 30, 66);
+    float: left;
+}
+
+.contenedor {
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos */
+}
+
+.dropdown-container {
+    overflow: hidden;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 8px;
+}
+
+.dropdown-button {
+    background-color: #ffffff;
+    border: 2px solid rgb(188,32,75);
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrow-down {
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.dropdown-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    display: none;
+    background-color: #ffffff;
+    border: 1px solid rgb(188,32,75);
+    border-radius: 5px;
+    width: 100%;
+}
+
+.dropdown-list li {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.dropdown:hover .dropdown-list {
+    display: block;
+}
+
+.contenedor-botones {
+    display: flex;
+    justify-content: space-between; 
+    width: 20%;
+}
+
+.btn{
+	font-size: 14px;
+	margin-top:20px;
+    flex: 4;
+    padding: 5px 10px; 
+}
+
 
 .horario-container {
     display: flex;
@@ -52,6 +139,12 @@ body {
     border: 1px solid #ccc;
     font-family: 'Roboto Slab';
     display: flex;
+    /* padding: 17px;
+    grid-gap: 3px; */
+    grid-column: span 1;
+    width: 150px;
+    height: 60px;
+
 }
 
 .dia {
@@ -69,7 +162,11 @@ body {
     border: 1px solid #ccc;
     width: 150px;
     height: 60px;
+    font-size: 14px;
+    text-align: center; /* Alinea horizontalmente al centro */
+    line-height: 20px; /* Alinea verticalmente al centro ajustando la altura de línea */
 }
+
 
 .celda:hover{
 background-color: #eceaea;
