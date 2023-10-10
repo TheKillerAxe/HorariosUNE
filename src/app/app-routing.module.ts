@@ -4,9 +4,16 @@ import { menuComponent } from './menu/menu';
 import { navbarComponent } from './navbarr/navbarr';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
 import { loginComponent } from './Login/login';
+import { HorarioComponent } from './horario/horario.component';
+import { RegistroHorario } from 'src/database/database';
+
 const routes: Routes = [
-  {path:"login",component:loginComponent},{path:"navbarr",component:navbarComponent},{path:"registro",component:AltadocentesComponent},{path:"menu",component:menuComponent}, 
-]
+  { path: 'login', component: loginComponent },
+  { path: 'Menu', component: menuComponent },
+  { path: 'Horario', component: HorarioComponent },
+  { path: 'RegistroDocentes', component: AltadocentesComponent },
+  { path: 'Navbar', component: navbarComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

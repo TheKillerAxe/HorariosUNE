@@ -1,4 +1,5 @@
 <navbarr></navbarr>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
   </style>
@@ -19,8 +20,19 @@
         <div class="dia">Viernes</div>
         <div class="dia">Sabado</div>
       
-    
+        <div *ngFor="let columna of horario; index as i" >
+            <div *ngFor="let fila of columna; index as j">
+                <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
+                <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}" >
+                    {{fila.maestro}} <br>
+                    {{fila.texto}} <br>
+                    {{fila.salon}}
+                </div>
+            </div>
+        </div>
+        <!--
         <div class="hora">8:00 am</div>
+        
         <div class="celda"></div>
         <div class="celda"></div>
         <div class="celda"></div>
@@ -124,7 +136,7 @@
         <div class="celda"></div>
         <div class="celda"></div>
         <div class="celda"></div>
-        <div class="celda"></div>
+        <div class="celda"></div>-->
     
         <!-- Repite esta estructura para cada día de la semana -->
     

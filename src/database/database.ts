@@ -9,7 +9,7 @@ export class Usuario {
     public TipoMaestro : string = "";                                               //Tipo de usuario (Tiempo Completo, Medio Tiempo). <?>
     public Nombre : string = "";                                                    //Nombre del usuario.
     public NombreUsuario : string = "";                                             //Nombre de usuario para ingresar.
-    public Contraseña : string = "";                                                //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
+    public Contrasena : string = "";                                                //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
 
     constructor() { }
 
@@ -19,8 +19,8 @@ export class Usuario {
         this.TipoMaestro = data.TipoMaestro;
         this.Nombre = data.Nombre;
         this.NombreUsuario = data.NombreUsuario;
-        this.Contraseña = data.Contraseña;
-    } 
+        this.Contrasena = data.Contrasena;
+    }
 } 
 
 /* Almacena todos los datos de una carrera */ 
