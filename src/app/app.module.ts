@@ -14,8 +14,9 @@ import { menuComponent } from './menu/menu';
 import { navbarComponent } from './navbarr/navbarr';
 import { loginComponent } from './Login/login';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
-import { HorarioComponent } from './horario/horario.component';
 import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.component';
+import { HorarioComponent } from './horario/horario.component';
+import { Horarios2Component } from './horarios2/horarios2.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.comp
     menuComponent,
     HorarioComponent,
     AltadocentesComponent,
-    ImprimirhorarioComponent
+    ImprimirhorarioComponent,
+    Horarios2Component
   ],
   imports: [
     BrowserModule,
