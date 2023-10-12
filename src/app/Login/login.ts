@@ -4,8 +4,7 @@ import { Usuario } from 'src/database/database';
 import { collection, query, where, collectionData, getDocs} from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import swal from 'sweetalert2'
-import readXlsxFile from 'read-excel-file'
-import { DocumentData, doc, setDoc } from 'firebase/firestore';
+
 
 @Component({
   selector: 'login',

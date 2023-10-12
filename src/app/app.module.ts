@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 
@@ -13,18 +14,25 @@ import { menuComponent } from './menu/menu';
 import { navbarComponent } from './navbarr/navbarr';
 import { loginComponent } from './Login/login';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
+import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.component';
 import { HorarioComponent } from './horario/horario.component';
+import { Horarios2Component } from './horarios2/horarios2.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     loginComponent,
     navbarComponent,
-    HorarioComponent
+    menuComponent,
+    HorarioComponent,
+    AltadocentesComponent,
+    ImprimirhorarioComponent,
+    Horarios2Component
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
