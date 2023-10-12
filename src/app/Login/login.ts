@@ -4,6 +4,8 @@ import { Usuario } from 'src/database/database';
 import { collection, query, where, collectionData, getDocs} from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import swal from 'sweetalert2'
+import readXlsxFile from 'read-excel-file'
+import { DocumentData, doc, setDoc } from 'firebase/firestore';
 
 @Component({
   selector: 'login',
@@ -15,6 +17,7 @@ export class loginComponent {
     Usuario = new Usuario();
 
     constructor(private firestore : Firestore, public router: Router){ }
+    
  login(){
      const user = collection(this.firestore, "Usuario");
      const q = query(user,
@@ -48,4 +51,6 @@ export class loginComponent {
              }
          }
      });
- }}
+ }
+
+}
