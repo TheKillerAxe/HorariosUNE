@@ -20,10 +20,12 @@
       <h4 style="text-align: center; padding-bottom: 5%;"><b>Generación de Horarios</b></h4>
       <div class="group">
         <input type="text" [(ngModel)]="Usuario.NombreUsuario" name="Usuario">
+        <label>Usuario</label>
       </div>
       <div class="group">
         <input type="text" [(ngModel)]="Usuario.Contrasena" name="Constrasena">
-          <button type="button" class="button buttonBlue" (click)="login()">Entrar</button>
+        <label>Contraseña</label>
+        <button type="button" class="button buttonBlue" (click)="login()">Entrar</button>
       </div>
     </form>
   </div>

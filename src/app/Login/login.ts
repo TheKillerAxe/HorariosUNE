@@ -33,7 +33,7 @@ export class loginComponent {
                         timer: 2000
                     }).then(() => {
                         this.Usuario.setData(snapUser[0]);
-                        this.router.navigate(['menu'], { state: this.Usuario });
+                        this.router.navigate(['inicio'], { state: this.Usuario });
                     })
                 }
                 else {
