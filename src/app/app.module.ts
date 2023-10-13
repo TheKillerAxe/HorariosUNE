@@ -32,7 +32,8 @@ import { imprimirhorarioPruebaComponent } from './imprimirhorarioPRUEBA/imprimir
     Horarios2Component,
     generarhorarioPruebaComponent,
     altamaestrosPrueba,
-    imprimirhorarioPruebaComponent
+    imprimirhorarioPruebaComponent,
+
   ],
   imports: [
     BrowserModule,
