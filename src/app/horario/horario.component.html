@@ -96,7 +96,7 @@
 
         <div *ngFor="let columna of Horario.HorarioRegular; index as i; let first = first">
             <div *ngFor="let fila of columna.registro; index as j">
-                <div *ngIf="!first" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
+                <div *ngIf="!first" class="celda" id="c{{i}}{{j}}" (click)="openSwalModalR(i, j)">
                     {{fila.maestro}} <br>
                     {{fila.texto}} <br>
                     {{fila.salon}}
@@ -126,7 +126,7 @@
 
         <div *ngFor="let columna of Horario.HorarioIrregular; index as i; let first = first">
             <div *ngFor="let fila of columna.registro; index as j">
-                <div *ngIf="!first" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
+                <div *ngIf="!first" class="celda" id="c{{i}}{{j}}" (click)="openSwalModalI(i, j)">
                     {{fila.maestro}} <br>
                     {{fila.texto}} <br>
                     {{fila.salon}}

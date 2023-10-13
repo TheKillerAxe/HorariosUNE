@@ -55,7 +55,7 @@ export class HorarioComponent {
     }
   }
 
-  openSwalModal(i: number, j: number) {
+  openSwalModalR(i: number, j: number) {
     const materiaSeleccionada = this.materiaSeleccionada;
     const maestroSeleccionado = this.maestroSeleccionado;
 
@@ -74,6 +74,36 @@ export class HorarioComponent {
         this.Horario.HorarioRegular[i].registro[j].salon = materiaSeleccionada;
         this.Horario.HorarioRegular[i].registro[j].maestro = maestroSeleccionado;
         this.Horario.HorarioRegular[i].registro[j].texto = valor3;
+
+        const cell = document.getElementById(`c${i}${j}`);
+        if (cell) {
+          cell.classList.add('dato-agregado');
+          this.Horario.Maestros.unshift(maestroSeleccionado);
+          this.Horario.Materias.unshift(materiaSeleccionada);
+        }
+      }
+    });
+  }
+
+  openSwalModalI(i: number, j: number) {
+    const materiaSeleccionada = this.materiaSeleccionada;
+    const maestroSeleccionado = this.maestroSeleccionado;
+
+    Swal.fire({
+      title: 'Ingresa el salón',
+      html:
+        `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
+      focusConfirm: false,
+      preConfirm: () => {
+        const valor3 = (document.getElementById('valor3') as HTMLInputElement).value;
+        return { valor3 };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const { valor3 } = result.value;
+        this.Horario.HorarioIrregular[i].registro[j].salon = materiaSeleccionada;
+        this.Horario.HorarioIrregular[i].registro[j].maestro = maestroSeleccionado;
+        this.Horario.HorarioIrregular[i].registro[j].texto = valor3;
 
         const cell = document.getElementById(`c${i}${j}`);
         if (cell) {
@@ -143,7 +173,7 @@ export class HorarioComponent {
   }
 
   generarPDF() {
-    /*const DATA: any = document.getElementById('htmlData');
+    const DATA: any = document.getElementById('htmlData');
     const doc = new jsPDF('l', 'pt', 'a4');
     const options = {
       background: 'white',
@@ -164,7 +194,7 @@ export class HorarioComponent {
       const storageRef = ref(this.fireStorage, ruta);
 
       uploadBytesResumable(storageRef, docResult.output('blob'));
-    });*/
+    });
   }
 
   mostrarCodigoHorario() {

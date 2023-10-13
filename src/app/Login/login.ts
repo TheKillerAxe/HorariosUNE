@@ -23,8 +23,10 @@ export class loginComponent {
             where("Contrasena", "==", this.Usuario.Contrasena),
         );
 
+        let flag = true;
         collectionData(q).subscribe((snapUser) => {
-                if (snapUser.length > 0) {
+                if (snapUser.length > 0 && flag) {
+                    flag = false;
                     swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -33,6 +35,7 @@ export class loginComponent {
                         timer: 2000
                     }).then(() => {
                         this.Usuario.setData(snapUser[0]);
+                        console.log(this.Usuario)
                         this.router.navigate(['inicio'], { state: this.Usuario });
                     })
                 }

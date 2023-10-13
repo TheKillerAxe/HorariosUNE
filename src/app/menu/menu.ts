@@ -17,7 +17,8 @@ export class menuComponent {
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
-    console.log(this.Usuario);
+    //console.log(this.Usuario);
+    console.log(history.state);
   }
 
   navigate(route: string) {
