@@ -56,7 +56,7 @@ export class Materia {
     setData(data : any) {
         this.IdMateria = data.IdMateria;
         this.Nombre = data.Nombre;
-        this.Carrera = data.carrera;
+        this.Carrera = data.Carrera;
         this.Periodo = data.Periodo;
     }
 }

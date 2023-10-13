@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Firestore } from "@angular/fire/firestore";
-import { Usuario } from 'src/database/database';
-import { collection, query, where, collectionData, getDocs } from "@angular/fire/firestore";
+import { Usuario } from '../database/database';
+import { collection, query, where, collectionData } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-//import swal from 'sweetalert2'
+import swal from 'sweetalert2'
+
 
 @Component({
     selector: 'login',
@@ -11,15 +12,10 @@ import { Router } from "@angular/router";
     styleUrls: ['./login.css']
 })
 export class loginComponent {
-
     Usuario = new Usuario();
 
     constructor(private firestore: Firestore, public router: Router) { }
 
-    navigate(route: string) {
-        this.router.navigate([route], { state: this.Usuario });
-      }
-      
     login() {
         const user = collection(this.firestore, "Usuario");
         const q = query(user,
@@ -27,14 +23,9 @@ export class loginComponent {
             where("Contrasena", "==", this.Usuario.Contrasena),
         );
 
-        let flag = true;
-
-        
         collectionData(q).subscribe((snapUser) => {
-            if (flag) {
                 if (snapUser.length > 0) {
-                    flag = false;
-                    /*swal.fire({
+                    swal.fire({
                         position: 'center',
                         icon: 'success',
                         title: 'Sesion iniciada.',
@@ -42,17 +33,16 @@ export class loginComponent {
                         timer: 2000
                     }).then(() => {
                         this.Usuario.setData(snapUser[0]);
-                        this.router.navigate(['menu'], { state: this.Usuario })
-                    })*/
+                        this.router.navigate(['menu'], { state: this.Usuario });
+                    })
                 }
                 else {
-                    /*swal.fire({
+                    swal.fire({
                         icon: 'error',
                         title: 'Usuario o Contraseña Incorrectos',
                         text: 'Usuario o Contraseña Incorrectos'
-                    })*/
+                    });
                 }
-            }
         });
     }
 }
