@@ -1,10 +1,10 @@
-<navbarr></navbarr>
-
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-  </style>
+</style>
 
-<div class="titulo"> 
+<navbarr [Usuario]="Usuario"></navbarr>
+
+<div class="titulo">
     <div class="titulotxt">
         GENERACIÓN DE HORARIOS
     </div>
@@ -13,89 +13,72 @@
 <div class="contenedor-grid">
     <div class="contenedor">
         <div class="txtcuadro">
-            Ciclo<br>Escolar
+            Ciclo<br> escolar
         </div>
-        <div class="dropdown">
-            <button class="dropdown-button" style="font-family: 'Roboto Slab';">
-                Seleccionar opción
-                <span class="arrow-down">&#9660;</span>
-            </button>
-            <ul class="dropdown-list">
-                <li>Opción 1</li>
-                <li>Opción 2</li>
-                <li>Opción 3</li>
-            </ul>
+        <div class="datos">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="ciclo">
+                <option>2023/01</option>
+                <option>2023/02</option>
+                <option>2023/03</option>
+            </select>
         </div>
     </div>
     <div class="contenedor">
         <div class="txtcuadro">
             Carrera
         </div>
-        <div class="dropdown">
-            <button class="dropdown-button" style="font-family: 'Roboto Slab';">
-                Seleccionar opción
-                <span class="arrow-down">&#9660;</span>
-            </button>
-            <ul class="dropdown-list">
-                <li>Opción 1</li>
-                <li>Opción 2</li>
-                <li>Opción 3</li>
-            </ul>
+        <div class="datos">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="carrera">
+                <option>ISCE</option>
+                <option>IIS</option>
+                <option>IP</option>
+            </select>
         </div>
     </div>
     <div class="contenedor">
         <div class="txtcuadro">
             Periodo
         </div>
-        <div class="dropdown">
-            <button class="dropdown-button" style="font-family: 'Roboto Slab';">
-                Seleccionar opción
-                <span class="arrow-down">&#9660;</span>
-            </button>
-            <ul class="dropdown-list">
-                <li>Opción 1</li>
-                <li>Opción 2</li>
-                <li>Opción 3</li>
-            </ul>
+        <div class="datos">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="periodo">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
         </div>
     </div>
     <div class="contenedor">
         <div class="txtcuadro">
             Materia
         </div>
-        <div class="dropdown">
-            <button class="dropdown-button" style="font-family: 'Roboto Slab';">
-                Seleccionar opción
-                <span class="arrow-down">&#9660;</span>
-            </button>
-            <ul class="dropdown-list">
-                <li>Opción 1</li>
-                <li>Opción 2</li>
-                <li>Opción 3</li>
-            </ul>
+        <div class="datos">
+            <select id="disabledSelect2" class="form-select input a" [(ngModel)]="materia">
+                <option>Programación</option>
+                <option>Algebra</option>
+                <option>Costos</option>
+            </select>
         </div>
     </div>
     <div class="contenedor">
         <div class="txtcuadro">
             Maestro
         </div>
-        <div class="dropdown">
-            <button class="dropdown-button" style="font-family: 'Roboto Slab';">
-                Seleccionar opción
-                <span class="arrow-down">&#9660;</span>
-            </button>
-            <ul class="dropdown-list">
-                <li>Opción 1</li>
-                <li>Opción 2</li>
-                <li>Opción 3</li>
-            </ul>
+        <div class="datos">
+            <select id="disabledSelect3" class="form-select input a" [(ngModel)]="maestro">
+                <option>Myriam Janeth</option>
+                <option>Felipe Perez</option>
+                <option>Denisse Mendoza</option>
+            </select>
         </div>
     </div>
 </div>
 
 <div class="contenedor-botones">
-    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-    <button  type="submit" class="btn btn-primary btn-block">Sign in</button>
+    <button type="button" class="btn b" style="margin-left: 40px;">Dividir materia</button>
+    <button type="button" class="btn b" style="margin-left: 1180px;" (click)="cambiosguardados()">Guardar
+        Cambios</button>
+
+
 </div>
 
 <div class="horario-container">
@@ -107,126 +90,54 @@
         <div class="dia">Jueves</div>
         <div class="dia">Viernes</div>
         <div class="dia">Sabado</div>
-      
-        <div *ngFor="let columna of horario; index as i" >
+
+        <div *ngFor="let columna of horario; index as i; let first = first">
             <div *ngFor="let fila of columna; index as j">
-                <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
-                <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}" >
+                <div *ngIf="!first" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
                     {{fila.maestro}} <br>
                     {{fila.texto}} <br>
                     {{fila.salon}}
                 </div>
             </div>
         </div>
-        <!--
-        <div class="hora">8:00 am</div>
-        
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">9:00 am</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">10:00 am</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">11:00 am</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">12:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">1:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">2:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">3:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">4:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">5:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">6:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">7:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">8:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">9:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="hora">10:00 pm</div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>
-        <div class="celda"></div>-->
-    
-        <!-- Repite esta estructura para cada día de la semana -->
-    
-    </div>
+
+
+    </div>
+</div>
+
+<button type="button" class="btn b1" style="margin-left: 1380px;" (click)="ejecutarFunciones()">+</button>
+
+
+<div *ngIf="mostrarHorario2" class="titulo">
+
+    <div class="titulotxt">
+        Horario Irregular
+    </div>
+
+</div>
+
+
+<div *ngIf="mostrarHorario" class="horario-container" style="margin-bottom: 30px;">
+    <div class="horario">
+
+        <div class="dias">Días</div>
+        <div class="dia">Lunes</div>
+        <div class="dia">Martes</div>
+        <div class="dia">Miercoles</div>
+        <div class="dia">Jueves</div>
+        <div class="dia">Viernes</div>
+        <div class="dia">Sabado</div>
+
+        <div *ngFor="let columna of horario; index as i; let first = first">
+            <div *ngFor="let fila of columna; index as j">
+                <div *ngIf="!first" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
+                    {{fila.maestro}} <br>
+                    {{fila.texto}} <br>
+                    {{fila.salon}}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </div>
