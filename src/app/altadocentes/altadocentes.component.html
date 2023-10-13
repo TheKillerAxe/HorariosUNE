@@ -18,15 +18,15 @@
 <div class="parent">
     <div class="div1">
         <label class="texto" for="nombre">Nombre:</label><br>
-        <input class="inputcss" type="text" id="nombre" name="nombre">
+        <input class="inputcss" type="text" id="nombre" name="nombre" [(ngModel)]="NuevoUsuario.Nombre">
     </div>
     <div class="div2">
         <label class="texto" for="nombre">Correo:</label><br>
-        <input class="inputcss" type="text" id="nombre" name="nombre">
+        <input class="inputcss" type="text" id="nombre" name="nombre" [(ngModel)]="NuevoUsuario.Correo">
     </div>
     <div class="div3">
         <label class="texto" for="tipoDocente">Tipo de Docente:</label><br>
-        <select class="inputcss" id="tipoDocente" name="tipoDocente">
+        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="NuevoUsuario.TipoMaestro">
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
@@ -34,16 +34,14 @@
     </div>
     <div class="div4">
         <label class="texto" for="contraseña">Contraseña:</label><br>
-        <input class="inputcss" type="password" id="contraseña" name="contraseña">
-
+        <input class="inputcss" type="password" id="contraseña" name="contraseña" [(ngModel)]="NuevoUsuario.Contrasena">
     </div>
     <div class="div5">
         <label class="texto" for="nombre">Usuario:</label><br>
-        <input class="inputcss" type="text" id="nombre" name="nombre">
+        <input class="inputcss" type="text" id="nombre" name="nombre" [(ngModel)]="NuevoUsuario.NombreUsuario">
     </div>
     <div class="div6">
-        <button class="botonune">Guardar Información</button>
-
+        <button class="botonune" (click)="registro()">Guardar Información</button>
     </div>
 </div>
 <hr>

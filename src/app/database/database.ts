@@ -9,6 +9,7 @@ export class Usuario {
     public TipoMaestro : string = "";                                               //Tipo de usuario (Tiempo Completo, Medio Tiempo). <?>
     public Nombre : string = "";                                                    //Nombre del usuario.
     public NombreUsuario : string = "";                                             //Nombre de usuario para ingresar.
+    public Correo : string = "";                                                    //Correo del usuario.
     public Contrasena : string = "";                                                //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
 
     constructor() { }
@@ -19,6 +20,7 @@ export class Usuario {
         this.TipoMaestro = data.TipoMaestro;
         this.Nombre = data.Nombre;
         this.NombreUsuario = data.NombreUsuario;
+        this.Correo = data.Correo;
         this.Contrasena = data.Contrasena;
     }
 } 
