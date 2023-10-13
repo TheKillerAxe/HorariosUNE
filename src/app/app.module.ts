@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { NgModel } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -8,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app'
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 import { AppComponent } from './app.component';
 import { menuComponent } from './menu/menu';
@@ -34,7 +34,7 @@ import { altamaestrosIndividualPrueba } from './altamaestrosIndividualPRUEBA/alt
     generarhorarioPruebaComponent,
     altamaestrosPrueba,
     imprimirhorarioPruebaComponent,
-    altamaestrosIndividualPrueba,
+    altamaestrosIndividualPrueba
   ],
   imports: [
     BrowserModule,
@@ -43,6 +43,7 @@ import { altamaestrosIndividualPrueba } from './altamaestrosIndividualPRUEBA/alt
     FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ],
   providers: [],
   bootstrap: [AppComponent]
