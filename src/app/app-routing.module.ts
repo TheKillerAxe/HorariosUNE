@@ -22,9 +22,7 @@ const routes: Routes = [
   { path: "horarioPrueba", component: generarhorarioPruebaComponent },
   { path: "altaPrueba", component: altamaestrosPrueba },
   { path: "imprimirPrueba", component: imprimirhorarioPruebaComponent },
-  { path: "altaIndPrueba", component: altamaestrosIndividualPrueba },
-
- 
+  { path: "altaIndividualPrueba", component: altamaestrosIndividualPrueba }
 ];
 
 @NgModule({

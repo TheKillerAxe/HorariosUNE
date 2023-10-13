@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
-import { Usuario } from '../database/database';
+import { Usuario, Horario } from '../database/database';
+import { Firestore } from '@angular/fire/firestore';
+import { collection, query, where, collectionData } from '@angular/fire/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { Storage, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { getDownloadURL, getStorage, deleteObject } from 'firebase/storage';
+
 import Swal from 'sweetalert2';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 
 @Component({
@@ -10,156 +18,46 @@ import Swal from 'sweetalert2';
 })
 export class HorarioComponent {
   Usuario: Usuario = new Usuario();
-  horario: any[] = new Array();
-  maestro = "";
-  ciclo = "";
-  periodo = "";
-  materia = "";
-  carrera = "";
+  Horario: Horario = new Horario();
 
-  constructor() {
+  maestroSeleccionado = "";
+  materiaSeleccionada = "";
+
+  mostrarHorarioIrregular: boolean = false;
+  errorGuardar: boolean = false;
+  nuevoHorario: boolean = false;
+
+  constructor(private firestore: Firestore, private fireStorage: Storage) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
       localStorage.setItem('Usuario', JSON.stringify(history.state));
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
-    console.log(this.Usuario);
+  }
 
-    this.horario[0] = [{}]
-    this.horario[1] = [{}]
-    this.horario[2] = [{}]
-    this.horario[3] = [{}]
-    this.horario[4] = [{}]
-    this.horario[5] = [{}]
-    this.horario[6] = [{}]
+  existeHorario() {
+    if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != "") {
+      (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
+      (document.getElementById('disabledSelect3') as HTMLInputElement).disabled = false;
 
-    this.horario[0][0] = { texto: "7:00" }
-    this.horario[0][1] = { texto: "8:00" }
-    this.horario[0][2] = { texto: "9:00" }
-    this.horario[0][3] = { texto: "10:00" }
-    this.horario[0][4] = { texto: "11:00" }
-    this.horario[0][5] = { texto: "12:00" }
-    this.horario[0][6] = { texto: "1:00" }
-    this.horario[0][7] = { texto: "2:00" }
-    this.horario[0][8] = { texto: "3:00" }
-    this.horario[0][9] = { texto: "4:00" }
-    this.horario[0][10] = { texto: "5:00" }
-    this.horario[0][11] = { texto: "6:00" }
-    this.horario[0][12] = { texto: "7:00" }
-    this.horario[0][13] = { texto: "8:00" }
-    this.horario[0][14] = { texto: "9:00" }
-    this.horario[0][15] = { texto: "10:00" }
+      this.Horario.IdHorario = `${this.Horario.Ciclo}-${this.Horario.Carrera}-${this.Horario.Periodo}`;
 
-    this.horario[1][0] = {
-      // maestro: "Camila",
-      // texto: "Aplicaciones Moviles",
-      // salon: "2.5"
+      const Horario = collection(this.firestore, "Horario");
+      const Query = query(Horario, where("IdHorario", "==", this.Horario.IdHorario));
+
+      collectionData(Query).subscribe((snapHorarios) => {
+        if (snapHorarios.length > 0) {
+          this.Horario.setData(snapHorarios[0]);
+        } else {
+          this.nuevoHorario = true;
+        }
+      });
     }
-    this.horario[1][1] = { texto: "" }
-    this.horario[1][2] = { texto: "" }
-    this.horario[1][3] = { texto: "" }
-    this.horario[1][4] = { texto: "" }
-    this.horario[1][5] = { texto: "" }
-    this.horario[1][6] = { texto: "" }
-    this.horario[1][7] = { texto: "" }
-    this.horario[1][8] = { texto: "" }
-    this.horario[1][9] = { texto: "" }
-    this.horario[1][10] = { texto: "" }
-    this.horario[1][11] = { texto: "" }
-    this.horario[1][12] = { texto: "" }
-    this.horario[1][13] = { texto: "" }
-    this.horario[1][14] = { texto: "" }
-    this.horario[1][15] = { texto: "" }
-
-    this.horario[2][0] = { texto: "" }
-    this.horario[2][1] = { texto: "" }
-    this.horario[2][2] = { texto: "" }
-    this.horario[2][3] = { texto: "" }
-    this.horario[2][4] = { texto: "" }
-    this.horario[2][5] = { texto: "" }
-    this.horario[2][6] = { texto: "" }
-    this.horario[2][7] = { texto: "" }
-    this.horario[2][8] = { texto: "" }
-    this.horario[2][9] = { texto: "" }
-    this.horario[2][10] = { texto: "" }
-    this.horario[2][11] = { texto: "" }
-    this.horario[2][12] = { texto: "" }
-    this.horario[2][13] = { texto: "" }
-    this.horario[2][14] = { texto: "" }
-    this.horario[2][15] = { texto: "" }
-
-    this.horario[3][0] = { texto: "" }
-    this.horario[3][1] = { texto: "" }
-    this.horario[3][2] = { texto: "" }
-    this.horario[3][3] = { texto: "" }
-    this.horario[3][4] = { texto: "" }
-    this.horario[3][5] = { texto: "" }
-    this.horario[3][6] = { texto: "" }
-    this.horario[3][7] = { texto: "" }
-    this.horario[3][8] = { texto: "" }
-    this.horario[3][9] = { texto: "" }
-    this.horario[3][10] = { texto: "" }
-    this.horario[3][11] = { texto: "" }
-    this.horario[3][12] = { texto: "" }
-    this.horario[3][13] = { texto: "" }
-    this.horario[3][14] = { texto: "" }
-    this.horario[3][15] = { texto: "" }
-
-    this.horario[4][0] = { texto: "" }
-    this.horario[4][1] = { texto: "" }
-    this.horario[4][2] = { texto: "" }
-    this.horario[4][3] = { texto: "" }
-    this.horario[4][4] = { texto: "" }
-    this.horario[4][5] = { texto: "" }
-    this.horario[4][6] = { texto: "" }
-    this.horario[4][7] = { texto: "" }
-    this.horario[4][8] = { texto: "" }
-    this.horario[4][9] = { texto: "" }
-    this.horario[4][10] = { texto: "" }
-    this.horario[4][11] = { texto: "" }
-    this.horario[4][12] = { texto: "" }
-    this.horario[4][13] = { texto: "" }
-    this.horario[4][14] = { texto: "" }
-    this.horario[4][15] = { texto: "" }
-
-    this.horario[5][0] = { texto: "" }
-    this.horario[5][1] = { texto: "" }
-    this.horario[5][2] = { texto: "" }
-    this.horario[5][3] = { texto: "" }
-    this.horario[5][4] = { texto: "" }
-    this.horario[5][5] = { texto: "" }
-    this.horario[5][6] = { texto: "" }
-    this.horario[5][7] = { texto: "" }
-    this.horario[5][8] = { texto: "" }
-    this.horario[5][9] = { texto: "" }
-    this.horario[5][10] = { texto: "" }
-    this.horario[5][11] = { texto: "" }
-    this.horario[5][12] = { texto: "" }
-    this.horario[5][13] = { texto: "" }
-    this.horario[5][14] = { texto: "" }
-    this.horario[5][15] = { texto: "" }
-
-    this.horario[6][0] = { texto: "" }
-    this.horario[6][1] = { texto: "" }
-    this.horario[6][2] = { texto: "" }
-    this.horario[6][3] = { texto: "" }
-    this.horario[6][4] = { texto: "" }
-    this.horario[6][5] = { texto: "" }
-    this.horario[6][6] = { texto: "" }
-    this.horario[6][7] = { texto: "" }
-    this.horario[6][8] = { texto: "" }
-    this.horario[6][9] = { texto: "" }
-    this.horario[6][10] = { texto: "" }
-    this.horario[6][11] = { texto: "" }
-    this.horario[6][12] = { texto: "" }
-    this.horario[6][13] = { texto: "" }
-    this.horario[6][14] = { texto: "" }
-    this.horario[6][15] = { texto: "" }
   }
 
   openSwalModal(i: number, j: number) {
-    const materiaSeleccionada = this.materia;
-    const maestroSeleccionado = this.maestro;
+    const materiaSeleccionada = this.materiaSeleccionada;
+    const maestroSeleccionado = this.maestroSeleccionado;
 
     Swal.fire({
       title: 'Ingresa el salón',
@@ -173,34 +71,103 @@ export class HorarioComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         const { valor3 } = result.value;
-        this.horario[i][j].salon = materiaSeleccionada;
-        this.horario[i][j].maestro = maestroSeleccionado;
-        this.horario[i][j].texto = valor3;
+        this.Horario.HorarioRegular[i].registro[j].salon = materiaSeleccionada;
+        this.Horario.HorarioRegular[i].registro[j].maestro = maestroSeleccionado;
+        this.Horario.HorarioRegular[i].registro[j].texto = valor3;
 
         const cell = document.getElementById(`c${i}${j}`);
         if (cell) {
           cell.classList.add('dato-agregado');
+          this.Horario.Maestros.unshift(maestroSeleccionado);
+          this.Horario.Materias.unshift(materiaSeleccionada);
         }
       }
     });
   }
 
-  cambiosguardados() {
-    Swal.fire('Cambios guardados', '', 'success');
+  eliminarDuplicados<T>(array: T[]) {
+    const result: T[] = [];
+    for (const item of array) {
+      if (!result.includes(item)) {
+        result.push(item);
+      }
+    }
+    return result;
   }
 
-  mostrarHorario: boolean = false;
-  mostrarHorario2: boolean = false;
+  guardarHorario() {
+    Swal.fire({
+      title: 'Actualización',
+      text: "¿Está seguro de estos cambios?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.Horario.Maestros = this.eliminarDuplicados(this.Horario.Maestros);
+        this.Horario.Materias = this.eliminarDuplicados(this.Horario.Materias);
+
+        let rutaDoc = doc(this.firestore, "Horario", this.Horario.IdHorario);
+
+        if (this.nuevoHorario) {
+          setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Horario)));
+          this.nuevoHorario = false;
+        } else {
+          let data = {
+            IdHorario: this.Horario.IdHorario,
+            Periodo: this.Horario.Periodo,
+            Carrera: this.Horario.Carrera,
+            Ciclo: this.Horario.Ciclo,
+            UltimaModificacion: this.Horario.UltimaModificacion,
+            Materias: this.Horario.Materias,
+            Maestros: this.Horario.Maestros,
+            HorarioRegular: this.Horario.HorarioRegular,
+            HorarioIrregular: this.Horario.HorarioIrregular
+          };
+          updateDoc(rutaDoc, data);
+        }
+
+        this.generarPDF();
+
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'El horario se guardó de forma exitosa!',
+          showConfirmButton: false,
+          timer: 1200
+        });
+      }
+    });
+  }
+
+  generarPDF() {
+    /*const DATA: any = document.getElementById('htmlData');
+    const doc = new jsPDF('l', 'pt', 'a4');
+    const options = {
+      background: 'white',
+      scale: 3,
+    };
+
+    html2canvas(DATA, options).then((canvas) => {
+      const img = canvas.toDataURL('image/PNG');
+      const bufferX = 15; const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+      let ruta = this.Horario.IdHorario;
+      const storageRef = ref(this.fireStorage, ruta);
+
+      uploadBytesResumable(storageRef, docResult.output('blob'));
+    });*/
+  }
 
   mostrarCodigoHorario() {
-    this.mostrarHorario = !this.mostrarHorario;
-  }
-  mostrarCodigoHorario2() {
-    this.mostrarHorario2 = !this.mostrarHorario2;
-  }
-
-  ejecutarFunciones() {
-    this.mostrarCodigoHorario();
-    this.mostrarCodigoHorario2();
+    this.mostrarHorarioIrregular = !this.mostrarHorarioIrregular;
   }
 }

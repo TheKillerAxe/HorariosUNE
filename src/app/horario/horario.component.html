@@ -16,10 +16,10 @@
             Ciclo<br> escolar
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="ciclo">
-                <option>2023/01</option>
-                <option>2023/02</option>
-                <option>2023/03</option>
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Horario.Ciclo" (change)="existeHorario()">
+                <option>2023-01</option>
+                <option>2023-02</option>
+                <option>2023-03</option>
             </select>
         </div>
     </div>
@@ -28,7 +28,7 @@
             Carrera
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="carrera">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Horario.Carrera" (change)="existeHorario()">
                 <option>ISCE</option>
                 <option>IIS</option>
                 <option>IP</option>
@@ -40,10 +40,16 @@
             Periodo
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="periodo">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Horario.Periodo" (change)="existeHorario()">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
             </select>
         </div>
     </div>
@@ -52,7 +58,7 @@
             Materia
         </div>
         <div class="datos">
-            <select id="disabledSelect2" class="form-select input a" [(ngModel)]="materia">
+            <select id="disabledSelect2" class="form-select input a" disabled="true" [(ngModel)]="materiaSeleccionada">
                 <option>Programación</option>
                 <option>Algebra</option>
                 <option>Costos</option>
@@ -64,7 +70,7 @@
             Maestro
         </div>
         <div class="datos">
-            <select id="disabledSelect3" class="form-select input a" [(ngModel)]="maestro">
+            <select id="disabledSelect3" class="form-select input a" disabled="true" [(ngModel)]="maestroSeleccionado">
                 <option>Myriam Janeth</option>
                 <option>Felipe Perez</option>
                 <option>Denisse Mendoza</option>
@@ -75,14 +81,11 @@
 
 <div class="contenedor-botones">
     <button type="button" class="btn b" style="margin-left: 40px;">Dividir materia</button>
-    <button type="button" class="btn b" style="margin-left: 1180px;" (click)="cambiosguardados()">Guardar
-        Cambios</button>
-
-
+    <button type="button" class="btn b" style="margin-left: 1180px;" (click)="guardarHorario()">Guardar Cambios </button>
 </div>
 
 <div class="horario-container">
-    <div class="horario">
+    <div class="horario" id="htmlData">
         <div class="dias">Días</div>
         <div class="dia">Lunes</div>
         <div class="dia">Martes</div>
@@ -91,8 +94,8 @@
         <div class="dia">Viernes</div>
         <div class="dia">Sabado</div>
 
-        <div *ngFor="let columna of horario; index as i; let first = first">
-            <div *ngFor="let fila of columna; index as j">
+        <div *ngFor="let columna of Horario.HorarioRegular; index as i; let first = first">
+            <div *ngFor="let fila of columna.registro; index as j">
                 <div *ngIf="!first" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
                     {{fila.maestro}} <br>
                     {{fila.texto}} <br>
@@ -100,26 +103,19 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 
-<button type="button" class="btn b1" style="margin-left: 1380px;" (click)="ejecutarFunciones()">+</button>
+<button type="button" class="btn b1" style="margin-left: 1380px;" (click)="mostrarCodigoHorario()">+</button>
 
-
-<div *ngIf="mostrarHorario2" class="titulo">
-
+<div *ngIf="mostrarHorarioIrregular" class="titulo">
     <div class="titulotxt">
         Horario Irregular
     </div>
-
 </div>
 
-
-<div *ngIf="mostrarHorario" class="horario-container" style="margin-bottom: 30px;">
+<div *ngIf="mostrarHorarioIrregular" class="horario-container" style="margin-bottom: 30px;">
     <div class="horario">
-
         <div class="dias">Días</div>
         <div class="dia">Lunes</div>
         <div class="dia">Martes</div>
@@ -128,8 +124,8 @@
         <div class="dia">Viernes</div>
         <div class="dia">Sabado</div>
 
-        <div *ngFor="let columna of horario; index as i; let first = first">
-            <div *ngFor="let fila of columna; index as j">
+        <div *ngFor="let columna of Horario.HorarioIrregular; index as i; let first = first">
+            <div *ngFor="let fila of columna.registro; index as j">
                 <div *ngIf="!first" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
                     {{fila.maestro}} <br>
                     {{fila.texto}} <br>
@@ -137,7 +133,5 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
