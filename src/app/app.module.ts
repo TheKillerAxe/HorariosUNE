@@ -20,6 +20,7 @@ import { Horarios2Component } from './horarios2/horarios2.component';
 import { generarhorarioPruebaComponent } from './generarhorarioPRUEBA/generarhorarioPrueba';
 import { altamaestrosPrueba } from './altamaestrosPRUEBA/altamaestrosPrueba';
 import { imprimirhorarioPruebaComponent } from './imprimirhorarioPRUEBA/imprimirhorarioPrueba';
+import { altamaestrosIndividualPrueba } from './altamaestrosIndividualPRUEBA/altamaestrosIndividualPrueba';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +34,7 @@ import { imprimirhorarioPruebaComponent } from './imprimirhorarioPRUEBA/imprimir
     generarhorarioPruebaComponent,
     altamaestrosPrueba,
     imprimirhorarioPruebaComponent,
-
+    altamaestrosIndividualPrueba,
   ],
   imports: [
     BrowserModule,
