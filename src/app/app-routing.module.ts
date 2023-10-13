@@ -9,6 +9,8 @@ import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.comp
 import { generarhorarioPruebaComponent } from './generarhorarioPRUEBA/generarhorarioPrueba';
 import { altamaestrosPrueba } from './altamaestrosPRUEBA/altamaestrosPrueba';
 import { imprimirhorarioPruebaComponent } from './imprimirhorarioPRUEBA/imprimirhorarioPrueba';
+import { altamaestrosPruebaIndividual } from './altamaestrosPRUEBAINDIVIDUAL/altamaestrosPruebaIndividual';
+
 
 const routes: Routes = [
   { path: "", component: loginComponent },
@@ -19,7 +21,9 @@ const routes: Routes = [
   { path: "imprimir", component: ImprimirhorarioComponent },
   { path: "horarioPrueba", component: generarhorarioPruebaComponent },
   { path: "altaPrueba", component: altamaestrosPrueba },
-  { path: "imprimirPrueba", component: imprimirhorarioPruebaComponent }
+  { path: "imprimirPrueba", component: imprimirhorarioPruebaComponent },
+  { path: "altaPruebaInd", component: altamaestrosPruebaIndividual },
+
  
 ];
 
