@@ -21,6 +21,7 @@ import { generarhorarioPruebaComponent } from './generarhorarioPRUEBA/generarhor
 import { altamaestrosPrueba } from './altamaestrosPRUEBA/altamaestrosPrueba';
 import { imprimirhorarioPruebaComponent } from './imprimirhorarioPRUEBA/imprimirhorarioPrueba';
 import { altamaestrosIndividualPrueba } from './altamaestrosIndividualPRUEBA/altamaestrosIndividualPrueba';
+
 @NgModule({
   declarations: [
     AppComponent,
