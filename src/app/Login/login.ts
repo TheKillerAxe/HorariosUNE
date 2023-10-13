@@ -15,6 +15,11 @@ export class loginComponent {
     Usuario = new Usuario();
 
     constructor(private firestore: Firestore, public router: Router) { }
+
+    navigate(route: string) {
+        this.router.navigate([route], { state: this.Usuario });
+      }
+      
     login() {
         const user = collection(this.firestore, "Usuario");
         const q = query(user,
@@ -24,6 +29,7 @@ export class loginComponent {
 
         let flag = true;
 
+        
         collectionData(q).subscribe((snapUser) => {
             if (flag) {
                 if (snapUser.length > 0) {

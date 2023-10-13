@@ -27,7 +27,7 @@ import { Horarios2Component } from './horarios2/horarios2.component';
     HorarioComponent,
     AltadocentesComponent,
     ImprimirhorarioComponent,
-    Horarios2Component
+    Horarios2Component,
   ],
   imports: [
     BrowserModule,
