@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Firestore } from "@angular/fire/firestore";
-import { Usuario } from 'src/database/database';
+import { Usuario } from '../database/database';
 import { collection, query, where, collectionData } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import swal from 'sweetalert2'
@@ -23,12 +23,8 @@ export class loginComponent {
             where("Contrasena", "==", this.Usuario.Contrasena),
         );
 
-        let flag = true;
-
         collectionData(q).subscribe((snapUser) => {
-            if (flag) {
                 if (snapUser.length > 0) {
-                    flag = false;
                     swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -47,7 +43,6 @@ export class loginComponent {
                         text: 'Usuario o Contraseña Incorrectos'
                     });
                 }
-            }
         });
     }
 }
