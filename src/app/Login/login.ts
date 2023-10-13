@@ -18,6 +18,7 @@ export class loginComponent {
     constructor(private firestore : Firestore, public router: Router){ }
     
  login(){
+    console.log(this.Usuario);
      const user = collection(this.firestore, "Usuario");
      const q = query(user,
          where("NombreUsuario", "==", this.Usuario.NombreUsuario),
@@ -38,7 +39,7 @@ export class loginComponent {
                      timer: 2000
                  }).then(() => {
                      this.Usuario.setData(snapUser[0]);
-                     this.router.navigate(['/Menu'], { state: this.Usuario })
+                     this.router.navigate(['menu'], { state: this.Usuario });
                  })
              }
              else{
@@ -46,7 +47,7 @@ export class loginComponent {
                      icon: 'error',
                      title: 'Usuario o Contraseña Incorrectos',
                      text: 'Usuario o Contraseña Incorrectos'
-                 })
+                 });
              }
          }
      });
