@@ -16,7 +16,6 @@ const routes: Routes = [
   { path: "navbarr", component: navbarComponent },
   { path: "inicio", component: menuComponent },
   { path: "horarios", component: Horarios2Component },
-  { path: "imprimirh", component: ImprimirhorarioComponent },
   { path: "imprimir", component: ImprimirhorarioComponent },
   { path: "horarioPrueba", component: generarhorarioPruebaComponent },
   { path: "altaPrueba", component: altamaestrosPrueba },
