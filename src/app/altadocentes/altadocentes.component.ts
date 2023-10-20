@@ -38,14 +38,14 @@ export class AltadocentesComponent {
   registro() {
     if (this.NuevoUsuario.NombreUsuario == "" || this.NuevoUsuario.Nombre == "" || this.NuevoUsuario.Correo == "" ||
         this.NuevoUsuario.TipoMaestro == "" || this.NuevoUsuario.Contrasena == "") {
-          Swal.fire({
-            position: 'top',
-            icon: 'error',
-            title: 'Favor de llenar todos los campos.',
-            showConfirmButton: true
-          });
-          console.log(this.NuevoUsuario);
-          return;
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Favor de llenar todos los campos.',
+        showConfirmButton: true
+      });
+      console.log(this.NuevoUsuario);
+      return;
     }
 
     if (this.validarCorreo()) {
@@ -58,7 +58,7 @@ export class AltadocentesComponent {
         Swal.fire({
           position: 'top',
           icon: 'success',
-          title: 'Tus datos se guardaron correctamente',
+          title: 'Tus datos se guardaron correctamente!',
           showConfirmButton: false,
           timer: 1200
         });
@@ -69,7 +69,7 @@ export class AltadocentesComponent {
       Swal.fire({
         position: 'top',
         icon: 'error',
-        title: 'El correo es inválido',
+        title: 'El correo es inválido.',
         showConfirmButton: true
       });
     }
@@ -110,7 +110,7 @@ export class AltadocentesComponent {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Datos guardados B',
+        title: 'Los datos se guardaron correctamente!',
         showConfirmButton: false,
         timer: 2000
       })
