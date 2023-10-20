@@ -47,9 +47,6 @@ export class HorarioComponent {
 
   buscarHorario() {
     if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != "") {
-      (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
-      (document.getElementById('disabledSelect3') as HTMLInputElement).disabled = false;
-
       this.Horario.IdHorario = `${this.Horario.Ciclo}-${this.Horario.Carrera}-${this.Horario.Periodo}`;
 
       const HorarioCol = collection(this.firestore, "Horario");
@@ -72,13 +69,21 @@ export class HorarioComponent {
             position: 'top',
             icon: 'warning',
             title: 'Este horario aún no existe.',
-            showConfirmButton: false,
-            timer: 1200
+            text: '¿Desea iniciar un nuevo horario?',
+            showConfirmButton: true,
+            showDenyButton: true,
+            confirmButtonText: 'Confirmar',
+            denyButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.vaciarHorario();
+              this.nuevoHorario = true;
+            }
           });
-
-          this.vaciarHorario();
-          this.nuevoHorario = true;
         }
+
+        (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
+        (document.getElementById('disabledSelect3') as HTMLInputElement).disabled = false;
       });
     } else {
       Swal.fire({
@@ -93,6 +98,8 @@ export class HorarioComponent {
   habilitarHorario() {
     if (this.maestroSeleccionado != "" && this.materiaSeleccionada != "") {
       this.horarioHabilitado = true;
+    } else {
+      this.horarioHabilitado = false;
     }
   }
 
@@ -138,37 +145,94 @@ export class HorarioComponent {
           }
         }
       });
+    } else if (this.Horario.HorarioRegular[i].registro[j].texto != "") {
+      Swal.fire({
+        title: '¿Borrar este registro?',
+        focusConfirm: false,
+        showDenyButton: true,
+        confirmButtonText: 'Borrar',
+        denyButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.Horario.HorarioRegular[i].registro[j].salon = "";
+          this.Horario.HorarioRegular[i].registro[j].maestro = "";
+          this.Horario.HorarioRegular[i].registro[j].texto = "";
+        }
+      });
+    } else {
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Favor de llenar todos los campos.',
+        showConfirmButton: true
+      });
     }
   }
 
   openSwalModalI(i: number, j: number) {
-    const materiaSeleccionada = this.materiaSeleccionada;
-    const maestroSeleccionado = this.maestroSeleccionado;
+    if (this.horarioHabilitado) {
+      const materiaSeleccionada = this.materiaSeleccionada;
+      const maestroSeleccionado = this.maestroSeleccionado;
 
-    Swal.fire({
-      title: 'Ingresa el salón',
-      html:
-        `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
-      focusConfirm: false,
-      preConfirm: () => {
-        const valor3 = (document.getElementById('valor3') as HTMLInputElement).value;
-        return { valor3 };
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
+      Swal.fire({
+        title: 'Ingresa el salón',
+        html:
+          `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
+        focusConfirm: false,
+        showDenyButton: true,
+        denyButtonText: 'Borrar',
+        preConfirm: () => {
+          const valor3 = (document.getElementById('valor3') as HTMLInputElement).value;
+          return { valor3 };
+        },
+      }).then((result) => {
         const { valor3 } = result.value;
-        this.Horario.HorarioIrregular[i].registro[j].salon = "Salón: " + valor3;;
-        this.Horario.HorarioIrregular[i].registro[j].maestro = maestroSeleccionado;
-        this.Horario.HorarioIrregular[i].registro[j].texto = materiaSeleccionada;
 
-        const cell = document.getElementById(`c${i}${j}`);
-        if (cell) {
-          cell.classList.add('dato-agregado');
-          this.Horario.Maestros.unshift(maestroSeleccionado);
-          this.Horario.Materias.unshift(materiaSeleccionada);
+        if (result.isConfirmed) {
+          this.Horario.HorarioIrregular[i].registro[j].salon = "Salón: " + valor3;;
+          this.Horario.HorarioIrregular[i].registro[j].maestro = maestroSeleccionado;
+          this.Horario.HorarioIrregular[i].registro[j].texto = materiaSeleccionada;
+
+          const cell = document.getElementById(`c${i}${j}`);
+          if (cell) {
+            cell.classList.add('dato-agregado');
+            this.Horario.Maestros.unshift(maestroSeleccionado);
+            this.Horario.Materias.unshift(materiaSeleccionada);
+          }
         }
-      }
-    });
+        if (result.isDenied) {
+          this.Horario.HorarioIrregular[i].registro[j].salon = "";
+          this.Horario.HorarioIrregular[i].registro[j].maestro = "";
+          this.Horario.HorarioIrregular[i].registro[j].texto = "";
+
+          const cell = document.getElementById(`c${i}${j}`);
+          if (cell) {
+            cell.classList.add('dato-agregado');
+          }
+        }
+      });
+    } else if (this.Horario.HorarioIrregular[i].registro[j].texto != "") {
+      Swal.fire({
+        title: '¿Borrar este registro?',
+        focusConfirm: false,
+        showDenyButton: true,
+        confirmButtonText: 'Borrar',
+        denyButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.Horario.HorarioIrregular[i].registro[j].salon = "";
+          this.Horario.HorarioIrregular[i].registro[j].maestro = "";
+          this.Horario.HorarioIrregular[i].registro[j].texto = "";
+        }
+      });
+    } else {
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Favor de llenar todos los campos.',
+        showConfirmButton: true
+      });
+    }
   }
 
   eliminarDuplicados<T>(array: T[]) {
