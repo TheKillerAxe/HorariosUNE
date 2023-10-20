@@ -268,3 +268,32 @@ background-color:#eceaea;
     color:white; 
     
   }
+
+  .materia-seminario {
+    background-color: rgb(96, 146, 255);
+    color: white;
+  }
+
+  .materia-seminario:hover {
+    background-color: rgb(96, 146, 255) !important;
+    color: white;
+  }
+  
+  .materia-costos {
+    background-color: rgb(115, 113, 255);
+    color:white;
+  }
+
+  .materia-costos:hover {
+    background-color: rgb(115, 113, 255)!important;
+    color:white;
+  }
+  .materia-algebra {
+    background-color: rgb(243, 95, 181);
+    color: white;
+  }
+
+  .materia-algebra:hover {
+    background-color: rgb(243, 95, 181) !important;
+    color: white;
+  }

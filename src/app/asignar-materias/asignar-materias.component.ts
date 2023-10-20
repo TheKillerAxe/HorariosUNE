@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Usuario } from '../database/database';
 
 @Component({
   selector: 'app-asignar-materias',
@@ -6,7 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./asignar-materias.component.css']
 })
 export class AsignarMateriasComponent {
+  Usuario : Usuario = new Usuario();
 
-  constructor() { }
+  constructor() {
+    if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
+      localStorage.setItem('Usuario', JSON.stringify(history.state));
+    }
 
+    this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
+  }
 }
