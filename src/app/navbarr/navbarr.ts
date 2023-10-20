@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/database/database';
-import { Input } from '@angular/core';
+import { Usuario } from '../database/database';
 
 @Component({
   selector: 'navbarr',
@@ -9,9 +8,9 @@ import { Input } from '@angular/core';
   styleUrls: ['./navbarr.css']
 })
 export class navbarComponent {
-  @Input() Usuario = new Usuario();
+  @Input() Usuario : Usuario = new Usuario();
 
-  constructor(public router : Router, private fireStorage:Storage) { }
+  constructor(public router : Router) { }
 
   navegar(referencia : string) {
     this.router.navigate([referencia], {state : this.Usuario});

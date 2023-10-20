@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
-import { Usuario } from 'src/database/database';
+import { Usuario } from 'src/app/database/database';
 
 @Component({
   selector: 'generarhorarioPrueba',
