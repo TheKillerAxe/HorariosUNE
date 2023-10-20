@@ -25,27 +25,37 @@ export class loginComponent {
 
         let flag = true;
         collectionData(q).subscribe((snapUser) => {
-                if (snapUser.length > 0 && flag) {
-                    flag = false;
-                    swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Sesion iniciada.',
-                        showConfirmButton: false,
-                        timer: 2000
-                    }).then(() => {
-                        this.Usuario.setData(snapUser[0]);
-                        console.log(this.Usuario)
-                        this.router.navigate(['inicio'], { state: this.Usuario });
-                    })
-                }
-                else {
-                    swal.fire({
-                        icon: 'error',
-                        title: 'Usuario o Contraseña Incorrectos',
-                        text: 'Usuario o Contraseña Incorrectos'
-                    });
-                }
+            if (snapUser.length > 0 && flag) {
+                flag = false;
+                swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Sesion iniciada.',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    this.Usuario.setData(snapUser[0]);
+
+                    switch (this.Usuario.TipoUsuario) {
+                        case "Admin":
+                            this.router.navigate(['admin'], { state: this.Usuario });
+                            break;
+                        case "Ingles":
+                            this.router.navigate(['ingles'], { state: this.Usuario });
+                            break;
+                        case "Maestro":
+                            this.router.navigate(['docente'], { state: this.Usuario });
+                            break;
+                    }
+                })
+            }
+            else {
+                swal.fire({
+                    icon: 'error',
+                    title: 'Usuario o Contraseña Incorrectos',
+                    text: 'Usuario o Contraseña Incorrectos'
+                });
+            }
         });
     }
 }

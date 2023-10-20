@@ -3,12 +3,11 @@ import { Router } from "@angular/router";
 import { Usuario } from '../database/database';
 
 @Component({
-  selector: 'menu',
-  templateUrl: './menu.html',
-  styleUrls: ['./menu.css']
+  selector: 'app-menu-docentes',
+  templateUrl: './menu-docentes.component.html',
+  styleUrls: ['./menu-docentes.component.css']
 })
-
-export class menuComponent {
+export class MenuDocentesComponent {
   Usuario : Usuario = new Usuario();
 
   constructor(public router: Router) {
@@ -17,8 +16,6 @@ export class menuComponent {
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
-    //console.log(this.Usuario);
-    console.log(history.state);
   }
 
   navigate(route: string) {
