@@ -33,7 +33,6 @@ import { altamaestrosIndividualPrueba } from './altamaestrosIndividualPRUEBA/alt
     ImprimirhorarioComponent,
     Horarios2Component,
     generarhorarioPruebaComponent,
-    altamaestrosPrueba,
     imprimirhorarioPruebaComponent,
     altamaestrosIndividualPrueba
   ],

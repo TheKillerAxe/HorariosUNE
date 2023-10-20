@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: "altaPrueba", component: altamaestrosPrueba },
   { path: "imprimirPrueba", component: imprimirhorarioPruebaComponent },
   { path: "altaIndividualPrueba", component: altamaestrosIndividualPrueba }
-];
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -65,42 +65,34 @@ export class AltadocentesComponent {
 
   subirExcel() {
     let ExcelMaestros = <HTMLInputElement>document.getElementById('avatar');
-
     readXlsxFile(ExcelMaestros.files![0]).then((rows) => {
-      rows = rows.slice(1);
+      rows = rows.slice(0);
       let flag = true;
       rows.forEach((fila) => {
         if (flag) {
           flag = false;
         } else {
-          let IdUsuario =
-            fila[2] == null
-              ? ''
-              : fila[2]!.toString() +
-              this.generateID(fila[3] == null ? '' : fila[3]!.toString());
-          let data = {
-            TipoUsuario: 'Maestro',
-            TipoMaestro: fila[0] == null ? '' : fila[0]!.toString(),
-            Nombre: fila[1] == null ? '' : fila[1]!.toString(),
-            NombreUsuario: fila[2] == null ? '' : fila[2]!.toString(),
-            Contrasena: this.generateID(
-              fila[3] == null ? '' : fila[3]!.toString()
-            ),
-          };
+          let newUser = new Usuario();
+          newUser.IdUsuario = fila[2] == null ? '' : fila[2]!.toString() + this.generateID(fila[4] == null ? '' : fila[4]!.toString());
+          newUser.TipoMaestro =fila[0] == null ? '' : fila[0]!.toString()
+          newUser.TipoUsuario = "Maestro"
+          newUser.Nombre = fila[1] == null ? '' : fila[1]!.toString()
+          newUser.NombreUsuario = fila[2] == null ? '' : fila[2]!.toString()
+          newUser.Correo = fila[3] == null ? '' : fila[3]!.toString()
+          newUser.Contrasena = this.generateID(fila[4] == null ? '' : fila[4]!.toString())
 
-          let rutaDoc = doc(this.firestore, 'Usuario', this.Usuario.IdUsuario);
-          getDoc(rutaDoc).then((docSnap) => {
-            if (docSnap.exists()) {
-              updateDoc(rutaDoc, { data: data })
-            } else {
-              const usuario = new Usuario();
-              usuario.IdUsuario = IdUsuario;
-              usuario.setData(data);
-              setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Usuario)))
-            }
-          })
+          let rutaDoc = doc(this.firestore, 'Usuario', newUser.IdUsuario);
+          setDoc(rutaDoc, JSON.parse(JSON.stringify(newUser)))
+          
         }
       });
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Datos guardados B',
+        showConfirmButton: false,
+        timer: 2000
+    })
     });
   }
 }
