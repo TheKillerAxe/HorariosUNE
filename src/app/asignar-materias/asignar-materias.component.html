@@ -1,0 +1,128 @@
+<navbarr [Usuario]="Usuario"></navbarr>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+  </style>
+
+<div class="titulo"> 
+    <div class="titulotxt">
+        Asignación de Materias
+    </div>
+</div>
+
+<div class="parent">
+    <div class="div2">
+        <label class="texto" for="tipoDocente">Cuatrimestre:</label><br>
+        <select class="inputcss" id="tipoDocente" name="tipoDocente">
+            <option value="0">-- Seleccionar --</option>
+            <option value="1">1°</option>
+            <option value="2">2°</option>
+            <option value="3">3°</option>
+            <option value="4">4°</option>
+            <option value="5">5°</option>
+            <option value="6">6°</option>
+            <option value="7">7°</option>
+            <option value="8">8°</option>
+            <option value="9">9°</option>
+        </select>
+
+    </div>
+    <div class="div3"> 
+        <label class="texto" for="tipoDocente">Materia:</label><br>
+        <select class="inputcss" id="tipoDocente" name="tipoDocente">
+            <option value="A">--Seleccionar Materia--</option>
+            <option value="B">Materia 1</option>
+            <option value="C">Materia 2</option>
+            <option value="D">Materia 3</option>
+        </select>
+    </div>
+    <div class="div4">
+        <div class="contenedor4">
+            <!-- <button  class=" b4">Buscar</button> -->
+        <div style="align-items: center; justify-content: center; vertical-align: middle;">   
+            <button style="padding-bottom: 8px;" class="btn b1 "><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg></button>
+            <label class="txtcuadro2">Buscar Materias</label>
+            
+        </div>
+        </div>
+    </div>
+    <div class="div5">
+        <label class="texto" for="tipoDocente">Carrera:</label><br>
+        <select class="inputcss" id="tipoDocente" name="tipoDocente">
+            <option value="A">--Seleccionar Materia--</option>
+            <option value="B">QFB</option>
+            <option value="C">ISCE</option>
+            <option value="D">IIS</option>
+            <option value="C">IP</option>
+            <option value="D">IA</option>
+        </select>
+    </div>
+    </div>
+
+    <div style="margin-left: 10%; width: 80%; height: 250px;" class="overflow-auto over">
+        
+        <table style="width: 100%;" class="table overflow-scroll">
+            <thead>
+              <tr>
+                <th scope="col">Usuario</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Coreo</th>
+                <th scope="col">Materias</th>
+                <th scope="col">Seleccionar</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <tr>
+                <th scope="row">FPerez</th>
+                <td>Felipe Perez</td>
+                <td>felipe@une.edu.mx</td>
+                <td></td>
+                <td><input class="form-check-input mt-0 check" type="checkbox" value=""></td>
+              </tr>
+              <tr>
+                <th scope="row">CFlores</th>
+                <td>Camila Flores</td>
+                <td>camila@une.edu.mx</td>
+                <td></td>
+                <td><input class="form-check-input mt-0 check" type="checkbox" value=""></td>
+              </tr>
+              <tr>
+                <th scope="row">RHernández</th>
+                <td>Ramón Hernández</td>
+                <td>ramon@une.edu.mx</td>
+                <td></td>
+                <td><input class="form-check-input mt-0 check" type="checkbox" value=""></td>
+              </tr>
+              <tr>
+                <th scope="row">JOrtiz</th>
+                <td>Julián Ortiz</td>
+                <td>julian@une.edu.mx</td>
+                <td></td>
+                <td><input class="form-check-input mt-0 check" type="checkbox" value=""></td>
+              </tr>
+              <tr>
+                <th scope="row">IBarrios</th>
+                <td>Itzia Barrios</td>
+                <td>itzia@une.edu.mx</td>
+                <td></td>
+                <td><input class="form-check-input mt-0 check" type="checkbox" value=""></td>
+              </tr>
+              <tr>
+                <th scope="row">AGarcia</th>
+                <td>Abraham Garcia</td>
+                <td>abraham@une.edu.mx</td>
+                <td></td>
+                <td><input class="form-check-input mt-0 check" type="checkbox" value=""></td>
+              </tr>
+            </tbody>
+          </table>
+    
+
+    </div>
+    
+    <div style="width: 20%; margin-left: 40%; margin-top: 15px;"> 
+        <button class="botonune">Asignar Materia</button>
+
+    </div>

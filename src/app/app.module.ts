@@ -10,31 +10,30 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 
 import { AppComponent } from './app.component';
-import { menuComponent } from './menu/menu';
 import { navbarComponent } from './navbarr/navbarr';
 import { loginComponent } from './Login/login';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
 import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.component';
 import { HorarioComponent } from './horario/horario.component';
-import { Horarios2Component } from './horarios2/horarios2.component';
-import { generarhorarioPruebaComponent } from './generarhorarioPRUEBA/generarhorarioPrueba';
-import { altamaestrosPrueba } from './altamaestrosPRUEBA/altamaestrosPrueba';
-import { imprimirhorarioPruebaComponent } from './imprimirhorarioPRUEBA/imprimirhorarioPrueba';
-import { altamaestrosIndividualPrueba } from './altamaestrosIndividualPRUEBA/altamaestrosIndividualPrueba';
+import { AsignarMateriasComponent } from './asignar-materias/asignar-materias.component';
+import { MenuDocentesComponent } from './menu-docentes/menu-docentes.component';
+import { MenuInglesComponent } from './menu-ingles/menu-ingles.component';
+import { MenuAdminComponent } from './menu-admin/menu-admin.component';
+import { DisponibilidadDocenteComponent } from './disponibilidad-docente/disponibilidad-docente.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     loginComponent,
     navbarComponent,
-    menuComponent,
     HorarioComponent,
     AltadocentesComponent,
     ImprimirhorarioComponent,
-    Horarios2Component,
-    generarhorarioPruebaComponent,
-    imprimirhorarioPruebaComponent,
-    altamaestrosIndividualPrueba
+    AsignarMateriasComponent,
+    MenuDocentesComponent,
+    MenuInglesComponent,
+    MenuAdminComponent,
+    DisponibilidadDocenteComponent
   ],
   imports: [
     BrowserModule,

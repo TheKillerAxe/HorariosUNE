@@ -1,8 +1,8 @@
+<navbarr [Usuario]="Usuario"></navbarr>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 </style>
-
-<navbarr [Usuario]="Usuario"></navbarr>
 
 <div class="titulo">
     <div class="titulotxt">
@@ -16,7 +16,7 @@
             Ciclo<br> escolar
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Horario.Ciclo" (change)="existeHorario()">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Horario.Ciclo">
                 <option>2023-01</option>
                 <option>2023-02</option>
                 <option>2023-03</option>
@@ -28,7 +28,7 @@
             Carrera
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Horario.Carrera" (change)="existeHorario()">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Horario.Carrera">
                 <option>ISCE</option>
                 <option>IIS</option>
                 <option>IP</option>
@@ -40,27 +40,34 @@
             Periodo
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Horario.Periodo" (change)="existeHorario()">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Horario.Periodo">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
             </select>
         </div>
     </div>
+
+    <!-- <button type="button" class="btn b" style="margin-left: 40px;">Dividir materia</button> -->
+    <div class="contenedor4">
+        <button class=" b4" (click)="buscarHorario()">Buscar</button>
+        <!-- <div style="align-items: center; justify-content: center; vertical-align: middle;">   
+        <button class="btn b1 bi bi-search"></button>
+        <label class="txtcuadro2">Buscar</label>
+    </div> -->
+    </div>
+</div>
+
+
+<div class="contenedor-grid">
     <div class="contenedor">
         <div class="txtcuadro">
             Materia
         </div>
         <div class="datos">
-            <select id="disabledSelect2" class="form-select input a" disabled="true" [(ngModel)]="materiaSeleccionada">
-                <option>Programación</option>
-                <option>Algebra</option>
+            <select id="disabledSelect2" class="form-select input a" disabled="true" (change)="habilitarHorario()" [(ngModel)]="materiaSeleccionada">
+                <option>Seminario de tecnologias</option>
+                <option>Dispositivos Logicos Programables</option>
                 <option>Costos</option>
             </select>
         </div>
@@ -70,7 +77,7 @@
             Maestro
         </div>
         <div class="datos">
-            <select id="disabledSelect3" class="form-select input a" disabled="true" [(ngModel)]="maestroSeleccionado">
+            <select id="disabledSelect3" class="form-select input a" disabled="true" (change)="habilitarHorario()" [(ngModel)]="maestroSeleccionado">
                 <option>Myriam Janeth</option>
                 <option>Felipe Perez</option>
                 <option>Denisse Mendoza</option>
@@ -79,42 +86,20 @@
     </div>
 </div>
 
-<div class="contenedor-botones">
-    <button type="button" class="btn b" style="margin-left: 40px;">Dividir materia</button>
-    <button type="button" class="btn b" style="margin-left: 1180px;" (click)="guardarHorario()">Guardar Cambios </button>
+<div class="contenedor-grid2">
+    <div class="contenedor2" style="float: left;">
+        <button class=" b3">Dividir materia</button>
+    </div>
+    <div class="contenedor2">
+    </div>
+    <div class="contenedor2">
+    </div>
+    <div class="contenedor3">
+        <button class=" b3" (click)="guardarHorario()">Guardar Cambios</button>
+    </div>
 </div>
 
 <div class="horario-container">
-    <div class="horario" id="htmlData">
-        <div class="dias">Días</div>
-        <div class="dia">Lunes</div>
-        <div class="dia">Martes</div>
-        <div class="dia">Miercoles</div>
-        <div class="dia">Jueves</div>
-        <div class="dia">Viernes</div>
-        <div class="dia">Sabado</div>
-
-        <div *ngFor="let columna of Horario.HorarioRegular; index as i; let first = first">
-            <div *ngFor="let fila of columna.registro; index as j">
-                <div *ngIf="!first" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
-                    {{fila.maestro}} <br>
-                    {{fila.texto}} <br>
-                    {{fila.salon}}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<button type="button" class="btn b1" style="margin-left: 1380px;" (click)="mostrarCodigoHorario()">+</button>
-
-<div *ngIf="mostrarHorarioIrregular" class="titulo">
-    <div class="titulotxt">
-        Horario Irregular
-    </div>
-</div>
-
-<div *ngIf="mostrarHorarioIrregular" class="horario-container" style="margin-bottom: 30px;">
     <div class="horario">
         <div class="dias">Días</div>
         <div class="dia">Lunes</div>
@@ -124,9 +109,67 @@
         <div class="dia">Viernes</div>
         <div class="dia">Sabado</div>
 
-        <div *ngFor="let columna of Horario.HorarioIrregular; index as i; let first = first">
+        <div *ngFor="let columna of Horario.HorarioRegular; index as i;">
             <div *ngFor="let fila of columna.registro; index as j">
-                <div *ngIf="!first" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
+                <div *ngIf="i==0" class="hora">{{fila.texto}}</div>
+                <div *ngIf="i!=0" class="celda" id="c{{i}}{{j}}" (click)="openSwalModalR(i, j)">
+                    {{fila.maestro}} <br>
+                    {{fila.texto}} <br>
+                    {{fila.salon}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="contenedor-grid2">
+    <div class="contenedor" style="float: left;">
+    </div>
+    <div class="contenedor">
+    </div>
+    <div class="contenedor">
+    </div>
+    <div class="contenedor3">
+        <div style="align-items: center; justify-content: center; margin-top: 28px;">
+            <button type="button" class="btn b1" (click)="toggleIrregular()">+</button>
+            <label class="txtcuadro2">Generar Horario Irregular</label>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div style="display: flex; align-items: center; justify-content: center;">
+    <button type="button" class="btn b1" (click)="ejecutarFunciones()">+</button>
+    <label class="txtcuadro2">Generar Horario Irregular</label>
+  </div> -->
+
+
+<div *ngIf="mostrarHorarioIrregular" class="titulo" style="border-top: 1px solid rgb(228, 228, 228);">
+
+    <div class="titulotxt" style="margin-top: 20px;">
+        Horario Irregular
+    </div>
+
+</div>
+
+
+<div *ngIf="mostrarHorarioIrregular" class="horario-container" style="margin-bottom: 30px;">
+    <div class="horario">
+
+        <div class="dias">Días</div>
+        <div class="dia">Lunes</div>
+        <div class="dia">Martes</div>
+        <div class="dia">Miercoles</div>
+        <div class="dia">Jueves</div>
+        <div class="dia">Viernes</div>
+        <div class="dia">Sabado</div>
+
+        <div *ngFor="let columna2 of Horario.HorarioIrregular; index as i;">
+            <div *ngFor="let fila of columna2.registro; index as j">
+                <div *ngIf="i==0" class="hora">{{fila.texto}}</div>
+                <div *ngIf="i!=0" class="celda" id="c{{i}}{{j}}" (click)="openSwalModalI(i, j)">
                     {{fila.maestro}} <br>
                     {{fila.texto}} <br>
                     {{fila.salon}}
