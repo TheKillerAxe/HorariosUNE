@@ -19,6 +19,7 @@ import { AsignarMateriasComponent } from './asignar-materias/asignar-materias.co
 import { MenuDocentesComponent } from './menu-docentes/menu-docentes.component';
 import { MenuInglesComponent } from './menu-ingles/menu-ingles.component';
 import { MenuAdminComponent } from './menu-admin/menu-admin.component';
+import { DisponibilidadDocenteComponent } from './disponibilidad-docente/disponibilidad-docente.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MenuAdminComponent } from './menu-admin/menu-admin.component';
     AsignarMateriasComponent,
     MenuDocentesComponent,
     MenuInglesComponent,
-    MenuAdminComponent
+    MenuAdminComponent,
+    DisponibilidadDocenteComponent
   ],
   imports: [
     BrowserModule,
