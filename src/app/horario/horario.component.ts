@@ -3,12 +3,8 @@ import { Usuario, Horario } from '../database/database';
 import { Firestore } from '@angular/fire/firestore';
 import { collection, query, where, collectionData } from '@angular/fire/firestore';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
-import { Storage, ref, uploadBytesResumable } from '@angular/fire/storage';
-import { getDownloadURL, getStorage, deleteObject } from 'firebase/storage';
 
 import Swal from 'sweetalert2';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 
 @Component({
@@ -24,10 +20,10 @@ export class HorarioComponent {
   materiaSeleccionada = "";
 
   mostrarHorarioIrregular: boolean = false;
-  errorGuardar: boolean = false;
-  nuevoHorario: boolean = false;
+  nuevoHorario: boolean = true;
+  horarioHabilitado: boolean = false;
 
-  constructor(private firestore: Firestore, private fireStorage: Storage) {
+  constructor(private firestore: Firestore) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
       localStorage.setItem('Usuario', JSON.stringify(history.state));
     }
@@ -35,54 +31,114 @@ export class HorarioComponent {
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
   }
 
-  existeHorario() {
+  vaciarHorario() {
+    let _id = this.Horario.IdHorario;
+    let _ciclo = this.Horario.Ciclo;
+    let _carrera = this.Horario.Carrera;
+    let _periodo = this.Horario.Periodo;
+
+    this.Horario = new Horario();
+
+    this.Horario.IdHorario = _id;
+    this.Horario.Ciclo = _ciclo;
+    this.Horario.Carrera = _carrera;
+    this.Horario.Periodo = _periodo;
+  }
+
+  buscarHorario() {
     if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != "") {
       (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
       (document.getElementById('disabledSelect3') as HTMLInputElement).disabled = false;
 
       this.Horario.IdHorario = `${this.Horario.Ciclo}-${this.Horario.Carrera}-${this.Horario.Periodo}`;
 
-      const Horario = collection(this.firestore, "Horario");
-      const Query = query(Horario, where("IdHorario", "==", this.Horario.IdHorario));
+      const HorarioCol = collection(this.firestore, "Horario");
+      const Query = query(HorarioCol, where("IdHorario", "==", this.Horario.IdHorario));
 
       collectionData(Query).subscribe((snapHorarios) => {
         if (snapHorarios.length > 0) {
+          Swal.fire({
+            position: 'top',
+            icon: 'success',
+            title: 'Se encontró el horario!',
+            showConfirmButton: false,
+            timer: 1200
+          });
+
           this.Horario.setData(snapHorarios[0]);
+          this.nuevoHorario = false;
         } else {
+          Swal.fire({
+            position: 'top',
+            icon: 'warning',
+            title: 'Este horario aún no existe.',
+            showConfirmButton: false,
+            timer: 1200
+          });
+
+          this.vaciarHorario();
           this.nuevoHorario = true;
         }
+      });
+    } else {
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Favor de llenar los campos de Ciclo, Carrera y Periodo.',
+        showConfirmButton: true
       });
     }
   }
 
+  habilitarHorario() {
+    if (this.maestroSeleccionado != "" && this.materiaSeleccionada != "") {
+      this.horarioHabilitado = true;
+    }
+  }
+
   openSwalModalR(i: number, j: number) {
-    const materiaSeleccionada = this.materiaSeleccionada;
-    const maestroSeleccionado = this.maestroSeleccionado;
+    if (this.horarioHabilitado) {
+      const materiaSeleccionada = this.materiaSeleccionada;
+      const maestroSeleccionado = this.maestroSeleccionado;
 
-    Swal.fire({
-      title: 'Ingresa el salón',
-      html:
-        `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
-      focusConfirm: false,
-      preConfirm: () => {
-        const valor3 = (document.getElementById('valor3') as HTMLInputElement).value;
-        return { valor3 };
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
+      Swal.fire({
+        title: 'Ingresa el salón',
+        html:
+          `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
+        focusConfirm: false,
+        showDenyButton: true,
+        denyButtonText: 'Borrar',
+        preConfirm: () => {
+          const valor3 = (document.getElementById('valor3') as HTMLInputElement).value;
+          return { valor3 };
+        },
+      }).then((result) => {
         const { valor3 } = result.value;
-        this.Horario.HorarioRegular[i].registro[j].salon = materiaSeleccionada;
-        this.Horario.HorarioRegular[i].registro[j].maestro = maestroSeleccionado;
-        this.Horario.HorarioRegular[i].registro[j].texto = valor3;
 
-        const cell = document.getElementById(`c${i}${j}`);
-        if (cell) {
-          cell.classList.add('dato-agregado');
-          this.Horario.Maestros.unshift(maestroSeleccionado);
-          this.Horario.Materias.unshift(materiaSeleccionada);
+        if (result.isConfirmed) {
+          this.Horario.HorarioRegular[i].registro[j].salon = "Salón: " + valor3;;
+          this.Horario.HorarioRegular[i].registro[j].maestro = maestroSeleccionado;
+          this.Horario.HorarioRegular[i].registro[j].texto = materiaSeleccionada;
+
+          const cell = document.getElementById(`c${i}${j}`);
+          if (cell) {
+            cell.classList.add('dato-agregado');
+            this.Horario.Maestros.unshift(maestroSeleccionado);
+            this.Horario.Materias.unshift(materiaSeleccionada);
+          }
         }
-      }
-    });
+        if (result.isDenied) {
+          this.Horario.HorarioRegular[i].registro[j].salon = "";
+          this.Horario.HorarioRegular[i].registro[j].maestro = "";
+          this.Horario.HorarioRegular[i].registro[j].texto = "";
+
+          const cell = document.getElementById(`c${i}${j}`);
+          if (cell) {
+            cell.classList.add('dato-agregado');
+          }
+        }
+      });
+    }
   }
 
   openSwalModalI(i: number, j: number) {
@@ -101,9 +157,9 @@ export class HorarioComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         const { valor3 } = result.value;
-        this.Horario.HorarioIrregular[i].registro[j].salon = materiaSeleccionada;
+        this.Horario.HorarioIrregular[i].registro[j].salon = "Salón: " + valor3;;
         this.Horario.HorarioIrregular[i].registro[j].maestro = maestroSeleccionado;
-        this.Horario.HorarioIrregular[i].registro[j].texto = valor3;
+        this.Horario.HorarioIrregular[i].registro[j].texto = materiaSeleccionada;
 
         const cell = document.getElementById(`c${i}${j}`);
         if (cell) {
@@ -159,8 +215,6 @@ export class HorarioComponent {
           updateDoc(rutaDoc, data);
         }
 
-        this.generarPDF();
-
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -172,32 +226,7 @@ export class HorarioComponent {
     });
   }
 
-  generarPDF() {
-    const DATA: any = document.getElementById('htmlData');
-    const doc = new jsPDF('l', 'pt', 'a4');
-    const options = {
-      background: 'white',
-      scale: 3,
-    };
-
-    html2canvas(DATA, options).then((canvas) => {
-      const img = canvas.toDataURL('image/PNG');
-      const bufferX = 15; const bufferY = 15;
-      const imgProps = (doc as any).getImageProperties(img);
-      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
-      return doc;
-    }).then((docResult) => {
-      let ruta = this.Horario.IdHorario;
-      const storageRef = ref(this.fireStorage, ruta);
-
-      uploadBytesResumable(storageRef, docResult.output('blob'));
-    });
-  }
-
-  mostrarCodigoHorario() {
+  toggleIrregular() {
     this.mostrarHorarioIrregular = !this.mostrarHorarioIrregular;
   }
 }

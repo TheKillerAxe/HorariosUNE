@@ -5,7 +5,7 @@ export class Usuario {
     public IdUsuario: string = "";                                                 //ID del usuario.
 
     //Campos
-    public TipoUsuario: string = "";                                               //Tipo de usuario (Admin, Maestro).
+    public TipoUsuario: string = "";                                               //Tipo de usuario (Admin, Inglés, Usuario, Maestro).
     public TipoMaestro: string = "";                                               //Tipo de usuario (Tiempo Completo, Medio Tiempo). <?>
     public Nombre: string = "";                                                    //Nombre del usuario.
     public NombreUsuario: string = "";                                             //Nombre de usuario para ingresar.
@@ -77,7 +77,7 @@ export class DisponibilidadIngles {
     public Periodo: string = "";
     public Periodicidad: string = "";
     public Disponibilidad: boolean[][] = new Array();
-}
+} 
 
 /* Clase auxiliar para las celdas del horario */
 export class RegistroHorario {

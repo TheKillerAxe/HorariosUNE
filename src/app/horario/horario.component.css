@@ -14,13 +14,25 @@ body {
     justify-content: center;
 }
 
+.contenedor-botones{
+    width: 2000px;
+    vertical-align: middle;
+}
 
 .contenedor-grid {
- 
-
-
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 1800px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.contenedor-grid2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 20px;
     justify-content: center;
     margin: 0 auto;
@@ -28,7 +40,6 @@ body {
     margin-top: 30px;
     margin-bottom: 30px;
 }
-
 
 .titulotxt {
     font-family: 'Roboto Slab';
@@ -46,13 +57,38 @@ body {
     float: left;
 }
 
+.txtcuadro2 {
+    font-family: 'Roboto Slab';
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(188, 32, 75);
+    margin-left: 5px;
+}
 
 .contenedor {
     display: flex;
     align-items: center; 
+    margin-right: 0px;
+    justify-content: center;
 }
 
+.contenedor2 {
+    display: flex;
+    float: left;
+    margin-left: 5%;
+}
 
+.contenedor3 {
+    display: flex;
+    justify-content: right;
+}
+
+.contenedor4 {
+    display: flex;
+    align-items: center; 
+    margin-right: 0px;
+    justify-content: center;
+}
 .a-container {
     overflow: hidden;
 }
@@ -72,17 +108,30 @@ body {
 
 .btn{
     font-size: 14px;
-    margin-top:20px;
     flex: 4;
     padding: 5px 10px;
 }
+
+
+.b2{
+    background-color: rgb(188, 32, 76);
+    color:white; 
+    font-family: 'Roboto Slab';
+    height: 50px;
+    font-size:30px;
+    width: 50px; 
+    border-radius: 50%; 
+  text-align: center; 
+  line-height: 20px; 
+ margin-bottom: 15px;
+}  
 
 
 
 
 .horario-container {
     display: flex;
-    max-height: 500px;
+    max-height: 510px;
     overflow-x: hidden;
     margin-top: 30px;
 }
@@ -119,8 +168,8 @@ body {
     /* padding: 17px;
     grid-gap: 3px; */
     grid-column: span 1;
-    width: 200px;
-    height: 80px;
+    width: 220px;
+    height: 100px;
     line-height: 80px;
 
 
@@ -144,12 +193,15 @@ body {
     grid-column: span 1;
     background-color: #fff;
     border: 1px solid #ccc;
-    width: 200px;
-    height: 80px;
+    width: 220px;
+    height: 100px;
     font-size: 17px;
     font-family: 'Roboto Slab';
-    text-align: center; 
-    line-height: 25px; 
+    text-align: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    line-height: 25px;
 }
 
 .b{
@@ -159,6 +211,29 @@ body {
     height: 40px;
     font-size:16px;
     width: 200px;
+}
+
+.b3{
+    background-color: rgb(188, 32, 76);
+    color:white; 
+    font-family: 'Roboto Slab';
+    height: 40px;
+    font-size:16px;
+    width: 210px;
+    border: 0px ;
+    border-radius: 6px;
+}
+
+.b4{
+    background-color: rgb(188, 32, 76);
+    color:white; 
+    font-family: 'Roboto Slab';
+    height: 40px;
+    font-size:16px;
+    width: 210px;
+    border: 0px ;
+    border-radius: 6px;
+    margin-left: 26%;
 }
 
 .b1{
@@ -176,13 +251,20 @@ body {
 
 
 
-/* .celda:hover{
+.celda:hover{
 background-color:#eceaea;
-} */
+}
 
 
 
 .dato-agregado {
     background-color: rgb(188, 32, 76);
     color:white; 
+  }
+
+
+  .dato-agregado:hover {
+    background-color: rgb(188, 32, 76) !important;
+    color:white; 
+    
   }

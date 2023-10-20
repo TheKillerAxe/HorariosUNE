@@ -1,4 +1,4 @@
-<navbarr></navbarr>
+<navbarr [Usuario]="Usuario"></navbarr>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
@@ -16,10 +16,10 @@
     </div>
 </div>
 
-<div class="parent">
+<div class="parent" id="htmlData">
     <div class="div2">
         <label class="texto" for="nombre">Ciclo Escolar:</label><br>
-        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="Ciclo">
+        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="Horario.Ciclo">
             <option>2023-01</option>
             <option>2023-02</option>
             <option>2023-03</option>
@@ -27,7 +27,7 @@
     </div>
     <div class="div3">
         <label class="texto" for="tipoDocente">Carrera:</label><br>
-        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="Carrera">
+        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="Horario.Carrera">
             <option>ISCE</option>
             <option>IIS</option>
             <option>IP</option>
@@ -35,7 +35,7 @@
     </div>
     <div class="div4">
         <label class="texto" for="contraseña">Periodo:</label><br>
-        <input class="inputcss" type="password" id="contraseña" name="contraseña" [(ngModel)]="Periodo">
+        <input class="inputcss" type="password" id="contraseña" name="contraseña" [(ngModel)]="Horario.Periodo">
     </div>
     <div class="div6">
         <button class="botonune" (click)="buscarHorario()">Imprimir Horario</button>
