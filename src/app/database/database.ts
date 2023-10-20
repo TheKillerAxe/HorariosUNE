@@ -5,7 +5,7 @@ export class Usuario {
     public IdUsuario: string = "";                                                 //ID del usuario.
 
     //Campos
-    public TipoUsuario: string = "";                                               //Tipo de usuario (Admin, Inglés, Usuario, Maestro).
+    public TipoUsuario: string = "";                                               //Tipo de usuario (Admin, Inglés, Maestro).
     public TipoMaestro: string = "";                                               //Tipo de usuario (Tiempo Completo, Medio Tiempo). <?>
     public Nombre: string = "";                                                    //Nombre del usuario.
     public NombreUsuario: string = "";                                             //Nombre de usuario para ingresar.

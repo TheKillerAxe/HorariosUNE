@@ -6,23 +6,16 @@ import { AltadocentesComponent } from './altadocentes/altadocentes.component';
 import { HorarioComponent } from './horario/horario.component';
 import { menuComponent } from './menu/menu';
 import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.component';
-import { generarhorarioPruebaComponent } from './generarhorarioPRUEBA/generarhorarioPrueba';
-import { altamaestrosPrueba } from './altamaestrosPRUEBA/altamaestrosPrueba';
-import { imprimirhorarioPruebaComponent } from './imprimirhorarioPRUEBA/imprimirhorarioPrueba';
-import { altamaestrosIndividualPrueba } from './altamaestrosIndividualPRUEBA/altamaestrosIndividualPrueba';
+import { AsignarMateriasComponent } from './asignar-materias/asignar-materias.component';
 
 
 const routes: Routes = [
   { path: "", component: loginComponent },
-  { path: "registro", component: AltadocentesComponent },
-  { path: "navbarr", component: navbarComponent },
-  { path: "inicio", component: menuComponent },
-  { path: "horarios", component: HorarioComponent },
+  { path: "alta", component: AltadocentesComponent },
+  { path: "admin", component: menuComponent },
+  { path: "horario", component: HorarioComponent },
   { path: "imprimir", component: ImprimirhorarioComponent },
-  { path: "horarioPrueba", component: generarhorarioPruebaComponent },
-  { path: "altaPrueba", component: altamaestrosPrueba },
-  { path: "imprimirPrueba", component: imprimirhorarioPruebaComponent },
-  { path: "altaIndividualPrueba", component: altamaestrosIndividualPrueba }
+  { path: "asignar", component: AsignarMateriasComponent }
 ];
 
 @NgModule({
