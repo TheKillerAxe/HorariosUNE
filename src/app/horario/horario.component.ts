@@ -6,7 +6,6 @@ import { doc, setDoc, updateDoc } from 'firebase/firestore';
 
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-horario',
   templateUrl: './horario.component.html',
@@ -15,6 +14,9 @@ import Swal from 'sweetalert2';
 export class HorarioComponent {
   Usuario: Usuario = new Usuario();
   Horario: Horario = new Horario();
+
+  materiasOriginales: string[] = ["Seminario de tecnologias", "Algebra", "Costos"];
+  materiasDuplicadas: string[] = this.materiasOriginales;
 
   maestroSeleccionado = "";
   materiaSeleccionada = "";
@@ -292,5 +294,34 @@ export class HorarioComponent {
 
   toggleIrregular() {
     this.mostrarHorarioIrregular = !this.mostrarHorarioIrregular;
+  }
+
+  duplicarmaterias() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Materias divididas correctamente',
+      showConfirmButton: false,
+      timer: 1200
+    });
+
+    const materiasDuplicadasTemp: string[] = [];
+    for (const materia of this.materiasOriginales) {
+      materiasDuplicadasTemp.push(`${materia} (Grupo A)`);
+      materiasDuplicadasTemp.push(`${materia} (Grupo B)`);
+    }
+    this.materiasDuplicadas = [...materiasDuplicadasTemp];
+  }
+
+  getClaseMateria(materia: string): string {
+    switch (materia) {
+      case 'Seminario de tecnologias':
+        return 'materia-seminario';
+      case 'Costos':
+        return 'materia-costos';
+      case 'Algebra':
+        return 'materia-algebra';
+      default:
+        return 'dato-agregado';
+    }
   }
 }

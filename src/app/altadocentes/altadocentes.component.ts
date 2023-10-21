@@ -22,7 +22,6 @@ export class AltadocentesComponent {
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
-    console.log(this.Usuario);
   }
 
   validarCorreo(): boolean {
@@ -44,7 +43,6 @@ export class AltadocentesComponent {
         title: 'Favor de llenar todos los campos.',
         showConfirmButton: true
       });
-      console.log(this.NuevoUsuario);
       return;
     }
 
