@@ -97,9 +97,23 @@ export class HorarioComponent {
     }
   }
 
+  resaltarMaestro(materia: string, maestro: string) {
+    for (let i = 0; i < this.Horario.HorarioRegular.length; i++) {
+      for (let j = 0; j < this.Horario.HorarioRegular[i].registro.length; j++) {
+        if (this.Horario.HorarioRegular[i].registro[j].texto == materia &&
+            this.Horario.HorarioRegular[i].registro[j].maestro == maestro) {
+          document.getElementById(`c${i}${j}`)?.classList.add('dato-agregado');
+        } else if (document.getElementById(`c${i}${j}`)?.classList.contains('dato-agregado')) {
+          document.getElementById(`c${i}${j}`)?.classList.remove('dato-agregado');
+        }
+      }
+    }
+  }
+
   habilitarHorario() {
     if (this.maestroSeleccionado != "" && this.materiaSeleccionada != "") {
       this.horarioHabilitado = true;
+      this.resaltarMaestro(this.materiaSeleccionada, this.maestroSeleccionado)
     } else {
       this.horarioHabilitado = false;
     }
@@ -116,6 +130,7 @@ export class HorarioComponent {
           `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
         focusConfirm: false,
         showDenyButton: true,
+        showCloseButton: true,
         denyButtonText: 'Borrar',
         preConfirm: () => {
           const valor3 = (document.getElementById('valor3') as HTMLInputElement).value;
@@ -125,7 +140,7 @@ export class HorarioComponent {
         const { valor3 } = result.value;
 
         if (result.isConfirmed) {
-          this.Horario.HorarioRegular[i].registro[j].salon = "Salón: " + valor3;;
+          this.Horario.HorarioRegular[i].registro[j].salon = "Salón: " + valor3;
           this.Horario.HorarioRegular[i].registro[j].maestro = maestroSeleccionado;
           this.Horario.HorarioRegular[i].registro[j].texto = materiaSeleccionada;
 
@@ -145,20 +160,6 @@ export class HorarioComponent {
           if (cell) {
             cell.classList.add('dato-agregado');
           }
-        }
-      });
-    } else if (this.Horario.HorarioRegular[i].registro[j].texto != "") {
-      Swal.fire({
-        title: '¿Borrar este registro?',
-        focusConfirm: false,
-        showDenyButton: true,
-        confirmButtonText: 'Borrar',
-        denyButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.Horario.HorarioRegular[i].registro[j].salon = "";
-          this.Horario.HorarioRegular[i].registro[j].maestro = "";
-          this.Horario.HorarioRegular[i].registro[j].texto = "";
         }
       });
     } else {
