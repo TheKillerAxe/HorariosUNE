@@ -41,7 +41,7 @@ export class Carrera {
         this.Nombre = data.Nombre;
         this.Periodicidad = data.Periodicidad;
     }
-}
+} 
 
 /* Almacena todos los datos de una materia. */
 export class Materia {
