@@ -66,7 +66,7 @@
         </div>
         <div class="datos">
             <select id="disabledSelect2" class="form-select input a" disabled="true" (change)="habilitarHorario()" [(ngModel)]="materiaSeleccionada">
-                <option *ngFor="let materia of materiasDuplicadas" [value]="materia">{{materia}}</option>
+                <option *ngFor="let materia of Materias" [value]="materia">{{materia.Nombre}}</option>
             </select>
         </div>
     </div>

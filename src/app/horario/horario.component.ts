@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Usuario, Horario } from '../database/database';
+import { Usuario, Horario, Materia } from '../database/database';
 import { Firestore } from '@angular/fire/firestore';
 import { collection, query, where, collectionData } from '@angular/fire/firestore';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
@@ -15,6 +15,7 @@ export class HorarioComponent {
   Usuario: Usuario = new Usuario();
   Horario: Horario = new Horario();
 
+  Materias: Materia[] = new Array();
   materiasOriginales: string[] = ["Seminario de tecnologias", "Algebra", "Costos"];
   materiasDuplicadas: string[] = this.materiasOriginales;
 
@@ -31,6 +32,18 @@ export class HorarioComponent {
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
+  }
+
+  obtenerMaterias() {
+    const MateriaCol = collection(this.firestore, "Materia");
+    const Query = query(MateriaCol);
+
+    collectionData(Query).subscribe((snapMaterias) => {
+      for(let i = 0; i < snapMaterias.length; i++) {
+        this.Materias[i] = new Materia();
+        this.Materias[i].setData(snapMaterias[i]);
+      }
+    });
   }
 
   vaciarHorario() {
@@ -84,6 +97,8 @@ export class HorarioComponent {
           });
         }
 
+        this.obtenerMaterias();
+
         (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
         (document.getElementById('disabledSelect3') as HTMLInputElement).disabled = false;
       });
@@ -101,7 +116,7 @@ export class HorarioComponent {
     for (let i = 0; i < this.Horario.HorarioRegular.length; i++) {
       for (let j = 0; j < this.Horario.HorarioRegular[i].registro.length; j++) {
         if (this.Horario.HorarioRegular[i].registro[j].texto == materia &&
-            this.Horario.HorarioRegular[i].registro[j].maestro == maestro) {
+          this.Horario.HorarioRegular[i].registro[j].maestro == maestro) {
           document.getElementById(`c${i}${j}`)?.classList.add('dato-agregado');
         } else if (document.getElementById(`c${i}${j}`)?.classList.contains('dato-agregado')) {
           document.getElementById(`c${i}${j}`)?.classList.remove('dato-agregado');
