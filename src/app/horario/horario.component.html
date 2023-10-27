@@ -6,7 +6,7 @@
 
 <div class="titulo">
     <div class="titulotxt">
-        GENERACIÓN DE HORARIOS
+        GENERAR HORARIO
     </div>
 </div>
 
@@ -40,11 +40,12 @@
             Periodo
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Horario.Periodo">
+            <!-- <select id="disabledSelect" class="form-select input a" [(ngModel)]="periodo">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
-            </select>
+              </select> -->
+            <input type="number" class="form-control a" [(ngModel)]="Horario.Periodo">
         </div>
     </div>
 
@@ -58,7 +59,6 @@
     </div>
 </div>
 
-
 <div class="contenedor-grid">
     <div class="contenedor">
         <div class="txtcuadro">
@@ -66,12 +66,11 @@
         </div>
         <div class="datos">
             <select id="disabledSelect2" class="form-select input a" disabled="true" (change)="habilitarHorario()" [(ngModel)]="materiaSeleccionada">
-                <option>Seminario de tecnologias</option>
-                <option>Dispositivos Logicos Programables</option>
-                <option>Costos</option>
+                <option *ngFor="let materia of materiasDuplicadas" [value]="materia">{{materia}}</option>
             </select>
         </div>
     </div>
+
     <div class="contenedor">
         <div class="txtcuadro">
             Maestro
@@ -88,7 +87,7 @@
 
 <div class="contenedor-grid2">
     <div class="contenedor2" style="float: left;">
-        <button class=" b3">Dividir materia</button>
+        <button class=" b3" (click)="duplicarmaterias()">Dividir materia</button>
     </div>
     <div class="contenedor2">
     </div>
@@ -113,16 +112,14 @@
             <div *ngFor="let fila of columna.registro; index as j">
                 <div *ngIf="i==0" class="hora">{{fila.texto}}</div>
                 <div *ngIf="i!=0" class="celda" id="c{{i}}{{j}}" (click)="openSwalModalR(i, j)">
-                    {{fila.maestro}} <br>
                     {{fila.texto}} <br>
+                    {{fila.maestro}} <br>
                     {{fila.salon}}
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-
 
 <div class="contenedor-grid2">
     <div class="contenedor" style="float: left;">
@@ -139,25 +136,19 @@
     </div>
 </div>
 
-
 <!-- <div style="display: flex; align-items: center; justify-content: center;">
     <button type="button" class="btn b1" (click)="ejecutarFunciones()">+</button>
     <label class="txtcuadro2">Generar Horario Irregular</label>
   </div> -->
 
-
 <div *ngIf="mostrarHorarioIrregular" class="titulo" style="border-top: 1px solid rgb(228, 228, 228);">
-
     <div class="titulotxt" style="margin-top: 20px;">
         Horario Irregular
     </div>
-
 </div>
-
 
 <div *ngIf="mostrarHorarioIrregular" class="horario-container" style="margin-bottom: 30px;">
     <div class="horario">
-
         <div class="dias">Días</div>
         <div class="dia">Lunes</div>
         <div class="dia">Martes</div>

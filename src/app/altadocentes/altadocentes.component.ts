@@ -22,36 +22,55 @@ export class AltadocentesComponent {
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
-    console.log(this.Usuario);
   }
 
-  generateRandomString = (num: number) => {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result1 = '';
-    const charactersLenght = characters.length;
-    for (let i = 0; i < num; i++) {
-      result1 += characters.charAt(Math.floor(Math.random() * charactersLenght));
+  validarCorreo(): boolean {
+    let validacion = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+
+    if (validacion.test(this.NuevoUsuario.Correo)) {
+      return true;
+    } else {
+      return false;
     }
-    return result1;
   }
 
   registro() {
-    this.NuevoUsuario.IdUsuario = "US-" + this.generateRandomString(5);
-    this.NuevoUsuario.TipoUsuario = "Maestro";
-
-    let rutaDoc = doc(this.firestore, "Usuario", this.NuevoUsuario.IdUsuario);
-
-    setDoc(rutaDoc, JSON.parse(JSON.stringify(this.NuevoUsuario))).then(() => {
+    if (this.NuevoUsuario.NombreUsuario == "" || this.NuevoUsuario.Nombre == "" || this.NuevoUsuario.Correo == "" ||
+        this.NuevoUsuario.TipoMaestro == "" || this.NuevoUsuario.Contrasena == "") {
       Swal.fire({
         position: 'top',
-        icon: 'success',
-        title: 'Tus datos se guardaron correctamente',
-        showConfirmButton: false,
-        timer: 1200
+        icon: 'error',
+        title: 'Favor de llenar todos los campos.',
+        showConfirmButton: true
       });
+      return;
+    }
 
-      this.NuevoUsuario = new Usuario();
-    });
+    if (this.validarCorreo()) {
+      this.NuevoUsuario.IdUsuario = this.NuevoUsuario.NombreUsuario + this.NuevoUsuario.Contrasena;
+      this.NuevoUsuario.TipoUsuario = "Maestro";
+
+      let rutaDoc = doc(this.firestore, "Usuario", this.NuevoUsuario.IdUsuario);
+
+      setDoc(rutaDoc, JSON.parse(JSON.stringify(this.NuevoUsuario))).then(() => {
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          title: 'Tus datos se guardaron correctamente!',
+          showConfirmButton: false,
+          timer: 1200
+        });
+
+        this.NuevoUsuario = new Usuario();
+      });
+    } else {
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'El correo es inválido.',
+        showConfirmButton: true
+      });
+    }
   }
 
   generateID = (fecha: string) => {
@@ -64,7 +83,7 @@ export class AltadocentesComponent {
   };
 
   subirExcel() {
-    let ExcelMaestros = <HTMLInputElement>document.getElementById('avatar');
+    let ExcelMaestros = <HTMLInputElement>document.getElementById('inputGroupFile01');
     readXlsxFile(ExcelMaestros.files![0]).then((rows) => {
       rows = rows.slice(0);
       let flag = true;
@@ -74,7 +93,7 @@ export class AltadocentesComponent {
         } else {
           let newUser = new Usuario();
           newUser.IdUsuario = fila[2] == null ? '' : fila[2]!.toString() + this.generateID(fila[4] == null ? '' : fila[4]!.toString());
-          newUser.TipoMaestro =fila[0] == null ? '' : fila[0]!.toString()
+          newUser.TipoMaestro = fila[0] == null ? '' : fila[0]!.toString()
           newUser.TipoUsuario = "Maestro"
           newUser.Nombre = fila[1] == null ? '' : fila[1]!.toString()
           newUser.NombreUsuario = fila[2] == null ? '' : fila[2]!.toString()
@@ -83,16 +102,16 @@ export class AltadocentesComponent {
 
           let rutaDoc = doc(this.firestore, 'Usuario', newUser.IdUsuario);
           setDoc(rutaDoc, JSON.parse(JSON.stringify(newUser)))
-          
+
         }
       });
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Datos guardados B',
+        title: 'Los datos se guardaron correctamente!',
         showConfirmButton: false,
         timer: 2000
-    })
+      })
     });
   }
 }

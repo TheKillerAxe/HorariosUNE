@@ -51,7 +51,7 @@ export class Materia {
     //Campos
     public Nombre: string = "";                                                    //Nombre de la materia.
     public Carrera: string = "";                                                   //Nombre de la carrera en la que se imparte la materia.
-    public Periodo: string = "";                                                   //Periodo en el que se imparte la materia.
+    public Periodo: number = 0;                                                   //Periodo en el que se imparte la materia.
 
     constructor() { }
 

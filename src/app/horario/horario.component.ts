@@ -6,7 +6,6 @@ import { doc, setDoc, updateDoc } from 'firebase/firestore';
 
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-horario',
   templateUrl: './horario.component.html',
@@ -15,6 +14,9 @@ import Swal from 'sweetalert2';
 export class HorarioComponent {
   Usuario: Usuario = new Usuario();
   Horario: Horario = new Horario();
+
+  materiasOriginales: string[] = ["Seminario de tecnologias", "Algebra", "Costos"];
+  materiasDuplicadas: string[] = this.materiasOriginales;
 
   maestroSeleccionado = "";
   materiaSeleccionada = "";
@@ -47,9 +49,6 @@ export class HorarioComponent {
 
   buscarHorario() {
     if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != "") {
-      (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
-      (document.getElementById('disabledSelect3') as HTMLInputElement).disabled = false;
-
       this.Horario.IdHorario = `${this.Horario.Ciclo}-${this.Horario.Carrera}-${this.Horario.Periodo}`;
 
       const HorarioCol = collection(this.firestore, "Horario");
@@ -72,13 +71,21 @@ export class HorarioComponent {
             position: 'top',
             icon: 'warning',
             title: 'Este horario aún no existe.',
-            showConfirmButton: false,
-            timer: 1200
+            text: '¿Desea iniciar un nuevo horario?',
+            showConfirmButton: true,
+            showDenyButton: true,
+            confirmButtonText: 'Confirmar',
+            denyButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.vaciarHorario();
+              this.nuevoHorario = true;
+            }
           });
-
-          this.vaciarHorario();
-          this.nuevoHorario = true;
         }
+
+        (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
+        (document.getElementById('disabledSelect3') as HTMLInputElement).disabled = false;
       });
     } else {
       Swal.fire({
@@ -90,9 +97,25 @@ export class HorarioComponent {
     }
   }
 
+  resaltarMaestro(materia: string, maestro: string) {
+    for (let i = 0; i < this.Horario.HorarioRegular.length; i++) {
+      for (let j = 0; j < this.Horario.HorarioRegular[i].registro.length; j++) {
+        if (this.Horario.HorarioRegular[i].registro[j].texto == materia &&
+            this.Horario.HorarioRegular[i].registro[j].maestro == maestro) {
+          document.getElementById(`c${i}${j}`)?.classList.add('dato-agregado');
+        } else if (document.getElementById(`c${i}${j}`)?.classList.contains('dato-agregado')) {
+          document.getElementById(`c${i}${j}`)?.classList.remove('dato-agregado');
+        }
+      }
+    }
+  }
+
   habilitarHorario() {
     if (this.maestroSeleccionado != "" && this.materiaSeleccionada != "") {
       this.horarioHabilitado = true;
+      this.resaltarMaestro(this.materiaSeleccionada, this.maestroSeleccionado)
+    } else {
+      this.horarioHabilitado = false;
     }
   }
 
@@ -107,6 +130,7 @@ export class HorarioComponent {
           `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
         focusConfirm: false,
         showDenyButton: true,
+        showCloseButton: true,
         denyButtonText: 'Borrar',
         preConfirm: () => {
           const valor3 = (document.getElementById('valor3') as HTMLInputElement).value;
@@ -116,7 +140,7 @@ export class HorarioComponent {
         const { valor3 } = result.value;
 
         if (result.isConfirmed) {
-          this.Horario.HorarioRegular[i].registro[j].salon = "Salón: " + valor3;;
+          this.Horario.HorarioRegular[i].registro[j].salon = "Salón: " + valor3;
           this.Horario.HorarioRegular[i].registro[j].maestro = maestroSeleccionado;
           this.Horario.HorarioRegular[i].registro[j].texto = materiaSeleccionada;
 
@@ -138,37 +162,80 @@ export class HorarioComponent {
           }
         }
       });
+    } else {
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Favor de llenar todos los campos.',
+        showConfirmButton: true
+      });
     }
   }
 
   openSwalModalI(i: number, j: number) {
-    const materiaSeleccionada = this.materiaSeleccionada;
-    const maestroSeleccionado = this.maestroSeleccionado;
+    if (this.horarioHabilitado) {
+      const materiaSeleccionada = this.materiaSeleccionada;
+      const maestroSeleccionado = this.maestroSeleccionado;
 
-    Swal.fire({
-      title: 'Ingresa el salón',
-      html:
-        `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
-      focusConfirm: false,
-      preConfirm: () => {
-        const valor3 = (document.getElementById('valor3') as HTMLInputElement).value;
-        return { valor3 };
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
+      Swal.fire({
+        title: 'Ingresa el salón',
+        html:
+          `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
+        focusConfirm: false,
+        showDenyButton: true,
+        denyButtonText: 'Borrar',
+        preConfirm: () => {
+          const valor3 = (document.getElementById('valor3') as HTMLInputElement).value;
+          return { valor3 };
+        },
+      }).then((result) => {
         const { valor3 } = result.value;
-        this.Horario.HorarioIrregular[i].registro[j].salon = "Salón: " + valor3;;
-        this.Horario.HorarioIrregular[i].registro[j].maestro = maestroSeleccionado;
-        this.Horario.HorarioIrregular[i].registro[j].texto = materiaSeleccionada;
 
-        const cell = document.getElementById(`c${i}${j}`);
-        if (cell) {
-          cell.classList.add('dato-agregado');
-          this.Horario.Maestros.unshift(maestroSeleccionado);
-          this.Horario.Materias.unshift(materiaSeleccionada);
+        if (result.isConfirmed) {
+          this.Horario.HorarioIrregular[i].registro[j].salon = "Salón: " + valor3;;
+          this.Horario.HorarioIrregular[i].registro[j].maestro = maestroSeleccionado;
+          this.Horario.HorarioIrregular[i].registro[j].texto = materiaSeleccionada;
+
+          const cell = document.getElementById(`c${i}${j}`);
+          if (cell) {
+            cell.classList.add('dato-agregado');
+            this.Horario.Maestros.unshift(maestroSeleccionado);
+            this.Horario.Materias.unshift(materiaSeleccionada);
+          }
         }
-      }
-    });
+        if (result.isDenied) {
+          this.Horario.HorarioIrregular[i].registro[j].salon = "";
+          this.Horario.HorarioIrregular[i].registro[j].maestro = "";
+          this.Horario.HorarioIrregular[i].registro[j].texto = "";
+
+          const cell = document.getElementById(`c${i}${j}`);
+          if (cell) {
+            cell.classList.add('dato-agregado');
+          }
+        }
+      });
+    } else if (this.Horario.HorarioIrregular[i].registro[j].texto != "") {
+      Swal.fire({
+        title: '¿Borrar este registro?',
+        focusConfirm: false,
+        showDenyButton: true,
+        confirmButtonText: 'Borrar',
+        denyButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.Horario.HorarioIrregular[i].registro[j].salon = "";
+          this.Horario.HorarioIrregular[i].registro[j].maestro = "";
+          this.Horario.HorarioIrregular[i].registro[j].texto = "";
+        }
+      });
+    } else {
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Favor de llenar todos los campos.',
+        showConfirmButton: true
+      });
+    }
   }
 
   eliminarDuplicados<T>(array: T[]) {
@@ -228,5 +295,34 @@ export class HorarioComponent {
 
   toggleIrregular() {
     this.mostrarHorarioIrregular = !this.mostrarHorarioIrregular;
+  }
+
+  duplicarmaterias() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Materias divididas correctamente',
+      showConfirmButton: false,
+      timer: 1200
+    });
+
+    const materiasDuplicadasTemp: string[] = [];
+    for (const materia of this.materiasOriginales) {
+      materiasDuplicadasTemp.push(`${materia} (Grupo A)`);
+      materiasDuplicadasTemp.push(`${materia} (Grupo B)`);
+    }
+    this.materiasDuplicadas = [...materiasDuplicadasTemp];
+  }
+
+  getClaseMateria(materia: string): string {
+    switch (materia) {
+      case 'Seminario de tecnologias':
+        return 'materia-seminario';
+      case 'Costos':
+        return 'materia-costos';
+      case 'Algebra':
+        return 'materia-algebra';
+      default:
+        return 'dato-agregado';
+    }
   }
 }
