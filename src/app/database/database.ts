@@ -33,6 +33,7 @@ export class Carrera {
     //Campos
     public Nombre: string = "";                                                    //Nombre de la carrera.
     public Periodicidad: string = "";                                              //Periodicidad de la carrera (Cuatrimestral / Semestral).
+    public Periodos: number = 0;                                                   //Cantidad de periodos que tiene la carrera.
 
     constructor() { }
 
@@ -51,7 +52,7 @@ export class Materia {
     //Campos
     public Nombre: string = "";                                                    //Nombre de la materia.
     public Carrera: string = "";                                                   //Nombre de la carrera en la que se imparte la materia.
-    public Periodo: number = 0;                                                   //Periodo en el que se imparte la materia.
+    public Periodo: string = "";                                                   //Periodo en el que se imparte la materia.
 
     constructor() { }
 
@@ -63,12 +64,56 @@ export class Materia {
     }
 }
 
+/*Clase Auxiliar para la Disponibilidad.*/
+export class RegistroDisponibilidad {
+    registro: any[] = new Array();
+
+    constructor() { }
+}
+
 /* Almacena los datos de la disponibilidad del horario del maestro. */
 export class DisponibilidadMaestro {
     public IdMaestro: string = "";                                                 //ID del maestro al que pertenece la disponibilidad.
     public Nombre: string = "";                                                    //Nombre del maestro al que pertenece la disponibilidad.
     public Ciclo: string = "";                                                      //Ciclo escolar al que pertenece la disponibilidad.
-    public Disponibilidad: boolean[][] = new Array();                                //Indica cuando está disponible el maestro.
+    public Disponibilidad: RegistroDisponibilidad[] = new Array();                  //Indica cuando está disponible el maestro.
+
+    constructor() {
+        this.prepararHorarios();
+    }
+
+    prepararHorarios() {
+        for (let i = 0; i < 7; i++) {
+            this.Disponibilidad[i] = new RegistroHorario();
+            this.Disponibilidad[i].registro = [];
+        }
+
+        let Hora = 7;
+        for (let i = 0; i < 16; i++) {
+            let Formato = Hora + ":00";
+            this.Disponibilidad[0].registro[i] = { texto: Formato };
+            this.Disponibilidad[0].registro[i].disponible = false;
+            if (Hora > 12) {
+                Hora = 1;
+            } else {
+                Hora++;
+            }
+        }
+
+        for (let i = 1; i < 7; i++) {
+            for (let j = 0; j < 16; j++) {
+                this.Disponibilidad[i].registro[j] = { texto: "" };
+                this.Disponibilidad[i].registro[j].disponible = false;
+            }
+        }
+    }
+
+    setData(data: any) {
+        this.IdMaestro = data.IdMaestro;
+        this.Nombre = data.Nombre;
+        this.Ciclo = data.Ciclo;
+        this.Disponibilidad = data.Disponibilidad;
+    }
 }
 
 /* Almacena los datos de la disponibilidad del horario de inglés. */
@@ -76,7 +121,44 @@ export class DisponibilidadIngles {
     public CicloEscolar: string = "";
     public Periodo: string = "";
     public Periodicidad: string = "";
-    public Disponibilidad: boolean[][] = new Array();
+    public Disponibilidad: RegistroDisponibilidad[] = new Array();
+
+    constructor() {
+        this.prepararHorarios();
+    }
+
+    prepararHorarios() {
+        for (let i = 0; i < 7; i++) {
+            this.Disponibilidad[i] = new RegistroHorario();
+            this.Disponibilidad[i].registro = [];
+        }
+
+        let Hora = 7;
+        for (let i = 0; i < 16; i++) {
+            let Formato = Hora + ":00";
+            this.Disponibilidad[0].registro[i] = { texto: Formato };
+            this.Disponibilidad[0].registro[i].disponible = false;
+            if (Hora > 12) {
+                Hora = 1;
+            } else {
+                Hora++;
+            }
+        }
+
+        for (let i = 1; i < 7; i++) {
+            for (let j = 0; j < 16; j++) {
+                this.Disponibilidad[i].registro[j] = { texto: "" };
+                this.Disponibilidad[i].registro[j].disponible = false;
+            }
+        }
+    }
+
+    setData(data:any) {
+        this.CicloEscolar = data.CicloEscolar;
+        this.Periodo = data.Periodo;
+        this.Periodicidad = data.Periodicidad;
+        this.Disponibilidad = data.Disponibilidad;
+    }
 } 
 
 /* Clase auxiliar para las celdas del horario */

@@ -14,19 +14,20 @@
     <div class="contenedor"></div>
     <div class="contenedor">
         <div class="txtcuadro">
-            Ciclo<br> escolar
+            Ciclo<br> Escolar
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="ciclo">
-                <option>2023/01</option>
-                <option>2023/02</option>
-                <option>2023/03</option>
+            <select id="disabledSelect" class="form-select input a" (click)="advertirCambios()" [(ngModel)]="Disponibilidad.Ciclo">
+                <option>2023-01</option>
+                <option>2023-02</option>
+                <option>2023-03</option>
             </select>
         </div>
     </div>
 
     <div class="contenedor">
-        <button class=" b3" (click)="cambiosguardados()">Guardar Cambios</button>
+        <button class=" b3" style="margin-right: 5%; height: fit-content;" (click)="cargarDisponibilidad()">Cargar Disponibilidad</button>
+        <button class=" b3" (click)="guardarDisponibilidad()">Guardar Cambios</button>
     </div>
     <div class="contenedor"></div>
 </div>
@@ -41,11 +42,11 @@
         <div class="dia">Viernes</div>
         <div class="dia">Sabado</div>
 
-        <div *ngFor="let columna of horario; index as i;">
-            <div *ngFor="let fila of columna; index as j">
-                <div *ngIf="i==0" class="hora">{{fila.texto}}</div>
-                <div *ngIf="i!=0" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
-                    {{diaHora}}
+        <div *ngFor="let columna of Disponibilidad.Disponibilidad; index as i;">
+            <div *ngFor="let fila of columna.registro; index as j">
+                <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
+                <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
+                    {{fila.hora}}
                 </div>
             </div>
         </div>
