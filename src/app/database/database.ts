@@ -11,6 +11,7 @@ export class Usuario {
     public NombreUsuario: string = "";                                             //Nombre de usuario para ingresar.
     public Correo: string = "";                                                    //Correo del usuario.
     public Contrasena: string = "";                                                //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
+    public Materias: string[] = new Array();                                       //Materias que lleva el docente (si lleva alguna).
 
     constructor() { }
 
@@ -33,7 +34,7 @@ export class Carrera {
     //Campos
     public Nombre: string = "";                                                    //Nombre de la carrera.
     public Periodicidad: string = "";                                              //Periodicidad de la carrera (Cuatrimestral / Semestral).
-    public Periodos: number = 0;                                                   //Cantidad de periodos que tiene la carrera.
+    public CantidadPeriodos: number = 0;                                           //Cantidad de periodos que tiene la carrera.
 
     constructor() { }
 
@@ -41,6 +42,7 @@ export class Carrera {
         this.IdCarrera = data.IdCarrera;
         this.Nombre = data.Nombre;
         this.Periodicidad = data.Periodicidad;
+        this.CantidadPeriodos = data.CantidadPeriodos;
     }
 } 
 
