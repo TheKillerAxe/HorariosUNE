@@ -64,19 +64,12 @@ export class Materia {
     }
 }
 
-/*Clase Auxiliar para la Disponibilidad.*/
-export class RegistroDisponibilidad {
-    registro: any[] = new Array();
-
-    constructor() { }
-}
-
 /* Almacena los datos de la disponibilidad del horario del maestro. */
 export class DisponibilidadMaestro {
     public IdMaestro: string = "";                                                 //ID del maestro al que pertenece la disponibilidad.
     public Nombre: string = "";                                                    //Nombre del maestro al que pertenece la disponibilidad.
     public Ciclo: string = "";                                                      //Ciclo escolar al que pertenece la disponibilidad.
-    public Disponibilidad: RegistroDisponibilidad[] = new Array();                  //Indica cuando está disponible el maestro.
+    public Disponibilidad: RegistroHorario[] = new Array();                  //Indica cuando está disponible el maestro.
 
     constructor() {
         this.prepararHorarios();
@@ -91,8 +84,7 @@ export class DisponibilidadMaestro {
         let Hora = 7;
         for (let i = 0; i < 16; i++) {
             let Formato = Hora + ":00";
-            this.Disponibilidad[0].registro[i] = { texto: Formato };
-            this.Disponibilidad[0].registro[i].disponible = false;
+            this.Disponibilidad[0].registro[i] = { texto: Formato, disponible: false, hora: "" };
             if (Hora > 12) {
                 Hora = 1;
             } else {
@@ -102,8 +94,7 @@ export class DisponibilidadMaestro {
 
         for (let i = 1; i < 7; i++) {
             for (let j = 0; j < 16; j++) {
-                this.Disponibilidad[i].registro[j] = { texto: "" };
-                this.Disponibilidad[i].registro[j].disponible = false;
+                this.Disponibilidad[i].registro[j] = { texto: "", disponible: false, hora: "" };
             }
         }
     }
@@ -121,7 +112,7 @@ export class DisponibilidadIngles {
     public CicloEscolar: string = "";
     public Periodo: string = "";
     public Periodicidad: string = "";
-    public Disponibilidad: RegistroDisponibilidad[] = new Array();
+    public Disponibilidad: RegistroHorario[] = new Array();
 
     constructor() {
         this.prepararHorarios();

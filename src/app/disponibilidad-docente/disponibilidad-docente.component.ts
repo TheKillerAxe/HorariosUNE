@@ -51,7 +51,7 @@ export class DisponibilidadDocenteComponent {
 
   cargarDisponibilidad() {
     if (this.Disponibilidad.Ciclo != "" && this.cambiosRecientes == false) {
-      const DisponibilidadCol = collection(this.firestore, "Disponibilidad");
+      const DisponibilidadCol = collection(this.firestore, "DisponibilidadMaestro");
       const Query = query(DisponibilidadCol,
         where("IdMaestro", "==", `${this.Usuario.NombreUsuario}_${this.Disponibilidad.Ciclo}`),
         where("Ciclo", "==", this.Disponibilidad.Ciclo)
@@ -98,7 +98,7 @@ export class DisponibilidadDocenteComponent {
           this.Disponibilidad.IdMaestro = `${this.Usuario.NombreUsuario}_${this.Ciclo}`;
           this.Disponibilidad.Nombre = this.Usuario.Nombre;
 
-          let rutaDoc = doc(this.firestore, "Disponibilidad", this.Disponibilidad.IdMaestro);
+          let rutaDoc = doc(this.firestore, "DisponibilidadMaestro", this.Disponibilidad.IdMaestro);
 
           if (this.nuevaDisponibilidad) {
             setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Disponibilidad)));

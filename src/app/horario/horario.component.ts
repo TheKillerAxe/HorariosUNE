@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Usuario, Horario, Materia } from '../database/database';
+import { Usuario, Horario, Materia, DisponibilidadMaestro } from '../database/database';
+import { DocumentData } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { collection, query, where, collectionData } from '@angular/fire/firestore';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
@@ -14,8 +15,10 @@ import Swal from 'sweetalert2';
 export class HorarioComponent {
   Usuario: Usuario = new Usuario();
   Horario: Horario = new Horario();
+  Disponibilidad: DisponibilidadMaestro = new DisponibilidadMaestro();
 
   Materias: Materia[] = new Array();
+  Maestros: Usuario[] = new Array();
   materiasOriginales: string[] = ["Seminario de tecnologias", "Algebra", "Costos"];
   materiasDuplicadas: string[] = this.materiasOriginales;
 
@@ -39,9 +42,21 @@ export class HorarioComponent {
     const Query = query(MateriaCol);
 
     collectionData(Query).subscribe((snapMaterias) => {
-      for(let i = 0; i < snapMaterias.length; i++) {
+      for (let i = 0; i < snapMaterias.length; i++) {
         this.Materias[i] = new Materia();
         this.Materias[i].setData(snapMaterias[i]);
+      }
+    });
+  }
+
+  obtenerMaestros() {
+    const MaestroCol = collection(this.firestore, "Usuario");
+    const Query = query(MaestroCol, where("TipoUsuario", "==", "Maestro"));
+
+    collectionData(Query).subscribe((snapMaestros) => {
+      for (let i = 0; i < snapMaestros.length; i++) {
+        this.Maestros[i] = new Usuario();
+        this.Maestros[i].setData(snapMaestros[i]);
       }
     });
   }
@@ -98,6 +113,7 @@ export class HorarioComponent {
         }
 
         this.obtenerMaterias();
+        this.obtenerMaestros();
 
         (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
         (document.getElementById('disabledSelect3') as HTMLInputElement).disabled = false;
@@ -112,30 +128,44 @@ export class HorarioComponent {
     }
   }
 
-  resaltarMaestro(materia: string, maestro: string) {
-    for (let i = 0; i < this.Horario.HorarioRegular.length; i++) {
-      for (let j = 0; j < this.Horario.HorarioRegular[i].registro.length; j++) {
-        if (this.Horario.HorarioRegular[i].registro[j].texto == materia &&
-          this.Horario.HorarioRegular[i].registro[j].maestro == maestro) {
+  buscarMaestro() {
+    const DisponibilidadCol = collection(this.firestore, "DisponibilidadMaestro");
+    const Query = query(DisponibilidadCol,
+      where("Nombre", "==", this.maestroSeleccionado),
+      where("Ciclo", "==", this.Horario.Ciclo)
+    );
+
+    collectionData(Query).subscribe((snapDisponibilidad) => {
+      if (snapDisponibilidad.length > 0) {
+        this.Disponibilidad.setData(snapDisponibilidad[0]);
+      }
+    });
+  }
+
+  resaltarMaestro() {
+    for (let i = 0; i < this.Disponibilidad.Disponibilidad.length; i++) {
+      for (let j = 0; j < this.Disponibilidad.Disponibilidad[i].registro.length; j++) {
+        if (this.Disponibilidad.Disponibilidad[i].registro[j].disponible) {
           document.getElementById(`c${i}${j}`)?.classList.add('dato-agregado');
-        } else if (document.getElementById(`c${i}${j}`)?.classList.contains('dato-agregado')) {
+        } else if(document.getElementById(`c${i}${j}`)?.classList.contains('dato-agregado')) {
           document.getElementById(`c${i}${j}`)?.classList.remove('dato-agregado');
         }
       }
     }
+
+    this.horarioHabilitado = true;
   }
 
   habilitarHorario() {
     if (this.maestroSeleccionado != "" && this.materiaSeleccionada != "") {
-      this.horarioHabilitado = true;
-      this.resaltarMaestro(this.materiaSeleccionada, this.maestroSeleccionado)
+      this.buscarMaestro();
     } else {
       this.horarioHabilitado = false;
     }
   }
 
   openSwalModalR(i: number, j: number) {
-    if (this.horarioHabilitado) {
+    if (document.getElementById(`c${i}${j}`)?.classList.contains('dato-agregado')) {
       const materiaSeleccionada = this.materiaSeleccionada;
       const maestroSeleccionado = this.maestroSeleccionado;
 

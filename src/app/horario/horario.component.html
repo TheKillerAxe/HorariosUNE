@@ -77,11 +77,12 @@
         </div>
         <div class="datos">
             <select id="disabledSelect3" class="form-select input a" disabled="true" (change)="habilitarHorario()" [(ngModel)]="maestroSeleccionado">
-                <option>Myriam Janeth</option>
-                <option>Felipe Perez</option>
-                <option>Denisse Mendoza</option>
+                <option *ngFor="let maestro of Maestros" [value]="maestro.Nombre">{{maestro.Nombre}}</option>
             </select>
         </div>
+    </div>
+    <div class="contenedor4">
+        <button class=" b4" (click)="resaltarMaestro()">Cargar</button>
     </div>
 </div>
 
