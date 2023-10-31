@@ -16,12 +16,14 @@ export class DisponibilidadDocenteComponent {
   Disponibilidad: DisponibilidadMaestro = new DisponibilidadMaestro();
 
   Ciclo: string = "";
+  HorasDisponibles: number = 0;
 
   horas: string[] = ["7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
 
   habilitarDisponibilidad: boolean = false;
   nuevaDisponibilidad: boolean = true;
   cambiosRecientes: boolean = false;
+  mostrarHoras: boolean = false;
 
   constructor(private firestore: Firestore) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
@@ -29,6 +31,18 @@ export class DisponibilidadDocenteComponent {
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
+
+    switch (this.Usuario.TipoMaestro) {
+      case "TC":
+        this.HorasDisponibles = 35;
+        break;
+      case "MT":
+        this.HorasDisponibles = 20;
+        break;
+      case "H":
+        this.HorasDisponibles = 16;
+        break;
+    }
   }
 
   advertirCambios() {
@@ -65,8 +79,11 @@ export class DisponibilidadDocenteComponent {
         } else {
           this.Disponibilidad = new DisponibilidadMaestro();
           this.Disponibilidad.Ciclo = this.Ciclo;
+          this.Disponibilidad.HorasRestantes = this.HorasDisponibles;
           this.nuevaDisponibilidad = true;
         }
+
+        this.mostrarHoras = true;
 
         Swal.fire({
           position: 'top',
@@ -133,39 +150,52 @@ export class DisponibilidadDocenteComponent {
       return;
     }
 
-    if (this.Disponibilidad.Disponibilidad[i].registro[j].hora) {
-      Swal.fire({
-        title: 'Eliminar hora',
-        text: '¿Deseas eliminar la hora seleccionada?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Sí',
-        cancelButtonText: 'No',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.Disponibilidad.Disponibilidad[i].registro[j].hora = '';
-          this.Disponibilidad.Disponibilidad[i].registro[j].disponible = false;
-          const celda = document.getElementById(`c${i}${j}`);
-          if (celda) {
-            celda.classList.remove('dato-agregado');
+    if (this.Disponibilidad.HorasRestantes != 0) {
+      if (this.Disponibilidad.Disponibilidad[i].registro[j].hora) {
+        Swal.fire({
+          title: 'Eliminar hora',
+          text: '¿Deseas eliminar la hora seleccionada?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Sí',
+          cancelButtonText: 'No',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.Disponibilidad.Disponibilidad[i].registro[j].hora = '';
+            this.Disponibilidad.Disponibilidad[i].registro[j].disponible = false;
+            this.Disponibilidad.HorasRestantes++;
+            const celda = document.getElementById(`c${i}${j}`);
+            if (celda) {
+              celda.classList.remove('dato-agregado');
+            }
+            this.cambiosRecientes = true;
           }
-          this.cambiosRecientes = true;
+        });
+      } else {
+        this.Disponibilidad.Disponibilidad[i].registro[j].hora = this.horas[j];
+        this.Disponibilidad.Disponibilidad[i].registro[j].disponible = true;
+        this.Disponibilidad.HorasRestantes--;
+        const celda = document.getElementById(`c${i}${j}`);
+        if (celda) {
+          celda.classList.add('dato-agregado');
         }
-      });
-    } else {
-      this.Disponibilidad.Disponibilidad[i].registro[j].hora = this.horas[j];
-      this.Disponibilidad.Disponibilidad[i].registro[j].disponible = true;
-      const celda = document.getElementById(`c${i}${j}`);
-      if (celda) {
-        celda.classList.add('dato-agregado');
-      }
-      this.cambiosRecientes = true;
+        this.cambiosRecientes = true;
 
+        Swal.fire({
+          position: 'center',
+          icon: 'info',
+          title: 'Hora Seleccionada:',
+          text: this.Disponibilidad.Disponibilidad[i].registro[j].hora + ' hrs',
+          showConfirmButton: false,
+          timer: 1000
+        });
+      }
+    } else {
       Swal.fire({
         position: 'center',
-        icon: 'info',
-        title: 'Hora Seleccionada:',
-        text: this.Disponibilidad.Disponibilidad[i].registro[j].hora + ' hrs',
+        icon: 'error',
+        title: 'Horario Lleno',
+        text: 'Ya no hay más horas restantes',
         showConfirmButton: false,
         timer: 1000
       });

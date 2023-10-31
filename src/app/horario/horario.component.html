@@ -16,8 +16,8 @@
             Carrera
         </div>
         <div class="datos">
-            <select id="carrera" class="form-select input a" (change)="obtenerCiclos()" (change)="obtenerPeriodos()" [(ngModel)]="Horario.Carrera">
-                <option *ngFor="let carrera of Carreras" [value]="carrera.IdCarrera">{{carrera.IdCarrera}}</option>
+            <select id="carrera" class="form-select input a" (change)="limpiarMaestroMateria()" (change)="obtenerCiclos()" (change)="obtenerPeriodos()" [(ngModel)]="Horario.Carrera">
+                <option *ngFor="let carrera of Carreras" [value]="carrera.Nombre">{{carrera.IdCarrera}}</option>
             </select>
         </div>
     </div>
@@ -36,7 +36,7 @@
             Periodo
         </div>
         <div class="datos">
-            <select id="periodo" class="form-select input a" disabled="true" [(ngModel)]="Horario.Periodo">
+            <select id="periodo" class="form-select input a" disabled="true" (change)="limpiarMaestroMateria()" [(ngModel)]="Horario.Periodo">
                 <option *ngFor="let periodo of Periodos" [value]="periodo">{{periodo}}</option>
             </select>
         </div>
@@ -50,23 +50,23 @@
 <div class="contenedor-grid">
     <div class="contenedor">
         <div class="txtcuadro">
+            Materia
+        </div>
+        <div class="datos">
+            <select id="disabledSelect2" class="form-select input a" disabled="true" (change)="habilitarHorario()"
+                (change)="obtenerMaestros()" [(ngModel)]="materiaSeleccionada">
+                <option *ngFor="let materia of Materias" [value]="materia.Nombre">{{materia.Nombre}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="txtcuadro">
             Maestro
         </div>
         <div class="datos">
             <select id="disabledSelect3" class="form-select input a" disabled="true" (change)="habilitarHorario()"
                 [(ngModel)]="maestroSeleccionado">
                 <option *ngFor="let maestro of Maestros" [value]="maestro.Nombre">{{maestro.Nombre}}</option>
-            </select>
-        </div>
-    </div>
-    <div class="contenedor">
-        <div class="txtcuadro">
-            Materia
-        </div>
-        <div class="datos">
-            <select id="disabledSelect2" class="form-select input a" disabled="true" (change)="habilitarHorario()"
-                [(ngModel)]="materiaSeleccionada">
-                <option *ngFor="let materia of Materias" [value]="materia.Nombre">{{materia.Nombre}}</option>
             </select>
         </div>
     </div>
