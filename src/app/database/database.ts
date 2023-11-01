@@ -11,8 +11,7 @@ export class Usuario {
     public NombreUsuario: string = "";                                             //Nombre de usuario para ingresar.
     public Correo: string = "";                                                    //Correo del usuario.
     public Contrasena: string = "";                                                //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
-
-    constructor() { }
+    public Materias: string[] = new Array();    constructor() { }
 
     setData(data: any) {
         this.IdUsuario = data.IdUsuario;
@@ -33,6 +32,7 @@ export class Carrera {
     //Campos
     public Nombre: string = "";                                                    //Nombre de la carrera.
     public Periodicidad: string = "";                                              //Periodicidad de la carrera (Cuatrimestral / Semestral).
+    public CantidadPeriodos: number = 0;
 
     constructor() { }
 
@@ -51,7 +51,7 @@ export class Materia {
     //Campos
     public Nombre: string = "";                                                    //Nombre de la materia.
     public Carrera: string = "";                                                   //Nombre de la carrera en la que se imparte la materia.
-    public Periodo: number = 0;                                                   //Periodo en el que se imparte la materia.
+    public Periodo: string = "";                                                   //Periodo en el que se imparte la materia.
 
     constructor() { }
 
