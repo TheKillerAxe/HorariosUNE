@@ -20,6 +20,7 @@ import { MenuDocentesComponent } from './menu-docentes/menu-docentes.component';
 import { MenuInglesComponent } from './menu-ingles/menu-ingles.component';
 import { MenuAdminComponent } from './menu-admin/menu-admin.component';
 import { DisponibilidadDocenteComponent } from './disponibilidad-docente/disponibilidad-docente.component';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { DisponibilidadDocenteComponent } from './disponibilidad-docente/disponi
     MenuDocentesComponent,
     MenuInglesComponent,
     MenuAdminComponent,
-    DisponibilidadDocenteComponent
+    DisponibilidadDocenteComponent,
+    ConfiguracionComponent
   ],
   imports: [
     BrowserModule,

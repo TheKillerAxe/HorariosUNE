@@ -10,6 +10,7 @@ import { HorarioComponent } from './horario/horario.component';
 import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.component';
 import { AsignarMateriasComponent } from './asignar-materias/asignar-materias.component';
 import { DisponibilidadDocenteComponent } from './disponibilidad-docente/disponibilidad-docente.component';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: "asignar", component: AsignarMateriasComponent },
   { path: "horario", component: HorarioComponent },
   { path: "imprimir", component: ImprimirhorarioComponent },
-  { path: "disponibilidad", component: DisponibilidadDocenteComponent }
+  { path: "disponibilidad", component: DisponibilidadDocenteComponent },
+  { path: "configuracion", component: ConfiguracionComponent }
 ];
 
 @NgModule({
