@@ -71,7 +71,6 @@ export class DisponibilidadMaestro {
     public IdMaestro: string = "";                                                 //ID del maestro al que pertenece la disponibilidad.
     public Nombre: string = "";                                                    //Nombre del maestro al que pertenece la disponibilidad.
     public Ciclo: string = "";                                                     //Ciclo escolar al que pertenece la disponibilidad.
-    public HorasRestantes: number = 0;
     public Disponibilidad: RegistroHorario[] = new Array();                        //Indica cuando está disponible el maestro.
 
     constructor() {
@@ -106,7 +105,6 @@ export class DisponibilidadMaestro {
         this.IdMaestro = data.IdMaestro;
         this.Nombre = data.Nombre;
         this.Ciclo = data.Ciclo;
-        this.HorasRestantes = data.HorasRestantes;
         this.Disponibilidad = data.Disponibilidad;
     }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Usuario, Horario, Materia, DisponibilidadMaestro, Carrera } from '../database/database';
-import { DocumentData } from 'firebase/firestore';
+import { Router } from "@angular/router";
 import { Firestore } from '@angular/fire/firestore';
 import { collection, query, where, collectionData } from '@angular/fire/firestore';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
@@ -27,18 +27,23 @@ export class HorarioComponent {
 
   maestroSeleccionado = "";
   materiaSeleccionada = "";
+  HorasDisponibles = 0;
 
   mostrarHorarioIrregular: boolean = false;
   nuevoHorario: boolean = true;
   horarioHabilitado: boolean = false;
   disponibilidadCargada: boolean = false;
 
-  constructor(private firestore: Firestore) {
+  constructor(public router: Router, private firestore: Firestore) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
       localStorage.setItem('Usuario', JSON.stringify(history.state));
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
+
+    if (this.Usuario.TipoUsuario != "Admin") {
+      this.router.navigate(['']);
+    }
 
     this.obtenerCarreras();
   }

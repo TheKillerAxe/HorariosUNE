@@ -14,7 +14,9 @@ import swal from 'sweetalert2'
 export class loginComponent {
     Usuario = new Usuario();
 
-    constructor(private firestore: Firestore, public router: Router) { }
+    constructor(private firestore: Firestore, public router: Router) {
+        localStorage.setItem('Usuario', JSON.stringify(new Usuario()));
+    }
 
     login() {
         const user = collection(this.firestore, "Usuario");

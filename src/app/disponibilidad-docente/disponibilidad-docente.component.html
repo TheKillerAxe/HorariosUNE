@@ -17,7 +17,7 @@
             Ciclo<br> Escolar
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" (click)="advertirCambios()" [(ngModel)]="Disponibilidad.Ciclo">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Disponibilidad.Ciclo">
                 <option>2023-01</option>
                 <option>2023-02</option>
                 <option>2023-03</option>
@@ -28,15 +28,6 @@
     <div class="contenedor">
         <button class=" b3" style="margin-right: 5%; height: fit-content;" (click)="cargarDisponibilidad()">Cargar Disponibilidad</button>
         <button class=" b3" (click)="guardarDisponibilidad()">Guardar Cambios</button>
-    </div>
-    <br>
-    <div *ngIf="mostrarHoras" class="contenedor" style="width: 100%; text-align: center;">
-        <div class="txtcuadro" style="width: 50%;">
-            Horas Disponibles: {{HorasDisponibles}}
-        </div>
-        <div class="txtcuadro" style="width: 50%;">
-            Horas Restantes: {{Disponibilidad.HorasRestantes}}
-        </div>
     </div>
 
     <div class="contenedor"></div>

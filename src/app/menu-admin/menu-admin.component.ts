@@ -16,6 +16,10 @@ export class MenuAdminComponent {
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
+
+    if (this.Usuario.TipoUsuario != "Admin") {
+      this.router.navigate(['']);
+    }
   }
 
   navigate(route: string) {

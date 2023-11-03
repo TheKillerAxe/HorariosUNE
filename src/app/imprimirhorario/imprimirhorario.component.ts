@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from "@angular/router";
 import { Firestore, collection, query, where, collectionData } from '@angular/fire/firestore';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { Horario, Usuario } from '../database/database';
@@ -18,12 +19,16 @@ export class ImprimirhorarioComponent {
 
   Docente: string = "";
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, private router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
       localStorage.setItem('Usuario', JSON.stringify(history.state));
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
+
+    if (this.Usuario.TipoUsuario != "Admin") {
+      this.router.navigate(['']);
+    }
   }
 
   imprimirHorario() {

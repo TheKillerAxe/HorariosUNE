@@ -16,6 +16,10 @@ export class MenuInglesComponent {
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
+
+    if (this.Usuario.TipoUsuario != "Ingles") {
+      this.router.navigate(['']);
+    }
   }
 
   navigate(route: string) {
