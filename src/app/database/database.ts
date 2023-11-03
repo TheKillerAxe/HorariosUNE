@@ -11,7 +11,7 @@ export class Usuario {
     public NombreUsuario: string = "";                                             //Nombre de usuario para ingresar.
     public Correo: string = "";                                                    //Correo del usuario.
     public Contrasena: string = "";                                                //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
-    public Materias: string[] = new Array();                                       //Materias que lleva el docente (si lleva alguna).
+    public Materias: string[] = new Array();    
 
     constructor() { }
 
