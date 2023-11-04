@@ -73,6 +73,10 @@ export class AsignarMateriasComponent {
     }
   }
 
+  habilitarMaterias() {
+    (document.getElementById('materia') as HTMLInputElement).disabled = false;
+  }
+
   habilitarBuscador() {
     (document.getElementById('profe') as HTMLInputElement).disabled = false;
   }
@@ -92,6 +96,7 @@ export class AsignarMateriasComponent {
       this.Periodos[i - 1] = i;
     }
 
+    (document.getElementById('periodo') as HTMLInputElement).disabled = false;
   }
 
   traerCarreras() {

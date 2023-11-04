@@ -28,7 +28,7 @@
 .div6 { grid-area: 2 / 3 / 3 / 4; }
 
 .inputcss {
-    width: 100%;
+    width: 110%;
     height: 35px;
     border: 1px solid;
     border-color: #B60D44;

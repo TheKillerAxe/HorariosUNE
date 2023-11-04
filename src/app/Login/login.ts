@@ -19,6 +19,8 @@ export class loginComponent {
     }
 
     login() {
+        console.log(this.Usuario)
+
         const user = collection(this.firestore, "Usuario");
         const q = query(user,
             where("NombreUsuario", "==", this.Usuario.NombreUsuario),
