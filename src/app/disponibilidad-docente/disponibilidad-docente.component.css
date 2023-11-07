@@ -5,8 +5,7 @@ body {
 }
 
 
-.titulo
-{
+.titulo {
     height: auto;
     width: 100%;
     margin-top: 3%;
@@ -14,7 +13,7 @@ body {
     justify-content: center;
 }
 
-.contenedor-botones{
+.contenedor-botones {
     width: 2000px;
     vertical-align: middle;
 }
@@ -67,7 +66,7 @@ body {
 
 .contenedor {
     display: flex;
-    align-items: center; 
+    align-items: center;
     margin-right: 0px;
     justify-content: center;
 }
@@ -85,10 +84,11 @@ body {
 
 .contenedor4 {
     display: flex;
-    align-items: center; 
+    align-items: center;
     margin-right: 0px;
     justify-content: center;
 }
+
 .a-container {
     overflow: hidden;
 }
@@ -99,32 +99,32 @@ body {
     display: inline-block;
     margin-left: 8px;
     width: 200px;
-    border: 2px solid rgb(188,32,75);
+    border: 2px solid rgb(188, 32, 75);
 }
 
 
 
 
 
-.btn{
+.btn {
     font-size: 14px;
     flex: 4;
     padding: 5px 10px;
 }
 
 
-.b2{
+.b2 {
     background-color: rgb(188, 32, 76);
-    color:white; 
+    color: white;
     font-family: 'Roboto Slab';
     height: 50px;
-    font-size:30px;
-    width: 50px; 
-    border-radius: 50%; 
-  text-align: center; 
-  line-height: 20px; 
- margin-bottom: 15px;
-}  
+    font-size: 30px;
+    width: 50px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 15px;
+}
 
 
 
@@ -149,7 +149,7 @@ body {
 
 
 .dias {
-    background-color: rgb(188,32,75);
+    background-color: rgb(188, 32, 75);
     text-align: center;
     color: white;
     font-family: 'Roboto Slab';
@@ -178,7 +178,7 @@ body {
 
 .dia {
     grid-column: span 1;
-    background-color: rgb(188,32,75);
+    background-color: rgb(188, 32, 75);
     text-align: center;
     color: white;
     font-family: 'Roboto Slab';
@@ -198,74 +198,73 @@ body {
     font-size: 17px;
     font-family: 'Roboto Slab';
     text-align: center;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
     line-height: 25px;
 }
 
-.b{
+.b {
     background-color: rgb(188, 32, 76);
-    color:white; 
+    color: white;
     font-family: 'Roboto Slab';
     height: 40px;
-    font-size:16px;
+    font-size: 16px;
     width: 200px;
 }
 
-.b3{
+.b3 {
     background-color: rgb(188, 32, 76);
-    color:white; 
+    color: white;
     font-family: 'Roboto Slab';
     height: 40px;
-    font-size:16px;
+    font-size: 16px;
     width: 220px;
-    border: 0px ;
+    border: 0px;
     border-radius: 6px;
 }
 
-.b4{
+.b4 {
     background-color: rgb(188, 32, 76);
-    color:white; 
+    color: white;
     font-family: 'Roboto Slab';
     height: 40px;
-    font-size:16px;
+    font-size: 16px;
     width: 210px;
-    border: 0px ;
+    border: 0px;
     border-radius: 6px;
     margin-left: 26%;
 }
 
-.b1{
+.b1 {
     background-color: rgb(188, 32, 76);
-    color:white; 
+    color: white;
     font-family: 'Roboto Slab';
     height: 50px;
-    font-size:30px;
-    width: 50px; 
-    border-radius: 50%; 
-  text-align: center; 
-  line-height: 20px; 
- 
-}  
+    font-size: 30px;
+    width: 50px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+
+}
 
 
 
-.celda:hover{
-background-color:#eceaea;
+.celda:hover {
+    background-color: #eceaea;
 }
 
 
 
 .dato-agregado {
     background-color: rgb(188, 32, 76);
-    color:white; 
-  }
+    color: white;
+}
 
 
-  .dato-agregado:hover {
+.dato-agregado:hover {
     background-color: rgb(188, 32, 76) !important;
-    color:white; 
-    
-  }
+    color: white;
 
+}

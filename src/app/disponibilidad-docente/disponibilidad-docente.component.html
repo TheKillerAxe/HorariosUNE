@@ -17,7 +17,7 @@
             Ciclo<br> Escolar
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Disponibilidad.Ciclo">
+            <select id="disabledSelect" class="form-select input a" (change)="cargarDisponibilidad()" [(ngModel)]="Disponibilidad.Ciclo">
                 <option>2023-01</option>
                 <option>2023-02</option>
                 <option>2023-03</option>
@@ -26,7 +26,7 @@
     </div>
 
     <div class="contenedor">
-        <button class=" b3" style="margin-right: 5%; height: fit-content;" (click)="cargarDisponibilidad()">Cargar Disponibilidad</button>
+        <button class=" b3" style="margin-right: 5%; height: fit-content;" (click)="resaltarDisponibilidad()">Cargar Disponibilidad</button>
         <button class=" b3" (click)="guardarDisponibilidad()">Guardar Cambios</button>
     </div>
 
