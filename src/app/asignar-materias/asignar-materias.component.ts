@@ -119,7 +119,7 @@ export class AsignarMateriasComponent {
         where("Nombre", "<=", this.maestroBD + '\uf8ff'),
         where("Nombre", ">=", this.maestroBD)
       );
-      
+
       collectionData(Q).subscribe((SnapMaestros) => {
         this.maestrosBuscados = new Array()
         if (SnapMaestros.length > 0) {
@@ -151,14 +151,12 @@ export class AsignarMateriasComponent {
 
   // no lo he metido porque no guarda nada pero creo que esta bien
   borrarMateria(i: number) {
-    delete this.maestrostabla[i].Materias[this.maestrostabla[i].Materias.indexOf(this.Materia.Nombre)]
+    delete this.maestrostabla[i].Materias[this.maestrostabla[i].Materias.indexOf(this.Materia.Nombre)];
 
-    const maestrosC = collection(this.firestore, "Usuario")
-    const QueryM = query(maestrosC);
     let rutaDoc = doc(this.firestore, "Usuario", this.maestrostabla[i].IdUsuario);
     updateDoc(rutaDoc, {
       Materias: this.maestrostabla[i].Materias
-    })
+    });
   }
 
   //guarda en otro lado, especificar id del documento    
