@@ -21,18 +21,25 @@
       <div style="align-items: center; justify-content: center; display: flex;">
         <img style="width: 80%; margin-top: 10%; margin-bottom: 2%;" src="https://imgur.com/Qxrhuhm.png" alt="">
       </div>
-      <h4 style="text-align: center; padding-bottom: 5%; font-size: 25px; font-family: 'Roboto Slab';"><b>Generación de
-          Horarios</b></h4>
-      <div class="group">
+      <h4 style="text-align: center; padding-bottom: 5%; font-size: 25px; font-family: 'Roboto Slab';">Generación de
+          Horarios</h4>
+      <!-- <div class="group">
         <input type="text" [(ngModel)]="Usuario.NombreUsuario" name="usuario">
         <span class="highlight"></span><span class="bar"></span>
         <label style="font-family:'Roboto Slab'">Usuario</label>
-      </div>
+      </div> -->
       <div class="group">
-        <input type="password" [(ngModel)]="Usuario.Contrasena" name="contraseña">
+        <input type="text" [(ngModel)]="Usuario.NombreUsuario" name="usuario" id="usuario" placeholder="">
+        <label for="usuario" style="font-family: 'Roboto Slab'">Usuario</label>
+      </div>
+      
+      <div class="group">
+        <!-- <input type="password" [(ngModel)]="Usuario.Contrasena" name="contraseña">
         <span class="highlight"></span><span class="bar"></span>
-        <label style="font-family:'Roboto Slab'">Contraseña</label>
-        <button (click)="login()" class="button buttonBlue" style="font-family:'Roboto Slab'"><b>Entrar</b></button>
+        <label style="font-family:'Roboto Slab'">Contraseña</label> -->
+        <input type="password" [(ngModel)]="Usuario.Contrasena" name="contrasena" id="contrasena" placeholder="">
+        <label for="usuario" style="font-family: 'Roboto Slab'">Contrasena</label>
+        <button (click)="login()" class="button buttonBlue" style="font-family:'Roboto Slab'; font-size: 20px;">Entrar</button>
       </div>
     </form>
   </div>
@@ -45,49 +52,34 @@
   .divP {
     display: flex;
     flex-direction: column;
-    /* Cambia la dirección de la columna en pantallas pequeñas */
     align-items: center;
-    /* Centra el contenido verticalmente */
     text-align: center;
-    /* Centra el texto horizontalmente */
     margin: 0;
-    /* Elimina el margen superior e inferior */
     padding: 0;
-    /* Elimina el relleno */
   }
 
   .obj1,
   .obj2 {
     width: 100%;
-    /* Ocupan todo el ancho disponible */
     margin: 0;
-    /* Elimina el margen superior e inferior */
     padding: 0;
-    /* Elimina el relleno */
   }
 
-  /* Estilo para pantallas medianas y grandes */
   @media (min-width: 768px) {
     .divP {
       flex-direction: row;
-      /* Vuelve a la dirección de fila en pantallas más grandes */
     }
 
     .obj1,
     .obj2 {
       width: 50%;
-      /* Divide el ancho en dos columnas iguales */
       margin: 0;
-      /* Elimina el margen superior e inferior */
       padding: 0;
-      /* Elimina el relleno */
     }
 
     .obj2 form {
       margin: 0 auto;
-      /* Ajusta el margen horizontal del formulario */
       width: 60%;
-      /* Cambia el ancho del formulario en pantallas grandes */
     }
   }
 </style>
@@ -111,9 +103,7 @@
     top: 0;
     left: 37%;
     z-index: 3;
-    /* Asegura que div6 esté por encima de otros elementos */
     background: linear-gradient(to top right, #B60D44, #B60D44, #460080);
-    /* Degradado de rojo a morado */
     background-size: 100% 100%;
     background-repeat: no-repeat;
   }
@@ -126,7 +116,6 @@
     left: 55%;
     background-color: #ffffff;
     z-index: 3;
-    /* Asegura que div3 esté por encima de otros elementos */
   }
 
   .div4 {
@@ -148,7 +137,6 @@
     left: 78%;
     background-color: #B60D44;
     z-index: 2;
-    /* Asegura que div3 esté por encima de otros elementos */
   }
 
   .div2 {
@@ -159,7 +147,6 @@
     left: 78%;
     background-color: #ffffff;
     z-index: 1;
-    /* Asegura que div2 esté por debajo de otros elementos */
   }
 </style>
 
@@ -197,9 +184,11 @@
     width: 50%;
     height: 65%;
     padding: 2em 2em 2em 2em;
-    background: #fafafa;
+    background: #ffffff;
     border: 1px solid #ebebeb;
-    box-shadow: rgba(0, 0, 0, 0.14902) 2px 2px 2px 2px, rgba(0, 0, 0, 0.09804) 2px 2px 2px 2px;
+    /* box-shadow: rgba(0, 0, 0, 0.14902) 2px 2px 2px 2px, rgba(0, 0, 0, 0.09804) 2px 2px 2px 2px; */
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 20px 50px 0 rgba(0,0,0,0.2);
     border-radius: 5%;
   }
 
@@ -213,7 +202,7 @@
     padding: 10px 10px 10px 5px;
     -webkit-appearance: none;
     display: block;
-    background: #fafafa;
+    background: #ffffff;
     color: #636363;
     width: 100%;
     border: none;
@@ -226,9 +215,8 @@
   }
 
 
-  /* Label */
 
-  label {
+  /* label {
     color: #999;
     font-size: 18px;
     font-weight: normal;
@@ -240,16 +228,39 @@
   }
 
 
-  /* active */
+ 
 
   input:focus~label,
   input.used~label {
     top: -20px;
     transform: scale(.75);
     left: -2px;
-    /* font-size: 14px; */
     color: #B60D44;
-  }
+  } */
+
+  /* Estilo para el input cuando está enfocado o tiene contenido */
+input:focus,
+input:not(:placeholder-shown) {
+  border-bottom: 2px solid #B60D44;
+}
+
+/* Estilo para el label cuando el input tiene contenido */
+input:not(:placeholder-shown) + label,
+input:focus + label {
+  top: -20px;
+  transform: scale(0.75);
+  color: #B60D44;
+}
+
+/* Estilo para el label en condiciones normales (sin contenido) */
+label {
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: all 0.2s ease;
+}
+
 
 
   /* Underline */
@@ -357,4 +368,7 @@
   .buttonBlue:hover {
     background: #c02659;
   }
+
+
+
 </style>
