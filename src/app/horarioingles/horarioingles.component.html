@@ -1,0 +1,85 @@
+<navbarr></navbarr>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+  </style>
+
+<div class="titulo"> 
+    <div class="titulotxt">
+        CAPTURAR HORARIO INGLES
+    </div>
+</div>
+
+<div class="contenedor-grid">
+    <div class="contenedor">
+        <div class="txtcuadro">
+            Ciclo<br> escolar
+        </div>
+        <div class="datos">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="ciclo">
+                <option value="" disabled selected hidden>--Seleccionar Ciclo--</option>
+                <option>2023/01</option>
+                <option>2023/02</option>
+                <option>2023/03</option>
+              </select>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="txtcuadro">
+            Periodo
+        </div>
+        <!-- <input type="number" class="form-control a" [(ngModel)]="periodo" > -->
+        <div class="datos">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="periodo">
+                <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="txtcuadro">
+            Periodicidad
+        </div>
+        <div class="datos">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="periodicidad">
+                <option value="" disabled selected hidden>--Seleccionar Periodicidad--</option>
+                <option>Cuatrimestral</option>
+                <option>Semestral</option>
+              </select>
+        </div>
+    </div>
+    <div class="contenedor">
+        <button  class=" b3"(click)="cambiosguardados()">Guardar Cambios</button>
+    </div>
+    
+    
+</div>
+
+  
+
+
+<div class="horario-container">
+    <div class="horario">
+        <div class="dias">Días</div>
+        <div class="dia">Lunes</div>
+        <div class="dia">Martes</div>
+        <div class="dia">Miercoles</div>
+        <div class="dia">Jueves</div>
+        <div class="dia">Viernes</div>
+        <div class="dia">Sabado</div>
+      
+        <div *ngFor="let columna of horario; index as i;">
+            <div *ngFor="let fila of columna; index as j">
+                <div *ngIf="i==0" class="hora">{{fila.texto}}</div>
+              <div *ngIf="i!=0" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
+                {{fila.periodicidad}} <br>
+                {{fila.periodo}} <br>
+                {{fila.salon}}
+              </div>
+            </div>
+          </div>
+    
+ </div>
+</div>

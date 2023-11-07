@@ -12,7 +12,7 @@ export class navbarComponent {
 
   constructor(public router : Router) { }
 
-  navegar(referencia : string) {
+  navigate(referencia : string) {
     this.router.navigate([referencia], {state : this.Usuario});
   }
 }

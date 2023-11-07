@@ -62,4 +62,8 @@ export class loginComponent {
             }
         });
     }
+
+    navigate(route: string) {
+        this.router.navigate([route], { state: this.Usuario });
+      }
 }
