@@ -141,15 +141,6 @@ export class DisponibilidadDocenteComponent {
         celda.classList.add('dato-agregado');
       }
       this.cambiosRecientes = true;
-
-      Swal.fire({
-        position: 'center',
-        icon: 'info',
-        title: 'Hora Seleccionada:',
-        text: this.Disponibilidad.Disponibilidad[i].registro[j].hora + ' hrs',
-        showConfirmButton: false,
-        timer: 1000
-      });
     }
   }
 }

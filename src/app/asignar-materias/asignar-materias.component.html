@@ -55,9 +55,11 @@
     <label class="texto" for="tipoDocente">Asignar a Docente:</label><br>
     <div style="display: flex;">
       <input style="width: 750px;" type="text" class=" inputcss" id="profe" placeholder="Buscar Docente" disabled="true"
-        (change)="buscaprofes2()" [(ngModel)]="maestroBD">
+        [(ngModel)]="maestroBD">
 
-      <div *ngIf="buscador && maestroBD && maestrosBuscados.length > 0" class="">
+      <button (click)="buscaprofes2()">buscar</button>
+
+      <div class="">
         <div *ngFor="let profes of maestrosBuscados; index as i" class="">
           <div (click)="pasardato(profes)">
             <label [(ngModel)]="profesorsillo[i]">{{profes.Nombre}}</label>
@@ -66,7 +68,7 @@
       </div>
 
       <button style="font-size: large;  width: 350px; margin-left: 5px; padding: 2px; background-color: #B60D44;"
-        class="btn btn-danger" type="button">Asignar</button>
+        class="btn btn-danger" type="button" (click)="asignarMateria()">Asignar</button>
     </div>
   </div>
 </div>

@@ -23,7 +23,6 @@ export class AsignarMateriasComponent {
   materias: DocumentData[] = [];
   maestrostabla: DocumentData[] = [];
 
-  buscador = false;
   maestroBD: string = "";
   profesorsillo: string[] = new Array();
   Periodos: number[] = new Array();
@@ -103,7 +102,6 @@ export class AsignarMateriasComponent {
     const CarrerasC = collection(this.firestore, "Carrera");
     const Query = query(CarrerasC);
     collectionData(Query).subscribe((snapCarreras) => {
-      // this.carreras = new Array();
       if (snapCarreras.length > 0) {
         snapCarreras.forEach((item: any) => {
           let recInf = new Carrera();
@@ -115,11 +113,13 @@ export class AsignarMateriasComponent {
   }
 
   buscaprofes2() {
-    this.buscador = true
     if (this.maestroBD.trim() !== '') {
       const usuacioC = collection(this.firestore, "Usuario");
-      const Q = query(usuacioC, where("Nombre", "<=", this.maestroBD + '\uf8ff'),
-        where("Nombre", ">=", this.maestroBD)); //Mod
+      const Q = query(usuacioC,
+        where("Nombre", "<=", this.maestroBD + '\uf8ff'),
+        where("Nombre", ">=", this.maestroBD)
+      );
+      
       collectionData(Q).subscribe((SnapMaestros) => {
         this.maestrosBuscados = new Array()
         if (SnapMaestros.length > 0) {
@@ -131,7 +131,6 @@ export class AsignarMateriasComponent {
         }
       });
     };
-
   }
 
   // sale un error en la consola de chrome
@@ -178,7 +177,6 @@ export class AsignarMateriasComponent {
   pasardato(profesor: Usuario) {
     this.maestroBD = profesor.Nombre;
     this.aidi = profesor.IdUsuario;
-    this.buscador = false;
   }
 
   // async maestros(){
