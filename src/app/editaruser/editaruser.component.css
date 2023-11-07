@@ -1,0 +1,78 @@
+body {
+    font-family: 'Roboto Slab', serif;
+    margin-top: 2%;
+  }
+  .container {
+      display: flex;
+      justify-content: center;
+
+  }
+  .column {
+      width: 50%;
+      padding: 20px;
+      float: left;
+      margin-left: 28%;
+  }
+  .column2 {
+      width: 120%;
+      padding: 20px;
+
+  }
+  .form-group {
+      margin-bottom: 20px;
+  }
+
+  #guardar{
+    border-width: 2px;
+    border-color: #B60D44;
+    background-color: #F2F2F2;
+    border-radius: 6px;
+    width: 200px;
+    height: 35px;
+  }
+
+
+  #imagen{
+    border-width: 2px;
+    border-color: #B60D44;
+    background-color: #F2F2F2;
+    border-radius: 6px;
+    width: 300px;
+    height: 30px;
+    
+  }
+ .Editar{
+  margin-left: 38%;
+  justify-content: center;
+ }
+ 
+ .titulo{
+  height: auto;
+  width: 100%;
+  margin-top: 3%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2%;
+ }
+
+ .titulotxt
+{
+font-family: 'Roboto Slab';
+font-size: 60px;
+font-weight: bold;
+color: rgb(4, 30, 66);
+}
+
+
+.txtn{
+font-size: 20px;
+color: rgb(4, 30, 66);
+font-family: 'Roboto Slab';
+}
+
+.inputcss {
+    height: 35px;
+    border: 1px solid;
+    border-color: #B60D44;
+    border-radius: 4px;
+}

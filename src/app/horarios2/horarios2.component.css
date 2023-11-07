@@ -4,6 +4,7 @@ body {
     padding: 0;
 }
 
+
 .titulo
 {
     height: auto;
@@ -13,15 +14,29 @@ body {
     justify-content: center;
 }
 
-.contenedor-grid {
-  
+.contenedor-botones{
+    width: 2000px;
+    vertical-align: middle;
+}
 
+.contenedor-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 20px;
-    justify-content: center; 
-    margin: 0 auto; 
-    max-width: 1600px; 
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 1800px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.contenedor-grid2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 1600px;
     margin-top: 30px;
     margin-bottom: 30px;
 }
@@ -33,6 +48,7 @@ body {
     color: rgb(4, 30, 66);
 }
 
+
 .txtcuadro {
     font-family: 'Roboto Slab';
     font-size: 18px;
@@ -41,111 +57,136 @@ body {
     float: left;
 }
 
-.contenedor {
-    display: flex;
-    align-items: center; /* Centra verticalmente los elementos */
+.txtcuadro2 {
+    font-family: 'Roboto Slab';
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(188, 32, 75);
+    margin-left: 5px;
 }
 
-.dropdown-container {
+.txtcuadro3 {
+    font-family: 'Roboto Slab';
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(188, 32, 75);
+    margin-left: 5px;
+}
+
+.contenedor {
+    display: flex;
+    align-items: center; 
+    margin-right: 0px;
+    justify-content: center;
+    align-items: center;
+}
+.contenedora {
+    display: flex;
+    margin-right: 0px;
+}
+.contenedor2 {
+    display: flex;
+    float: left;
+    margin-left: 5%;
+}
+
+.contenedor3 {
+    display: flex;
+    justify-content: right;
+}
+
+.contenedor4 {
+    display: flex;
+    align-items: center; 
+    margin-right: 0px;
+    justify-content: center;
+}
+.a-container {
     overflow: hidden;
 }
 
-.dropdown {
+
+.a {
     position: relative;
     display: inline-block;
     margin-left: 8px;
-}
-
-.dropdown-button {
-    background-color: #ffffff;
+    width: 217px;
     border: 2px solid rgb(188,32,75);
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    outline: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
-.arrow-down {
-    font-size: 12px;
-    margin-left: 10px;
-}
 
-.dropdown-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    position: absolute;
-    display: none;
-    background-color: #ffffff;
-    border: 1px solid rgb(188,32,75);
-    border-radius: 5px;
-    width: 100%;
-}
 
-.dropdown-list li {
-    padding: 10px 20px;
-    cursor: pointer;
-}
 
-.dropdown:hover .dropdown-list {
-    display: block;
-}
-
-.contenedor-botones {
-    display: flex;
-    justify-content: space-between; 
-    width: 20%;
-}
 
 .btn{
-	font-size: 14px;
-	margin-top:20px;
+    font-size: 14px;
     flex: 4;
-    padding: 5px 10px; 
+    padding: 5px 10px;
 }
+
+
+.b2{
+    background-color: rgb(188, 32, 76);
+    color:white; 
+    font-family: 'Roboto Slab';
+    height: 50px;
+    font-size:30px;
+    width: 50px; 
+    border-radius: 50%; 
+  text-align: center; 
+  line-height: 20px; 
+ margin-bottom: 15px;
+}  
+
+
 
 
 .horario-container {
     display: flex;
-    max-height: 500px; 
-    overflow-x: hidden; 
+    max-height: 510px;
+    overflow-x: hidden;
+    margin-top: 30px;
 }
+
 
 .horario {
     display: grid;
-    grid-template-columns: 150px repeat(6, 1fr); /* Aumenta el ancho de las columnas */
+    grid-template-columns: 220px repeat(6, 1fr);
     grid-gap: 3px;
-    max-width: 2000px; /* Aumenta el ancho máximo del horario */
+    max-width: 2000px;
     margin: 0 auto;
     padding: 20px;
-    overflow-y: auto; 
+    overflow-y: auto;
 }
 
+
 .dias {
-    grid-column: 1;
     background-color: rgb(188,32,75);
     text-align: center;
     color: white;
     font-family: 'Roboto Slab';
+
+
 }
+
 
 .hora {
     background-color: #f2f2f2;
-    align-items: center; 
-    justify-content: center; 
+    align-items: center;
+    justify-content: center;
     border: 1px solid #ccc;
     font-family: 'Roboto Slab';
     display: flex;
     /* padding: 17px;
     grid-gap: 3px; */
     grid-column: span 1;
-    width: 150px;
-    height: 60px;
+    width: 220px;
+    height: 100px;
+    line-height: 80px;
+
 
 }
+
 
 .dia {
     grid-column: span 1;
@@ -154,21 +195,106 @@ body {
     color: white;
     font-family: 'Roboto Slab';
 
+
+
+
 }
+
 
 .celda {
     grid-column: span 1;
     background-color: #fff;
     border: 1px solid #ccc;
-    width: 150px;
-    height: 60px;
+    width: 220px;
+    height: 100px;
     font-size: 14px;
-    text-align: center; /* Alinea horizontalmente al centro */
-    line-height: 20px; /* Alinea verticalmente al centro ajustando la altura de línea */
+    font-family: 'Roboto Slab';
+    text-align: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    line-height: 17px;
 }
+
+.b{
+    background-color: rgb(188, 32, 76);
+    color:white; 
+    font-family: 'Roboto Slab';
+    height: 40px;
+    font-size:16px;
+    width: 200px;
+}
+
+.b3{
+    background-color: rgb(188, 32, 76);
+    color:white; 
+    font-family: 'Roboto Slab';
+    height: 40px;
+    font-size:16px;
+    width: 220px;
+    border: 0px ;
+    border-radius: 6px;
+}
+
+.b6{
+    background-color: rgb(188, 32, 76);
+    color:white; 
+    font-family: 'Roboto Slab';
+    height: 40px;
+    font-size:16px;
+    width: 210px;
+    border: 0px ;
+    border-radius: 6px;
+    margin-left: 33%;
+}
+
+
+
+.b4{
+    background-color: rgb(188, 32, 76);
+    color:white; 
+    font-family: 'Roboto Slab';
+    height: 40px;
+    font-size:16px;
+    width: 210px;
+    border: 0px ;
+    border-radius: 6px;
+    margin-left: 26%;
+}
+
+.b1{
+    background-color: rgb(188, 32, 76);
+    color:white; 
+    font-family: 'Roboto Slab';
+    height: 50px;
+    font-size:30px;
+    width: 50px; 
+    border-radius: 50%; 
+  text-align: center; 
+  line-height: 20px; 
+ 
+}  
+
 
 
 .celda:hover{
-background-color: #eceaea;
-
+background-color:#eceaea;
 }
+
+
+
+.dato-agregado {
+    background-color: rgb(188, 32, 76);
+    color:white; 
+ }
+
+
+  .dato-agregado:hover {
+    background-color: rgb(188, 32, 76) !important;
+    color:white; 
+    
+  }
+
+ 
+
+ 

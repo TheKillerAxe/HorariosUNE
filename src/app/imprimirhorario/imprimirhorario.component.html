@@ -3,6 +3,8 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
   </style>
+  <div class="todo">
+    
 
 <div class="titulo"> 
     <div class="titulotxt">
@@ -19,7 +21,8 @@
 <div class="parent">
     <div class="div2"> 
         <label class="texto" for="nombre">Ciclo Escolar:</label><br>
-        <select class="inputcss" id="tipoDocente" name="tipoDocente">
+        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="ciclo">
+            <option value="" disabled selected hidden>---Seleccionar Ciclo--</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
@@ -27,19 +30,27 @@
     </div>
     <div class="div3"> 
         <label class="texto" for="tipoDocente">Carrera:</label><br>
-        <select class="inputcss" id="tipoDocente" name="tipoDocente">
+        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="carrera">
+            <option value="" disabled selected hidden>--Seleccionar Carrera--</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
         </select>
     </div>
     <div class="div4"> 
-        <label class="texto" for="contraseña">Periodo:</label><br>
-        <input class="inputcss" type="password" id="contraseña" name="contraseña">
+        <!-- <label class="texto">Periodo:</label><br>
+        <input class="inputcss" type="number"> -->
+        <label class="texto" for="nombre">Periodo:</label><br>
+        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="periodo">
+            <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
+            <option value="A">1</option>
+            <option value="B">2</option>
+            <option value="C">3</option>
+        </select>
 
     </div>
     <div class="div6"> 
-        <button class="botonune">Imprimir Horario</button>
+        <button class="botonune" (click)="imprimir()">Imprimir Horario</button>
 
     </div>
     </div>
@@ -52,8 +63,9 @@
     
     <div class="parent2">
         <div class="div3"> 
-            <label class="texto" for="tipoDocente">Docente:</label><br>
-            <select class="inputcss" id="tipoDocente" name="tipoDocente">
+            <label class="texto" for="tipoDocente" >Docente:</label><br>
+            <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="docente">
+                <option value="" disabled selected hidden>--Seleccionar Docente--</option>
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
@@ -61,7 +73,37 @@
                 
         </div>
         <div class="div6"> 
-            <button class="botonune">Imprimir Horario</button>
+            <button class="botonune" (click)="imprimirdocente()">Imprimir Horario</button>
     
         </div>
         </div>
+
+        <div class="horario-container" id="asddsa" >
+            <div class="horario" id="impresion">
+                <div class="dias">Días</div>
+                <div class="dia">Lunes</div>
+                <div class="dia">Martes</div>
+                <div class="dia">Miercoles</div>
+                <div class="dia">Jueves</div>
+                <div class="dia">Viernes</div>
+                <div class="dia">Sabado</div>
+              
+        
+               <div *ngFor="let columna of horario; index as i;">
+                <div *ngFor="let fila of columna; index as j">
+                  <div *ngIf="i == 0" class="hora">{{horas[j]}}</div>
+                  <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}" >
+                        Desarrollo de aplicaciones moviles<br>
+                        Felipe Perez<br>
+                        Aula: 5.3
+                
+                  </div>
+                </div>
+              </div>
+              
+          
+                  
+         </div>
+        </div>
+
+    </div>

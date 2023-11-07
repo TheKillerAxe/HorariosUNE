@@ -17,32 +17,32 @@
 
 <div class="parent">
     <div class="div1">
-        <label class="texto" for="nombre">Nombre:</label><br>
-        <input class="inputcss" type="text" id="nombre" name="nombre">
+        <label class="texto" for="nombre">Usuario:</label><br>
+        <input class="inputcss" type="text" id="usuario" name="usuario" [(ngModel)]="usuario">
     </div>
     <div class="div2"> 
-        <label class="texto" for="nombre">Correo:</label><br>
-        <input class="inputcss" type="text" id="nombre" name="nombre">
+        <label class="texto" for="nombre">Nombre:</label><br>
+        <input class="inputcss" type="text" id="nombre" name="nombre" [(ngModel)]="nombre">
     </div>
     <div class="div3"> 
-        <label class="texto" for="tipoDocente">Tipo de Docente:</label><br>
-        <select class="inputcss" id="tipoDocente" name="tipoDocente">
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-        </select>
+        <label class="texto" for="nombre">Correo:</label><br>
+        <input class="inputcss" type="email" id="correo" name="correo" [(ngModel)]="correo">
     </div>
     <div class="div4"> 
-        <label class="texto" for="contraseña">Contraseña:</label><br>
-        <input class="inputcss" type="password" id="contraseña" name="contraseña">
-
+        <label class="texto" for="tipoDocente">Tipo de Docente:</label><br>
+        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="tipo">
+            <option value="" disabled selected hidden>--Seleccionar tipo de docente--</option>
+            <option value="B">Honorario</option>
+            <option value="C">Medio Tiempo</option>
+            <option value="D">Tiempo Completo</option>
+        </select>
     </div>
     <div class="div5"> 
-        <label class="texto" for="nombre">Usuario:</label><br>
-        <input class="inputcss" type="text" id="nombre" name="nombre">
+        <label class="texto" for="contraseña">Contraseña:</label><br>
+        <input class="inputcss" type="password" id="contraseña" name="contraseña" [(ngModel)]="contrasena">
     </div>
     <div class="div6"> 
-        <button class="botonune">Guardar Información</button>
+        <button class="botonune" (click)="subirdocente()">Registrar Usuario</button>
 
     </div>
     </div>
@@ -56,11 +56,12 @@
     <div class="parent2">
         <div class="div3"> 
             <label class="texto" for="tipoDocente">Archivo de docentes:</label><br>
-            <input class="inputcss2" type="file" id="avatar"/>
-            
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" id="inputGroupFile01">
+              </div>            
         </div>
         <div class="div6"> 
-            <button class="botonune">Subir Información</button>
+            <button class="botonune" (click)="guardar()">Subir Información</button>
     
         </div>
         </div>

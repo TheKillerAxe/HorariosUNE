@@ -15,24 +15,34 @@ import { navbarComponent } from './navbarr/navbarr';
 import { loginComponent } from './Login/login';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
 import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.component';
-import { HorarioComponent } from './horario/horario.component';
 import { Horarios2Component } from './horarios2/horarios2.component';
 import { generarhorarioPruebaComponent } from './generarhorarioPRUEBA/generarhorarioPrueba';
 import { altamaestrosPrueba } from './altamaestrosPRUEBA/altamaestrosPrueba';
 import { imprimirhorarioPruebaComponent } from './imprimirhorarioPRUEBA/imprimirhorarioPrueba';
+import { MenuingComponent } from './menuing/menuing.component';
+import { MenudocentesComponent } from './menudocentes/menudocentes.component';
+import { AsignarmateriasComponent } from './asignarmaterias/asignarmaterias.component';
+import { DisponibilidadComponent } from './disponibilidad/disponibilidad.component';
+import { HorarioinglesComponent } from './horarioingles/horarioingles.component';
+import { EditaruserComponent } from './editaruser/editaruser.component';
 @NgModule({
   declarations: [
     AppComponent,
     loginComponent,
     navbarComponent,
     menuComponent,
-    HorarioComponent,
     AltadocentesComponent,
     ImprimirhorarioComponent,
     Horarios2Component,
     generarhorarioPruebaComponent,
     altamaestrosPrueba,
-    imprimirhorarioPruebaComponent
+    imprimirhorarioPruebaComponent,
+    MenuingComponent,
+    MenudocentesComponent,
+    AsignarmateriasComponent,
+    DisponibilidadComponent,
+    HorarioinglesComponent,
+    EditaruserComponent
   ],
   imports: [
     BrowserModule,

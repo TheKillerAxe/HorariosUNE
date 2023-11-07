@@ -9,6 +9,12 @@ import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.comp
 import { generarhorarioPruebaComponent } from './generarhorarioPRUEBA/generarhorarioPrueba';
 import { altamaestrosPrueba } from './altamaestrosPRUEBA/altamaestrosPrueba';
 import { imprimirhorarioPruebaComponent } from './imprimirhorarioPRUEBA/imprimirhorarioPrueba';
+import { MenuingComponent } from './menuing/menuing.component';
+import { MenudocentesComponent } from './menudocentes/menudocentes.component';
+import { AsignarmateriasComponent } from './asignarmaterias/asignarmaterias.component';
+import { DisponibilidadComponent } from './disponibilidad/disponibilidad.component';
+import { HorarioinglesComponent } from './horarioingles/horarioingles.component';
+import { EditaruserComponent } from './editaruser/editaruser.component';
 
 const routes: Routes = [
   { path: "", component: loginComponent },
@@ -17,10 +23,12 @@ const routes: Routes = [
   { path: "inicio", component: menuComponent },
   { path: "horarios", component: Horarios2Component },
   { path: "imprimirh", component: ImprimirhorarioComponent },
-  { path: "imprimir", component: ImprimirhorarioComponent },
-  { path: "horarioPrueba", component: generarhorarioPruebaComponent },
-  { path: "altaPrueba", component: altamaestrosPrueba },
-  { path: "imprimirPrueba", component: imprimirhorarioPruebaComponent }
+  { path: "menudocentes", component: MenudocentesComponent },
+  { path: "menuingles", component: MenuingComponent },
+  { path: "asignarmaterias", component: AsignarmateriasComponent },
+  { path: "disponibilidad", component: DisponibilidadComponent },
+  { path: "horarioingles", component: HorarioinglesComponent },
+  { path: "editaruser", component: EditaruserComponent }
  
 ];
 

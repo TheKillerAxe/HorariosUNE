@@ -1,3 +1,7 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+</style>
+
 <div class="divP">
   <div class="obj1">
     <div style="width: 90%; height: 70%; position: relative;">
@@ -15,15 +19,17 @@
   <div class="obj2">
     <form>
       <div style="align-items: center; justify-content: center; display: flex;">
-        <img style="width: 80%; margin-top: 10%;" src="https://i.imgur.com/3AWjxyB.png" alt="">
+        <img style="width: 80%; margin-top: 10%; margin-bottom: 2%;" src="https://imgur.com/Qxrhuhm.png" alt="">
       </div>
-      <h4 style="text-align: center; padding-bottom: 5%;"><b>Generación de Horarios</b></h4>
+      <h4 style="text-align: center; padding-bottom: 5%; font-size: 25px; font-family: 'Roboto Slab';"><b>Generación de Horarios</b></h4>
       <div class="group">
-        <input type="text" [(ngModel)]="Usuario.NombreUsuario" name="Usuario">
+        <input type="text"><span class="highlight"></span><span class="bar"></span>
+        <label style="font-family:'Roboto Slab'">Usuario</label>
       </div>
       <div class="group">
-        <input type="text" [(ngModel)]="Usuario.Contrasena" name="Constrasena">
-          <button type="button" class="button buttonBlue" (click)="login()">Entrar</button>
+        <input type="email"><span class="highlight"></span><span class="bar"></span>
+        <label style="font-family:'Roboto Slab'">Contraseña</label>
+        <button (click)="navigate('inicio')"  class="button buttonBlue" style="font-family:'Roboto Slab'"><b>Entrar</b></button>
       </div>
     </form>
   </div>
@@ -272,7 +278,7 @@ input:focus ~ .highlight {
 /* Button */
 
 .button {
-  height: 25%;
+  height: 35%;
   position: relative;
   display: block;
   margin: 8% auto 0; /* Cambiado el margen superior a 5% */
@@ -295,7 +301,7 @@ input:focus ~ .highlight {
 
 .buttonBlue {
   background: #B60D44;
-
+  height: 53px;
 }
 
 .buttonBlue:hover { background: #c02659; }
