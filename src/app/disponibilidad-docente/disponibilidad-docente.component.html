@@ -18,6 +18,7 @@
         </div>
         <div class="datos">
             <select id="disabledSelect" class="form-select input a" (change)="cargarDisponibilidad()" [(ngModel)]="Disponibilidad.Ciclo">
+                <option value="" disabled selected hidden>--Seleccionar Ciclo--</option>
                 <option>2023-01</option>
                 <option>2023-02</option>
                 <option>2023-03</option>
