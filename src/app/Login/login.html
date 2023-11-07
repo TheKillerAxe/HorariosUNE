@@ -1,3 +1,7 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+</style>
+
 <div class="divP">
   <div class="obj1">
     <div style="width: 90%; height: 70%; position: relative;">
@@ -12,70 +16,81 @@
     </div>
   </div>
   <!--Columna 2-->
+  
   <div class="obj2">
     <form>
       <div style="align-items: center; justify-content: center; display: flex;">
-        <img style="width: 80%; margin-top: 10%;" src="https://i.imgur.com/3AWjxyB.png" alt="">
+        <img style="width: 80%; margin-top: 10%; margin-bottom: 2%;" src="https://imgur.com/Qxrhuhm.png" alt="">
       </div>
-      <h4 style="text-align: center; padding-bottom: 5%;"><b>Generación de Horarios</b></h4>
+      <h4 style="text-align: center; padding-bottom: 5%; font-size: 25px; font-family: 'Roboto Slab';">Generación de
+          Horarios</h4>
+      <!-- <div class="group">
+        <input type="text" [(ngModel)]="Usuario.NombreUsuario" name="usuario">
+        <span class="highlight"></span><span class="bar"></span>
+        <label style="font-family:'Roboto Slab'">Usuario</label>
+      </div> -->
       <div class="group">
-        <input type="text" [(ngModel)]="Usuario.NombreUsuario" name="Usuario">
-        <label>Usuario</label>
+        <input type="text" [(ngModel)]="Usuario.NombreUsuario" name="usuario" id="usuario" placeholder="">
+        <label for="usuario" style="font-family: 'Roboto Slab'">Usuario</label>
       </div>
+      
       <div class="group">
-        <input type="text" [(ngModel)]="Usuario.Contrasena" name="Constrasena">
-        <label>Contraseña</label>
-        <button type="button" class="button buttonBlue" (click)="login()">Entrar</button>
+        <!-- <input type="password" [(ngModel)]="Usuario.Contrasena" name="contraseña">
+        <span class="highlight"></span><span class="bar"></span>
+        <label style="font-family:'Roboto Slab'">Contraseña</label> -->
+        <input type="password" [(ngModel)]="Usuario.Contrasena" name="contrasena" id="contrasena" placeholder="">
+        <label for="usuario" style="font-family: 'Roboto Slab'">Contraseña</label>
+        <button (click)="login()" class="button buttonBlue" style="font-family:'Roboto Slab'; font-size: 20px;">Entrar</button>
       </div>
     </form>
   </div>
 </div>
-    <!--HTML de Login-->
-  
-   
+<!--HTML de Login-->
+
+
 
 <style>
   .divP {
-  display: flex;
-  flex-direction: column; /* Cambia la dirección de la columna en pantallas pequeñas */
-  align-items: center; /* Centra el contenido verticalmente */
-  text-align: center; /* Centra el texto horizontalmente */
-  margin: 0; /* Elimina el margen superior e inferior */
-  padding: 0; /* Elimina el relleno */
-}
-
-.obj1, .obj2 {
-  width: 100%; /* Ocupan todo el ancho disponible */
-  margin: 0; /* Elimina el margen superior e inferior */
-  padding: 0; /* Elimina el relleno */
-}
-
-/* Estilo para pantallas medianas y grandes */
-@media (min-width: 768px) {
-  .divP {
-    flex-direction: row; /* Vuelve a la dirección de fila en pantallas más grandes */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
   }
 
-  .obj1, .obj2 {
-    width: 50%; /* Divide el ancho en dos columnas iguales */
-    margin: 0; /* Elimina el margen superior e inferior */
-    padding: 0; /* Elimina el relleno */
+  .obj1,
+  .obj2 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
-  .obj2 form {
-    margin: 0 auto; /* Ajusta el margen horizontal del formulario */
-    width: 60%; /* Cambia el ancho del formulario en pantallas grandes */
+  @media (min-width: 768px) {
+    .divP {
+      flex-direction: row;
+    }
+
+    .obj1,
+    .obj2 {
+      width: 50%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .obj2 form {
+      margin: 0 auto;
+      width: 60%;
+    }
   }
-}
 </style>
-    
+
 
 
 
 
 <!--css de la chica y sus divs-->
 <style>
- 
   .container {
     position: relative;
     width: 100%;
@@ -83,16 +98,16 @@
   }
 
   .div6 {
-  height: 39%;
-  width: 18%;
-  position: absolute;
-  top: 0;
-  left: 37%;
-  z-index: 3; /* Asegura que div6 esté por encima de otros elementos */
-  background: linear-gradient(to top right, #B60D44,#B60D44, #460080); /* Degradado de rojo a morado */
-  background-size:100% 100% ;
-  background-repeat: no-repeat;
-}
+    height: 39%;
+    width: 18%;
+    position: absolute;
+    top: 0;
+    left: 37%;
+    z-index: 3;
+    background: linear-gradient(to top right, #B60D44, #B60D44, #460080);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
 
   .div5 {
     height: 39%;
@@ -101,7 +116,7 @@
     top: 0;
     left: 55%;
     background-color: #ffffff;
-    z-index: 3; /* Asegura que div3 esté por encima de otros elementos */
+    z-index: 3;
   }
 
   .div4 {
@@ -111,9 +126,10 @@
     top: 39%;
     left: 55%;
     background-color: #B60D44;
-    z-index: 3; /* Asegura que div3 esté por encima de otros elementos */
+    z-index: 3;
+    /* Asegura que div3 esté por encima de otros elementos */
   }
-  
+
   .div3 {
     height: 45%;
     width: 27%;
@@ -121,9 +137,9 @@
     top: 55%;
     left: 78%;
     background-color: #B60D44;
-    z-index: 2; /* Asegura que div3 esté por encima de otros elementos */
+    z-index: 2;
   }
-  
+
   .div2 {
     height: 55%;
     width: 29%;
@@ -131,70 +147,78 @@
     top: 0;
     left: 78%;
     background-color: #ffffff;
-    z-index: 1; /* Asegura que div2 esté por debajo de otros elementos */
+    z-index: 1;
   }
-  </style>
+</style>
 
-  <!--css del login-->
-  <style>
-
-
-body {
+<!--css del login-->
+<style>
+  body {
 
     font-family: Helvetica;
     background: #eee;
-  -webkit-font-smoothing: antialiased;
-  border-radius: 5%;
-}
+    -webkit-font-smoothing: antialiased;
+    border-radius: 5%;
+  }
 
-hgroup { 
-    text-align:center;
+  hgroup {
+    text-align: center;
     margin-top: 4em;
-}
+  }
 
-h1, h3 { font-weight: 300; }
+  h1,
+  h3 {
+    font-weight: 300;
+  }
 
-h1 { color: #636363; }
+  h1 {
+    color: #636363;
+  }
 
-h3 { color: #B60D44; }
+  h3 {
+    color: #B60D44;
+  }
 
-form {
-margin-top: 15%;
-  margin-left: 15%;
+  form {
+    margin-top: 15%;
+    margin-left: 15%;
     width: 50%;
-  height: 65%;
+    height: 65%;
     padding: 2em 2em 2em 2em;
-    background: #fafafa;
+    background: #ffffff;
     border: 1px solid #ebebeb;
-    box-shadow: rgba(0,0,0,0.14902) 2px 2px 2px 2px,rgba(0,0,0,0.09804) 2px 2px 2px 2px;
-  border-radius: 5%;
-}
+    /* box-shadow: rgba(0, 0, 0, 0.14902) 2px 2px 2px 2px, rgba(0, 0, 0, 0.09804) 2px 2px 2px 2px; */
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 20px 50px 0 rgba(0,0,0,0.2);
+    border-radius: 5%;
+  }
 
-.group { 
-    position: relative; 
-    margin-bottom: 45px; 
-}
+  .group {
+    position: relative;
+    margin-bottom: 45px;
+  }
 
-input {
+  input {
     font-size: 18px;
     padding: 10px 10px 10px 5px;
     -webkit-appearance: none;
     display: block;
-    background: #fafafa;
+    background: #ffffff;
     color: #636363;
     width: 100%;
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #757575;
-}
+  }
 
-input:focus { outline: none; }
+  input:focus {
+    outline: none;
+  }
 
 
-/* Label */
 
-label {
-    color: #999; 
+  /* label {
+    color: #999;
     font-size: 18px;
     font-weight: normal;
     position: absolute;
@@ -202,106 +226,150 @@ label {
     left: 5px;
     top: 10px;
     transition: all 0.2s ease;
-}
+  }
 
 
-/* active */
+ 
 
-input:focus ~ label, input.used ~ label {
+  input:focus~label,
+  input.used~label {
     top: -20px;
-  transform: scale(.75); left: -2px;
-    /* font-size: 14px; */
+    transform: scale(.75);
+    left: -2px;
     color: #B60D44;
+  } */
+
+  /* Estilo para el input cuando está enfocado o tiene contenido */
+input:focus,
+input:not(:placeholder-shown) {
+  border-bottom: 2px solid #B60D44;
+}
+
+/* Estilo para el label cuando el input tiene contenido */
+input:not(:placeholder-shown) + label,
+input:focus + label {
+  top: -20px;
+  transform: scale(0.75);
+  color: #B60D44;
+}
+
+/* Estilo para el label en condiciones normales (sin contenido) */
+label {
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: all 0.2s ease;
 }
 
 
-/* Underline */
 
-.bar {
+  /* Underline */
+
+  .bar {
     position: relative;
     display: block;
     width: 100%;
-}
+  }
 
-.bar:before, .bar:after {
+  .bar:before,
+  .bar:after {
     content: '';
-    height: 2px; 
+    height: 2px;
     width: 0;
-    bottom: 1px; 
+    bottom: 1px;
     position: absolute;
-    background: #B60D44; 
+    background: #B60D44;
     transition: all 0.2s ease;
-}
+  }
 
-.bar:before { left: 50%; }
+  .bar:before {
+    left: 50%;
+  }
 
-.bar:after { right: 50%; }
+  .bar:after {
+    right: 50%;
+  }
 
 
-/* active */
+  /* active */
 
-input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
+  input:focus~.bar:before,
+  input:focus~.bar:after {
+    width: 50%;
+  }
 
 
-/* Highlight */
+  /* Highlight */
 
-.highlight {
+  .highlight {
     position: absolute;
-    height: 60%; 
-    width: 100px; 
-    top: 25%; 
+    height: 60%;
+    width: 100px;
+    top: 25%;
     left: 0;
     pointer-events: none;
     opacity: 0.5;
-}
+  }
 
 
-/* active */
+  /* active */
 
-input:focus ~ .highlight {
+  input:focus~.highlight {
     animation: inputHighlighter 0.3s ease;
-}
+  }
 
 
-/* Animations */
+  /* Animations */
 
-@keyframes inputHighlighter {
-    from { background: #B60D44; }
-    to 	{ width: 0; background: transparent; }
-}
+  @keyframes inputHighlighter {
+    from {
+      background: #B60D44;
+    }
 
-
-/* Button */
-
-.button {
-  height: 25%;
-  position: relative;
-  display: block;
-  margin: 8% auto 0; /* Cambiado el margen superior a 5% */
-  padding: 12px 24px;
-  width: auto;
-  vertical-align: middle;
-  color: #fff;
-  font-size: 16px;
-  line-height: 100%;
-  text-align: center;
-  letter-spacing: 1px;
-  background: transparent;
-  border: 0;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.button:focus { outline: 0; }
-
-.buttonBlue {
-  background: #B60D44;
-
-}
-
-.buttonBlue:hover { background: #c02659; }
+    to {
+      width: 0;
+      background: transparent;
+    }
+  }
 
 
+  /* Button */
 
-  </style>
+  .button {
+    height: 35%;
+    position: relative;
+    display: block;
+    margin: 8% auto 0;
+    /* Cambiado el margen superior a 5% */
+    padding: 12px 24px;
+    width: auto;
+    vertical-align: middle;
+    color: #fff;
+    font-size: 16px;
+    line-height: 100%;
+    text-align: center;
+    letter-spacing: 1px;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .button:focus {
+    outline: 0;
+  }
+
+  .buttonBlue {
+    background: #B60D44;
+    height: 53px;
+  }
+
+  .buttonBlue:hover {
+    background: #c02659;
+  }
+
+
+
+</style>

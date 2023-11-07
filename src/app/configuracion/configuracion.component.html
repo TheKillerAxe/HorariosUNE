@@ -1,8 +1,6 @@
 <navbarr [Usuario]="Usuario"></navbarr>
 
-
 <!DOCTYPE html>
-<html>
 
 <head>
 </head>
@@ -12,34 +10,30 @@
         <div class="titulotxt">EDITAR PERFIL</div>
     </div>
 
-    <div class="Editar">
-        <label for="imagen" class="txtn"><b>Foto de Perfil:</b></label><br>
-        <input type="file" id="imagen" name="imagen"><br><br>
-    </div>
-
     <div class="container">
         <div class="column">
             <form class="form-group" action="update_profile.php" method="post" enctype="multipart/form-data">
-                <label for="nombre" class="txtn"><b>Nombre(s):</b></label><br>
-                <input class="inputcss" type="text" id="nombre" name="nombre" required><br><br>
+                <label for="nombre" class="txtn"><b>Nombre:</b></label><br>
+                <input class="inputcss" type="text" id="nombre" name="nombre" disabled required [(ngModel)]="Usuario.Nombre"><br><br>
                 <label for="correo" class="txtn"><b>Correo:</b></label><br>
-                <input class="inputcss" type="email" id="correo" name="correo" required><br><br>
+                <input class="inputcss" type="email" id="correo" name="correo" disabled required [(ngModel)]="Usuario.Correo"><br><br>
 
             </form>
         </div>
         <div class="column2">
             <form class="form-group" action="update_profile.php" method="post">
-                <label for="apellido" class="txtn"><b>Apellidos:</b></label><br>
-                <input class="inputcss" type="text" id="apellido" name="apellido" required><br><br>
+                <label for="apellido" class="txtn"><b>Usuario:</b></label><br>
+                <input class="inputcss" type="text" id="apellido" name="apellido" required [(ngModel)]="NuevoUsuario.NombreUsuario"><br><br>
                 <label for="contrasena" class="txtn"><b>Contraseña:</b></label><br>
-                <input class="inputcss" type="password" id="contraseña" name="contraseña" required><br><br>
+                <input class="inputcss" type="password" id="contraseña" name="contraseña" required [(ngModel)]="NuevoUsuario.Contrasena"><br><br>
             </form>
         </div>
     </div>
     <div class="container">
-        <button type="submit" id="guardar"><b>Guardar Cambios</b></button>
+        <button type="submit" class="btn btn-danger" (click)="actualizarUsuario()">Guardar Cambios</button>
     </div>
 </body>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 </style>

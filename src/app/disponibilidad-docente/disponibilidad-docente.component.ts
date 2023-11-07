@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from "@angular/router";
 import { Firestore } from '@angular/fire/firestore';
 import { DisponibilidadMaestro, Usuario } from '../database/database';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
@@ -14,96 +15,77 @@ import Swal from 'sweetalert2';
 export class DisponibilidadDocenteComponent {
   Usuario: Usuario = new Usuario();
   Disponibilidad: DisponibilidadMaestro = new DisponibilidadMaestro();
-
-  Ciclo: string = "";
-  HorasDisponibles: number = 0;
-
-  horas: string[] = ["7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+  DisponibilidadAux: DisponibilidadMaestro = new DisponibilidadMaestro();
 
   habilitarDisponibilidad: boolean = false;
-  nuevaDisponibilidad: boolean = true;
-  cambiosRecientes: boolean = false;
-  mostrarHoras: boolean = false;
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, private router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
       localStorage.setItem('Usuario', JSON.stringify(history.state));
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
 
-    switch (this.Usuario.TipoMaestro) {
-      case "TC":
-        this.HorasDisponibles = 35;
-        break;
-      case "MT":
-        this.HorasDisponibles = 20;
-        break;
-      case "H":
-        this.HorasDisponibles = 16;
-        break;
-    }
-  }
-
-  advertirCambios() {
-    if (this.cambiosRecientes) {
-      Swal.fire({
-        position: 'top',
-        icon: 'warning',
-        title: 'Aún no ha guardado sus cambios recientes.',
-        showConfirmButton: true,
-        showDenyButton: true,
-        confirmButtonText: 'Guardar Cambios',
-        denyButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.guardarDisponibilidad();
-        }
-      });
+    if (this.Usuario.TipoUsuario != "Maestro") {
+      this.router.navigate(['']);
     }
   }
 
   cargarDisponibilidad() {
-    if (this.Disponibilidad.Ciclo != "" && this.cambiosRecientes == false) {
+    if (this.Disponibilidad.Ciclo != "") {
       const DisponibilidadCol = collection(this.firestore, "DisponibilidadMaestro");
       const Query = query(DisponibilidadCol,
-        where("IdMaestro", "==", `${this.Usuario.NombreUsuario}_${this.Disponibilidad.Ciclo}`),
+        where("IdDisponibilidad", "==", `${this.Usuario.NombreUsuario}_${this.Disponibilidad.Ciclo}`),
         where("Ciclo", "==", this.Disponibilidad.Ciclo)
       );
-
+      
+      let flag = true;
       collectionData(Query).subscribe((snapDisponibilidad) => {
-        this.Ciclo = this.Disponibilidad.Ciclo;
-        if (snapDisponibilidad.length > 0) {
-          this.Disponibilidad.setData(snapDisponibilidad[0]);
-          this.nuevaDisponibilidad = false;
-        } else {
-          this.Disponibilidad = new DisponibilidadMaestro();
-          this.Disponibilidad.Ciclo = this.Ciclo;
-          this.Disponibilidad.HorasRestantes = this.HorasDisponibles;
-          this.nuevaDisponibilidad = true;
+        if (flag) {
+          flag = false;
+
+          if (snapDisponibilidad.length > 0) {
+            this.Disponibilidad.setData(snapDisponibilidad[0]);
+          } else {
+            let ciclo = this.Disponibilidad.Ciclo;
+            this.Disponibilidad = new DisponibilidadMaestro();
+            this.Disponibilidad.Ciclo = ciclo;
+          }
         }
-
-        this.mostrarHoras = true;
-
-        Swal.fire({
-          position: 'top',
-          icon: 'success',
-          title: 'Disponibilidad cargada!',
-          showConfirmButton: false,
-          timer: 1200
-        });
       });
+    }
+  }
+
+  resaltarDisponibilidad() {
+    if (this.Disponibilidad.Ciclo != "") {
+      for (let i = 0; i < this.Disponibilidad.Disponibilidad.length; i++) {
+        for (let j = 0; j < this.Disponibilidad.Disponibilidad[i].registro.length; j++) {
+          if (this.Disponibilidad.Disponibilidad[i].registro[j].disponible) {
+            document.getElementById(`c${i}${j}`)?.classList.add('dato-agregado');
+          } else if (document.getElementById(`c${i}${j}`)?.classList.contains('dato-agregado')) {
+            document.getElementById(`c${i}${j}`)?.classList.remove('dato-agregado');
+          }
+        }
+      }
 
       this.habilitarDisponibilidad = true;
-    } else if (this.cambiosRecientes) {
-      this.advertirCambios();
+
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Disponibilidad cargada!',
+        showConfirmButton: false,
+        timer: 1200
+      });
+    } else {
+      Swal.fire('Debe seleccionar un ciclo antes de cargar la disponibilidad.', '', 'error');
     }
   }
 
   guardarDisponibilidad() {
-    if (this.Ciclo != "") {
+    if (this.habilitarDisponibilidad) {
       Swal.fire({
-        title: 'Actualización',
+        title: 'Guardar Cambios',
         text: "¿Está seguro de estos cambios?",
         icon: 'warning',
         showCancelButton: true,
@@ -112,35 +94,23 @@ export class DisponibilidadDocenteComponent {
         confirmButtonText: 'Aceptar'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.Disponibilidad.IdMaestro = `${this.Usuario.NombreUsuario}_${this.Ciclo}`;
+          this.Disponibilidad.IdDisponibilidad = `${this.Usuario.NombreUsuario}_${this.Disponibilidad.Ciclo}`;
           this.Disponibilidad.Nombre = this.Usuario.Nombre;
 
-          let rutaDoc = doc(this.firestore, "DisponibilidadMaestro", this.Disponibilidad.IdMaestro);
-
-          if (this.nuevaDisponibilidad) {
-            setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Disponibilidad)));
-            this.nuevaDisponibilidad = false;
-          } else {
-            let data = {
-              IdMaestro: this.Disponibilidad.IdMaestro,
-              Nombre: this.Disponibilidad.Nombre,
-              Ciclo: this.Ciclo,
-              Disponibilidad: this.Disponibilidad.Disponibilidad
-            };
-            updateDoc(rutaDoc, data);
-          }
-
-          this.cambiosRecientes = false;
+          let rutaDoc = doc(this.firestore, "DisponibilidadMaestro", this.Disponibilidad.IdDisponibilidad);
+          setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Disponibilidad)));
 
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Cambios guardados!',
             showConfirmButton: false,
-            timer: 1500
+            timer: 1200
           });
         }
       });
+    } else {
+      Swal.fire('Por favor, seleccione un ciclo y cargue la disponibilidad antes de comenzar.', '', 'warning');
     }
   }
 
@@ -150,55 +120,31 @@ export class DisponibilidadDocenteComponent {
       return;
     }
 
-    if (this.Disponibilidad.HorasRestantes != 0) {
-      if (this.Disponibilidad.Disponibilidad[i].registro[j].hora) {
-        Swal.fire({
-          title: 'Eliminar hora',
-          text: '¿Deseas eliminar la hora seleccionada?',
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonText: 'Sí',
-          cancelButtonText: 'No',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.Disponibilidad.Disponibilidad[i].registro[j].hora = '';
-            this.Disponibilidad.Disponibilidad[i].registro[j].disponible = false;
-            this.Disponibilidad.HorasRestantes++;
-            const celda = document.getElementById(`c${i}${j}`);
-            if (celda) {
-              celda.classList.remove('dato-agregado');
-            }
-            this.cambiosRecientes = true;
-          }
-        });
-      } else {
-        this.Disponibilidad.Disponibilidad[i].registro[j].hora = this.horas[j];
-        this.Disponibilidad.Disponibilidad[i].registro[j].disponible = true;
-        this.Disponibilidad.HorasRestantes--;
-        const celda = document.getElementById(`c${i}${j}`);
-        if (celda) {
-          celda.classList.add('dato-agregado');
-        }
-        this.cambiosRecientes = true;
-
-        Swal.fire({
-          position: 'center',
-          icon: 'info',
-          title: 'Hora Seleccionada:',
-          text: this.Disponibilidad.Disponibilidad[i].registro[j].hora + ' hrs',
-          showConfirmButton: false,
-          timer: 1000
-        });
-      }
-    } else {
+    if (this.Disponibilidad.Disponibilidad[i].registro[j].hora) {
       Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Horario Lleno',
-        text: 'Ya no hay más horas restantes',
-        showConfirmButton: false,
-        timer: 1000
+        title: 'Eliminar hora',
+        text: '¿Deseas eliminar la hora seleccionada?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'No',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.Disponibilidad.Disponibilidad[i].registro[j].hora = '';
+          this.Disponibilidad.Disponibilidad[i].registro[j].disponible = false;
+          const celda = document.getElementById(`c${i}${j}`);
+          if (celda) {
+            celda.classList.remove('dato-agregado');
+          }
+        }
       });
+    } else {
+      this.Disponibilidad.Disponibilidad[i].registro[j].hora = this.Disponibilidad.Disponibilidad[0].registro[j].texto;
+      this.Disponibilidad.Disponibilidad[i].registro[j].disponible = true;
+      const celda = document.getElementById(`c${i}${j}`);
+      if (celda) {
+        celda.classList.add('dato-agregado');
+      }
     }
   }
 }

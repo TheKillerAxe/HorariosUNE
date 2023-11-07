@@ -11,7 +11,8 @@ export class Usuario {
     public NombreUsuario: string = "";                                             //Nombre de usuario para ingresar.
     public Correo: string = "";                                                    //Correo del usuario.
     public Contrasena: string = "";                                                //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
-    public Materias: string[] = new Array();    
+    public Materias: string[] = new Array();                                       //Materias que imparte el docente.
+    public CambiosRecientes: boolean = false;                                      //Variable auxiliar para el cambio de datos de usuario.
 
     constructor() { }
 
@@ -23,6 +24,7 @@ export class Usuario {
         this.NombreUsuario = data.NombreUsuario;
         this.Correo = data.Correo;
         this.Contrasena = data.Contrasena;
+        this.Materias = data.Materias;
     }
 }
 
@@ -44,17 +46,18 @@ export class Carrera {
         this.Periodicidad = data.Periodicidad;
         this.CantidadPeriodos = data.CantidadPeriodos;
     }
-} 
+}
 
 /* Almacena todos los datos de una materia. */
 export class Materia {
     //ID
-    public IdMateria: string = "";                                                 //ID de la materia [000-INICIALES].
+    public IdMateria: string = "";                                                 //ID de la materia [INICIALESCARRERA-INICIALESMATERIA].
 
     //Campos
     public Nombre: string = "";                                                    //Nombre de la materia.
     public Carrera: string = "";                                                   //Nombre de la carrera en la que se imparte la materia.
     public Periodo: string = "";                                                   //Periodo en el que se imparte la materia.
+    public Horas: number = 0;                                                      //Cantidad de horas que se debe impartir la materia.
 
     constructor() { }
 
@@ -63,15 +66,15 @@ export class Materia {
         this.Nombre = data.Nombre;
         this.Carrera = data.Carrera;
         this.Periodo = data.Periodo;
+        this.Horas = 4;
     }
 }
 
 /* Almacena los datos de la disponibilidad del horario del maestro. */
 export class DisponibilidadMaestro {
-    public IdMaestro: string = "";                                                 //ID del maestro al que pertenece la disponibilidad.
+    public IdDisponibilidad: string = "";                                          //ID del maestro al que pertenece la disponibilidad.
     public Nombre: string = "";                                                    //Nombre del maestro al que pertenece la disponibilidad.
     public Ciclo: string = "";                                                     //Ciclo escolar al que pertenece la disponibilidad.
-    public HorasRestantes: number = 0;
     public Disponibilidad: RegistroHorario[] = new Array();                        //Indica cuando está disponible el maestro.
 
     constructor() {
@@ -103,17 +106,17 @@ export class DisponibilidadMaestro {
     }
 
     setData(data: any) {
-        this.IdMaestro = data.IdMaestro;
+        this.IdDisponibilidad = data.IdDisponibilidad;
         this.Nombre = data.Nombre;
         this.Ciclo = data.Ciclo;
-        this.HorasRestantes = data.HorasRestantes;
         this.Disponibilidad = data.Disponibilidad;
     }
 }
 
 /* Almacena los datos de la disponibilidad del horario de inglés. */
 export class DisponibilidadIngles {
-    public CicloEscolar: string = "";
+    public IdDisponibilidad: string = "";
+    public Ciclo: string = "";
     public Periodo: string = "";
     public Periodicidad: string = "";
     public Disponibilidad: RegistroHorario[] = new Array();
@@ -142,19 +145,20 @@ export class DisponibilidadIngles {
 
         for (let i = 1; i < 7; i++) {
             for (let j = 0; j < 16; j++) {
-                this.Disponibilidad[i].registro[j] = { texto: "" };
+                this.Disponibilidad[i].registro[j] = { texto: "", periodicidad: "", periodo: "", salon: "" };
                 this.Disponibilidad[i].registro[j].disponible = false;
             }
         }
     }
 
-    setData(data:any) {
-        this.CicloEscolar = data.CicloEscolar;
+    setData(data: any) {
+        this.IdDisponibilidad = data.IdDisponibilidad;
+        this.Ciclo = data.Ciclo;
         this.Periodo = data.Periodo;
         this.Periodicidad = data.Periodicidad;
         this.Disponibilidad = data.Disponibilidad;
     }
-} 
+}
 
 /* Clase auxiliar para las celdas del horario */
 export class RegistroHorario {
@@ -169,13 +173,9 @@ export class Horario {
     public IdHorario: string = "";                                                 //ID del horario (Ej. ISCE-R-7-Horario).
 
     //Objetos
-    public Periodicidad: string = "";                                              //Periodicidad de la carrera a la que pertenece el horario.
     public Periodo: string = "";                                                   //Periodo al que pertenece el horario.
     public Carrera: string = "";                                                   //Carrera a la que pertenece el horario.
     public Ciclo: string = "";                                                     //Ciclo escolar al que pertenece el horario.
-    public UltimaModificacion: string = "";                                        //Usuario que modificó el horario por última vez.
-    public Materias: string[] = new Array();                                       //Materias asignadas al horario.
-    public Maestros: string[] = new Array();                                       //Maestros asignados al horario.
     public HorarioRegular: RegistroHorario[] = new Array();                        //Registros de las celdas del horario regular.
     public HorarioIrregular: RegistroHorario[] = new Array();                      //Registros de las celdas del horario irregular.
 
@@ -205,8 +205,8 @@ export class Horario {
 
         for (let i = 1; i < 7; i++) {
             for (let j = 0; j < 16; j++) {
-                this.HorarioRegular[i].registro[j] = { texto: "" };
-                this.HorarioIrregular[i].registro[j] = { texto: "" };
+                this.HorarioRegular[i].registro[j] = { texto: "", salon: "", maestro: "" };
+                this.HorarioIrregular[i].registro[j] = { texto: "", salon: "", maestro: "" };
             }
         }
     }
@@ -216,9 +216,6 @@ export class Horario {
         this.Periodo = data.Periodo;
         this.Carrera = data.Carrera;
         this.Ciclo = data.Ciclo;
-        this.UltimaModificacion = data.UltimaModificacion;
-        this.Materias = data.Materias;
-        this.Maestros = data.Maestros;
         this.HorarioRegular = data.HorarioRegular;
         this.HorarioIrregular = data.HorarioIrregular;
     }

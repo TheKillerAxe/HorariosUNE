@@ -21,6 +21,7 @@ import { MenuInglesComponent } from './menu-ingles/menu-ingles.component';
 import { MenuAdminComponent } from './menu-admin/menu-admin.component';
 import { DisponibilidadDocenteComponent } from './disponibilidad-docente/disponibilidad-docente.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
+import { HorarioInglesComponent } from './horario-ingles/horario-ingles.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
     MenuInglesComponent,
     MenuAdminComponent,
     DisponibilidadDocenteComponent,
-    ConfiguracionComponent
+    ConfiguracionComponent,
+    HorarioInglesComponent
   ],
   imports: [
     BrowserModule,

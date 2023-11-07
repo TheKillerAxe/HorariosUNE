@@ -12,7 +12,20 @@ export class navbarComponent {
 
   constructor(public router : Router) { }
 
-  navegar(referencia : string) {
+  obtenerReferencia(): string {
+    if (this.Usuario.TipoUsuario == "Admin") {
+      return "admin";
+    }
+    if (this.Usuario.TipoUsuario == "Maestro") {
+      return "docente";
+    }
+    if (this.Usuario.TipoUsuario == "Ingles") {
+      return "ingles";
+    }
+    return "";
+  }
+
+  navigate(referencia : string) {
     this.router.navigate([referencia], {state : this.Usuario});
   }
 }

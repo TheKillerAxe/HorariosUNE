@@ -14,7 +14,13 @@ import swal from 'sweetalert2'
 export class loginComponent {
     Usuario = new Usuario();
 
-    constructor(private firestore: Firestore, public router: Router) { }
+    constructor(private firestore: Firestore, public router: Router) {
+        localStorage.setItem('Usuario', JSON.stringify(new Usuario()));
+    }
+
+    navigate(route: string) {
+        this.router.navigate([route], { state: this.Usuario });
+    }
 
     login() {
         const user = collection(this.firestore, "Usuario");
@@ -24,15 +30,16 @@ export class loginComponent {
         );
 
         let flag = true;
+
         collectionData(q).subscribe((snapUser) => {
             if (snapUser.length > 0 && flag) {
                 flag = false;
                 swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Sesion iniciada.',
+                    title: 'Sesión Iniciada',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 1200
                 }).then(() => {
                     this.Usuario.setData(snapUser[0]);
 
@@ -48,12 +55,13 @@ export class loginComponent {
                             break;
                     }
                 })
-            }
-            else {
+            } else if (flag) {
+                flag = false;
                 swal.fire({
                     icon: 'error',
                     title: 'Usuario o Contraseña Incorrectos',
-                    text: 'Usuario o Contraseña Incorrectos'
+                    showConfirmButton: false,
+                    timer: 1200
                 });
             }
         });

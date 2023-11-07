@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from "@angular/router";
 import { Usuario } from '../database/database';
 import { Firestore } from '@angular/fire/firestore';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
@@ -16,12 +17,16 @@ export class AltadocentesComponent {
   Usuario: Usuario = new Usuario();
   NuevoUsuario: Usuario = new Usuario();
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, private router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
       localStorage.setItem('Usuario', JSON.stringify(history.state));
     }
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
+
+    if (this.Usuario.TipoUsuario != "Admin") {
+      this.router.navigate(['']);
+    }
   }
 
   validarCorreo(): boolean {
