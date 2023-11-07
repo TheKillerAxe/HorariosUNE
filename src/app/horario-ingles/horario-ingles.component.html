@@ -16,7 +16,7 @@
             Ciclo<br> escolar
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="ciclo">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Disponibilidad.Ciclo">
                 <option value="" disabled selected hidden>--Seleccionar Ciclo--</option>
                 <option>2023/01</option>
                 <option>2023/02</option>
@@ -29,7 +29,7 @@
             Periodo
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="periodo">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Disponibilidad.Periodo">
                 <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
                 <option>1</option>
                 <option>2</option>
@@ -42,7 +42,7 @@
             Periodicidad
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="periodicidad">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Disponibilidad.Periodicidad">
                 <option value="" disabled selected hidden>--Seleccionar Periodicidad--</option>
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
@@ -64,8 +64,8 @@
         <div class="dia">Viernes</div>
         <div class="dia">Sabado</div>
 
-        <div *ngFor="let columna of horario; index as i;">
-            <div *ngFor="let fila of columna; index as j">
+        <div *ngFor="let columna of Disponibilidad.Disponibilidad; index as i;">
+            <div *ngFor="let fila of columna.registro; index as j">
                 <div *ngIf="i==0" class="hora">{{fila.texto}}</div>
                 <div *ngIf="i!=0" class="celda" id="c{{i}}{{j}}" (click)="openSwalModal(i, j)">
                     {{fila.periodicidad}} <br>

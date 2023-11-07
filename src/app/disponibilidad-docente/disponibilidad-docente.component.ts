@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 export class DisponibilidadDocenteComponent {
   Usuario: Usuario = new Usuario();
   Disponibilidad: DisponibilidadMaestro = new DisponibilidadMaestro();
+  DisponibilidadAux: DisponibilidadMaestro = new DisponibilidadMaestro();
 
   habilitarDisponibilidad: boolean = false;
 
@@ -50,18 +51,32 @@ export class DisponibilidadDocenteComponent {
             this.Disponibilidad = new DisponibilidadMaestro();
             this.Disponibilidad.Ciclo = ciclo;
           }
-  
-          Swal.fire({
-            position: 'top',
-            icon: 'success',
-            title: 'Disponibilidad cargada!',
-            showConfirmButton: false,
-            timer: 1200
-          });
         }
       });
+    }
+  }
+
+  resaltarDisponibilidad() {
+    if (this.Disponibilidad.Ciclo != "") {
+      for (let i = 0; i < this.Disponibilidad.Disponibilidad.length; i++) {
+        for (let j = 0; j < this.Disponibilidad.Disponibilidad[i].registro.length; j++) {
+          if (this.Disponibilidad.Disponibilidad[i].registro[j].disponible) {
+            document.getElementById(`c${i}${j}`)?.classList.add('dato-agregado');
+          } else if (document.getElementById(`c${i}${j}`)?.classList.contains('dato-agregado')) {
+            document.getElementById(`c${i}${j}`)?.classList.remove('dato-agregado');
+          }
+        }
+      }
 
       this.habilitarDisponibilidad = true;
+
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Disponibilidad cargada!',
+        showConfirmButton: false,
+        timer: 1200
+      });
     } else {
       Swal.fire('Debe seleccionar un ciclo antes de cargar la disponibilidad.', '', 'error');
     }
