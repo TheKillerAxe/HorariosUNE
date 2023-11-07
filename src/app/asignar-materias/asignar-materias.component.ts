@@ -125,7 +125,6 @@ export class AsignarMateriasComponent {
         
       }
 
-    // sale un error en la consola de chrome
     maestrostablamet(){
       const maestrosC= collection(this.firestore,"Usuario")
       const QueryM = query(maestrosC, where("Materias", "array-contains" , this.Materia.Nombre));
@@ -141,19 +140,16 @@ export class AsignarMateriasComponent {
       });
     }
 
-    // no lo he metido porque no guarda nada pero creo que esta bien
     borrarMateria(i: number){
       delete this.maestrostabla[i].Materias[this.maestrostabla[i].Materias.indexOf(this.Materia.Nombre)]
-
-      const maestrosC= collection(this.firestore,"Usuario")
-      const QueryM = query(maestrosC);
+      // const maestrosC= collection(this.firestore,"Usuario")
+      // const QueryM = query(maestrosC);
       let rutaDoc = doc(this.firestore, "Usuario", this.maestrostabla[i].IdUsuario); 
        updateDoc(rutaDoc,{
         Materias: this.maestrostabla[i].Materias
       })
     }
 
-    //guarda en otro lado, especificar id del documento    
     asignarMateria(){
       if(this.Carrera.Nombre!="" && this.maestroBD!=""){
        let rutaDoc = doc(this.firestore, "Usuario", this.aidi);
