@@ -16,11 +16,7 @@ export class DisponibilidadDocenteComponent {
   Usuario: Usuario = new Usuario();
   Disponibilidad: DisponibilidadMaestro = new DisponibilidadMaestro();
 
-  horas: string[] = ["7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
-
   habilitarDisponibilidad: boolean = false;
-  nuevaDisponibilidad: boolean = true;
-  cambiosRecientes: boolean = false;
 
   constructor(private firestore: Firestore, private router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
@@ -35,39 +31,46 @@ export class DisponibilidadDocenteComponent {
   }
 
   cargarDisponibilidad() {
-    if (this.Disponibilidad.Ciclo != "" && this.cambiosRecientes == false) {
+    if (this.Disponibilidad.Ciclo != "") {
       const DisponibilidadCol = collection(this.firestore, "DisponibilidadMaestro");
       const Query = query(DisponibilidadCol,
-        where("IdMaestro", "==", `${this.Usuario.NombreUsuario}_${this.Disponibilidad.Ciclo}`),
+        where("IdDisponibilidad", "==", `${this.Usuario.NombreUsuario}_${this.Disponibilidad.Ciclo}`),
         where("Ciclo", "==", this.Disponibilidad.Ciclo)
       );
-
+      
+      let flag = true;
       collectionData(Query).subscribe((snapDisponibilidad) => {
-        if (snapDisponibilidad.length > 0) {
-          this.Disponibilidad.setData(snapDisponibilidad[0]);
-          this.nuevaDisponibilidad = false;
-        } else {
-          this.Disponibilidad = new DisponibilidadMaestro();
-          this.nuevaDisponibilidad = true;
-        }
+        if (flag) {
+          flag = false;
 
-        Swal.fire({
-          position: 'top',
-          icon: 'success',
-          title: 'Disponibilidad cargada!',
-          showConfirmButton: false,
-          timer: 1200
-        });
+          if (snapDisponibilidad.length > 0) {
+            this.Disponibilidad.setData(snapDisponibilidad[0]);
+          } else {
+            let ciclo = this.Disponibilidad.Ciclo;
+            this.Disponibilidad = new DisponibilidadMaestro();
+            this.Disponibilidad.Ciclo = ciclo;
+          }
+  
+          Swal.fire({
+            position: 'top',
+            icon: 'success',
+            title: 'Disponibilidad cargada!',
+            showConfirmButton: false,
+            timer: 1200
+          });
+        }
       });
 
       this.habilitarDisponibilidad = true;
+    } else {
+      Swal.fire('Debe seleccionar un ciclo antes de cargar la disponibilidad.', '', 'error');
     }
   }
 
   guardarDisponibilidad() {
-    if (this.Disponibilidad.Ciclo != "") {
+    if (this.habilitarDisponibilidad) {
       Swal.fire({
-        title: 'Actualización',
+        title: 'Guardar Cambios',
         text: "¿Está seguro de estos cambios?",
         icon: 'warning',
         showCancelButton: true,
@@ -76,35 +79,23 @@ export class DisponibilidadDocenteComponent {
         confirmButtonText: 'Aceptar'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.Disponibilidad.IdMaestro = `${this.Usuario.NombreUsuario}_${this.Disponibilidad.Ciclo}`;
+          this.Disponibilidad.IdDisponibilidad = `${this.Usuario.NombreUsuario}_${this.Disponibilidad.Ciclo}`;
           this.Disponibilidad.Nombre = this.Usuario.Nombre;
 
-          let rutaDoc = doc(this.firestore, "DisponibilidadMaestro", this.Disponibilidad.IdMaestro);
-
-          if (this.nuevaDisponibilidad) {
-            setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Disponibilidad)));
-            this.nuevaDisponibilidad = false;
-          } else {
-            let data = {
-              IdMaestro: this.Disponibilidad.IdMaestro,
-              Nombre: this.Disponibilidad.Nombre,
-              Ciclo: this.Disponibilidad.Ciclo,
-              Disponibilidad: this.Disponibilidad.Disponibilidad
-            };
-            updateDoc(rutaDoc, data);
-          }
-
-          this.cambiosRecientes = false;
+          let rutaDoc = doc(this.firestore, "DisponibilidadMaestro", this.Disponibilidad.IdDisponibilidad);
+          setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Disponibilidad)));
 
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Cambios guardados!',
             showConfirmButton: false,
-            timer: 1500
+            timer: 1200
           });
         }
       });
+    } else {
+      Swal.fire('Por favor, seleccione un ciclo y cargue la disponibilidad antes de comenzar.', '', 'warning');
     }
   }
 
@@ -130,17 +121,15 @@ export class DisponibilidadDocenteComponent {
           if (celda) {
             celda.classList.remove('dato-agregado');
           }
-          this.cambiosRecientes = true;
         }
       });
     } else {
-      this.Disponibilidad.Disponibilidad[i].registro[j].hora = this.horas[j];
+      this.Disponibilidad.Disponibilidad[i].registro[j].hora = this.Disponibilidad.Disponibilidad[0].registro[j].texto;
       this.Disponibilidad.Disponibilidad[i].registro[j].disponible = true;
       const celda = document.getElementById(`c${i}${j}`);
       if (celda) {
         celda.classList.add('dato-agregado');
       }
-      this.cambiosRecientes = true;
     }
   }
 }

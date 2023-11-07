@@ -70,7 +70,7 @@ export class Materia {
 
 /* Almacena los datos de la disponibilidad del horario del maestro. */
 export class DisponibilidadMaestro {
-    public IdMaestro: string = "";                                                 //ID del maestro al que pertenece la disponibilidad.
+    public IdDisponibilidad: string = "";                                                 //ID del maestro al que pertenece la disponibilidad.
     public Nombre: string = "";                                                    //Nombre del maestro al que pertenece la disponibilidad.
     public Ciclo: string = "";                                                     //Ciclo escolar al que pertenece la disponibilidad.
     public Disponibilidad: RegistroHorario[] = new Array();                        //Indica cuando está disponible el maestro.
@@ -104,7 +104,7 @@ export class DisponibilidadMaestro {
     }
 
     setData(data: any) {
-        this.IdMaestro = data.IdMaestro;
+        this.IdDisponibilidad = data.IdMaestro;
         this.Nombre = data.Nombre;
         this.Ciclo = data.Ciclo;
         this.Disponibilidad = data.Disponibilidad;
