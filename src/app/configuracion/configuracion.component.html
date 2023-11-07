@@ -14,23 +14,23 @@
         <div class="column">
             <form class="form-group" action="update_profile.php" method="post" enctype="multipart/form-data">
                 <label for="nombre" class="txtn"><b>Nombre:</b></label><br>
-                <input class="inputcss" type="text" id="nombre" name="nombre" required [(ngModel)]="Usuario.Nombre"><br><br>
+                <input class="inputcss" type="text" id="nombre" name="nombre" required [(ngModel)]="NuevoUsuario.Nombre"><br><br>
                 <label for="correo" class="txtn"><b>Correo:</b></label><br>
-                <input class="inputcss" type="email" id="correo" name="correo" required [(ngModel)]="Usuario.Correo"><br><br>
+                <input class="inputcss" type="email" id="correo" name="correo" required [(ngModel)]="NuevoUsuario.Correo"><br><br>
 
             </form>
         </div>
         <div class="column2">
             <form class="form-group" action="update_profile.php" method="post">
                 <label for="apellido" class="txtn"><b>Usuario:</b></label><br>
-                <input class="inputcss" type="text" id="apellido" name="apellido" required [(ngModel)]="Usuario.NombreUsuario"><br><br>
+                <input class="inputcss" type="text" id="apellido" name="apellido" required [(ngModel)]="NuevoUsuario.NombreUsuario"><br><br>
                 <label for="contrasena" class="txtn"><b>Contraseña:</b></label><br>
-                <input class="inputcss" type="password" id="contraseña" name="contraseña" required [(ngModel)]="Usuario.Contrasena"><br><br>
+                <input class="inputcss" type="password" id="contraseña" name="contraseña" required [(ngModel)]="NuevoUsuario.Contrasena"><br><br>
             </form>
         </div>
     </div>
     <div class="container">
-        <button type="submit" class="btn btn-danger">Guardar Cambios</button>
+        <button type="submit" class="btn btn-danger" (click)="actualizarUsuario()">Guardar Cambios</button>
     </div>
 </body>
 
