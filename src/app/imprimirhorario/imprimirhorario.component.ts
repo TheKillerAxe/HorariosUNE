@@ -1,82 +1,86 @@
-import { Component, OnInit } from '@angular/core';
-import Swal from 'sweetalert2';
-import jsPDF from "jspdf";
+import { Component } from '@angular/core';
+import { Router } from "@angular/router";
+import { Firestore, collection, query, where, collectionData } from '@angular/fire/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { Horario, Usuario } from '../database/database';
+
+import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-imprimirhorario',
   templateUrl: './imprimirhorario.component.html',
   styleUrls: ['./imprimirhorario.component.css']
 })
-export class ImprimirhorarioComponent implements OnInit {
+export class ImprimirhorarioComponent {
+  Usuario: Usuario = new Usuario();
+  Horario: Horario = new Horario();
 
-  horario: any[] = new Array();
-  carrera = '';
-  ciclo = '';
-  periodo = '';
-  docente = '';
-  horas: string[] = ["7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
-  maestro='';
-  texto='';
-  salon='';
+  Docente: string = "";
 
-  constructor() {
-    for (let i = 0; i < 7; i++) {
-      this.horario[i] = [{}];
-      for (let j = 0; j < 16; j++) {
-        this.horario[i][j] = { texto: this.horas[j] };
-      }
+  constructor(private firestore: Firestore, private router: Router) {
+    if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
+      localStorage.setItem('Usuario', JSON.stringify(history.state));
     }
 
-  
+    this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
+
+    if (this.Usuario.TipoUsuario != "Admin") {
+      this.router.navigate(['']);
+    }
   }
 
-  ngOnInit(): void {
+  imprimirHorario() {
+    const DATA: any = document.getElementById('htmlData');
+    const doc = new jsPDF('l', 'pt', 'a4');
+    const options = {
+      background: 'white',
+      scale: 3,
+    };
+
+    html2canvas(DATA, options).then((canvas) => {
+      const img = canvas.toDataURL('image/PNG');
+      const bufferX = 15; const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+      docResult.save(`${this.Horario.IdHorario}.pdf`);
+    });
   }
 
+  buscarHorario() {
+    if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != "") {
+      this.Horario.IdHorario = `${this.Horario.Ciclo}-${this.Horario.Carrera}-${this.Horario.Periodo}`;
 
-  imprimir() {
-    if (this.ciclo === '' || this.carrera === '' || this.periodo === '') {
-      Swal.fire('Por favor seleccione todos los campos.', '', 'warning');
-      return;
+      const HorarioCol = collection(this.firestore, "Horario");
+      const Query = query(HorarioCol, where("IdHorario", "==", this.Horario.IdHorario));
+
+      collectionData(Query).subscribe((snapHorarios) => {
+        if (snapHorarios.length > 0) {
+          this.Horario.setData(snapHorarios[0]);
+          this.imprimirHorario();
+        } else {
+          Swal.fire({
+            position: 'top',
+            icon: 'error',
+            title: 'Este horario no existe.',
+            showConfirmButton: false,
+            timer: 1200
+          });
+        }
+      });
     } else {
-      const DATA: any = document.getElementById('impresion');
-      const doc = new jsPDF('p', 'pt', 'letter');
-      
-
-      doc.html(DATA!, {
-        html2canvas: {
-          scale: .6,
-        },
-        x: -90,
-        y: 39,
-        callback: function(doc) {
-          doc.save('Horario.pdf');
-        }
-      })
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Favor de llenar los campos de Ciclo, Carrera y Periodo.',
+        showConfirmButton: true
+      });
     }
   }
-
-  imprimirdocente() {
-    if (this.docente === '') {
-      Swal.fire('Por favor seleccione todos los campos.', '', 'warning');
-      return;
-    }else {
-      const DATA: any = document.getElementById('impresion');
-      const doc = new jsPDF('p', 'pt', 'letter');
-      
-
-      doc.html(DATA!, {
-        html2canvas: {
-          scale: .5,
-        },
-        x: -33,
-        y: 30,
-        callback: function(doc) {
-          doc.save('Horario Docente.pdf');
-        }
-      })
-    }
-  }
-
 }

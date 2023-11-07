@@ -14,35 +14,52 @@ import swal from 'sweetalert2'
 export class loginComponent {
     Usuario = new Usuario();
 
-    constructor(private firestore: Firestore, public router: Router) { }
+    constructor(private firestore: Firestore, public router: Router) {
+        localStorage.setItem('Usuario', JSON.stringify(new Usuario()));
+    }
 
     login() {
+        console.log(this.Usuario)
+
         const user = collection(this.firestore, "Usuario");
         const q = query(user,
             where("NombreUsuario", "==", this.Usuario.NombreUsuario),
             where("Contrasena", "==", this.Usuario.Contrasena),
         );
 
+        let flag = true;
         collectionData(q).subscribe((snapUser) => {
-                if (snapUser.length > 0) {
-                    swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Sesion iniciada.',
-                        showConfirmButton: false,
-                        timer: 2000
-                    }).then(() => {
-                        this.Usuario.setData(snapUser[0]);
-                        this.router.navigate(['menu'], { state: this.Usuario });
-                    })
-                }
-                else {
-                    swal.fire({
-                        icon: 'error',
-                        title: 'Usuario o Contraseña Incorrectos',
-                        text: 'Usuario o Contraseña Incorrectos'
-                    });
-                }
+            if (snapUser.length > 0 && flag) {
+                flag = false;
+                swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Sesion iniciada.',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    this.Usuario.setData(snapUser[0]);
+
+                    switch (this.Usuario.TipoUsuario) {
+                        case "Admin":
+                            this.router.navigate(['admin'], { state: this.Usuario });
+                            break;
+                        case "Ingles":
+                            this.router.navigate(['ingles'], { state: this.Usuario });
+                            break;
+                        case "Maestro":
+                            this.router.navigate(['docente'], { state: this.Usuario });
+                            break;
+                    }
+                })
+            }
+            else {
+                swal.fire({
+                    icon: 'error',
+                    title: 'Usuario o Contraseña Incorrectos',
+                    text: 'Usuario o Contraseña Incorrectos'
+                });
+            }
         });
     }
 

@@ -1,0 +1,105 @@
+<navbarr [Usuario]="Usuario"></navbarr>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+</style>
+
+<div class="titulo">
+  <div class="titulotxt">
+    Asignación de Materias
+  </div>
+</div>
+
+<div style="margin-left: 10%; width: 80%; margin-top: 2%;" class="parent">
+  <div class="div2">
+    <label class="texto" for="tipoDocente">Periodo:</label><br>
+    <select class="inputcss" id="periodo" name="periodo" disabled="true" [(ngModel)]="Materia.Periodo">
+      <option value="" disabled selected hidden>-- Seleccionar Periodo--</option>
+      <option *ngFor="let periodo of Periodos" [value]="periodo">{{ periodo }}</option>
+    </select>
+  </div>
+
+  <div class="div5">
+    <label class="texto" for="tipoDocente">Materia:</label><br>
+    <select class="inputcss" id="materia" name="materia" (change)="habilitarBuscador()" (change)="maestrostablamet()"
+      disabled="true" [(ngModel)]="Materia.Nombre">
+      <option value="" disabled selected hidden>--Seleccionar Materia--</option>
+      <option *ngFor="let materia of materias" [value]="materia.Nombre">{{materia.Nombre}} </option>
+    </select>
+  </div>
+
+  <div class="div3">
+    <div style="padding-top: 15px;" class="contenedor4">
+      <div style="align-items: center; justify-content: center; vertical-align: middle;">
+        <button style="padding-bottom: 8px;" class="btn b1 " (click)="buscarMaterias()"><svg
+            xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search"
+            viewBox="0 0 16 16">
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+          </svg></button>
+        <label class="txtcuadro2">Buscar Materias</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="div1">
+    <label class="texto" for="tipoDocente">Carrera:</label><br>
+    <select class="inputcss" id="tipoDocente" name="tipoDocente" (change)="obtenerPeriodos()"
+      [(ngModel)]="Carrera.Nombre">
+      <option value="" disabled selected hidden>--Seleccionar Carrera--</option>
+      <option *ngFor="let carrera of carreras" [value]="carrera.Nombre">{{carrera.Nombre}}</option>
+    </select>
+  </div>
+
+  <div class="div6">
+    <label class="texto" for="tipoDocente">Asignar a Docente:</label><br>
+    <div style="display: flex;">
+      <input style="width: 750px;" type="text" class=" inputcss" id="profe" placeholder="Buscar Docente" disabled="true"
+        (change)="buscaprofes2()" [(ngModel)]="maestroBD">
+
+      <div *ngIf="buscador && maestroBD && maestrosBuscados.length > 0" class="">
+        <div *ngFor="let profes of maestrosBuscados; index as i" class="">
+          <div (click)="pasardato(profes)">
+            <label [(ngModel)]="profesorsillo[i]">{{profes.Nombre}}</label>
+          </div>
+        </div>
+      </div>
+
+      <button style="font-size: large;  width: 350px; margin-left: 5px; padding: 2px; background-color: #B60D44;"
+        class="btn btn-danger" type="button">Asignar</button>
+    </div>
+  </div>
+</div>
+
+<div class="titulo2">
+  <div class="titulotxt2">
+    Maestros con la Materia Asignada </div>
+</div>
+
+<div style="margin-left: 10%; width: 80%; height: 250px; margin-top: 1%;" class="overflow-auto over">
+  <table style="width: 100%;" class="table overflow-scroll">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Tipo de Docente</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Materias</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let maestro of maestrostabla, index as i">
+        <td>{{maestro.Nombre}}</td>
+        <td>{{maestro.TipoMaestro}}</td>
+        <td>{{maestro.Correo}}</td>
+        <!-- <td>{{maestro.Materias[1]}}</td> -->
+        <td><button (click)="borrarMateria(i)" type="button" class="btn btn-danger eliminar"><svg
+              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill"
+              viewBox="0 0 16 16">
+              <path
+                d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+            </svg></button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

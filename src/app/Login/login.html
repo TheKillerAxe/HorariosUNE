@@ -21,65 +21,83 @@
       <div style="align-items: center; justify-content: center; display: flex;">
         <img style="width: 80%; margin-top: 10%; margin-bottom: 2%;" src="https://imgur.com/Qxrhuhm.png" alt="">
       </div>
-      <h4 style="text-align: center; padding-bottom: 5%; font-size: 25px; font-family: 'Roboto Slab';"><b>Generación de Horarios</b></h4>
+      <h4 style="text-align: center; padding-bottom: 5%; font-size: 25px; font-family: 'Roboto Slab';"><b>Generación de
+          Horarios</b></h4>
       <div class="group">
-        <input type="text"><span class="highlight"></span><span class="bar"></span>
+        <input type="text" [(ngModel)]="Usuario.NombreUsuario" name="usuario">
+        <span class="highlight"></span><span class="bar"></span>
         <label style="font-family:'Roboto Slab'">Usuario</label>
       </div>
       <div class="group">
-        <input type="email"><span class="highlight"></span><span class="bar"></span>
+        <input type="text" [(ngModel)]="Usuario.Contrasena" name="contraseña">
+        <span class="highlight"></span><span class="bar"></span>
         <label style="font-family:'Roboto Slab'">Contraseña</label>
-        <button (click)="navigate('inicio')"  class="button buttonBlue" style="font-family:'Roboto Slab'"><b>Entrar</b></button>
+        <button (click)="login()" class="button buttonBlue" style="font-family:'Roboto Slab'"><b>Entrar</b></button>
       </div>
     </form>
   </div>
 </div>
-    <!--HTML de Login-->
-  
-   
+<!--HTML de Login-->
+
+
 
 <style>
   .divP {
-  display: flex;
-  flex-direction: column; /* Cambia la dirección de la columna en pantallas pequeñas */
-  align-items: center; /* Centra el contenido verticalmente */
-  text-align: center; /* Centra el texto horizontalmente */
-  margin: 0; /* Elimina el margen superior e inferior */
-  padding: 0; /* Elimina el relleno */
-}
-
-.obj1, .obj2 {
-  width: 100%; /* Ocupan todo el ancho disponible */
-  margin: 0; /* Elimina el margen superior e inferior */
-  padding: 0; /* Elimina el relleno */
-}
-
-/* Estilo para pantallas medianas y grandes */
-@media (min-width: 768px) {
-  .divP {
-    flex-direction: row; /* Vuelve a la dirección de fila en pantallas más grandes */
+    display: flex;
+    flex-direction: column;
+    /* Cambia la dirección de la columna en pantallas pequeñas */
+    align-items: center;
+    /* Centra el contenido verticalmente */
+    text-align: center;
+    /* Centra el texto horizontalmente */
+    margin: 0;
+    /* Elimina el margen superior e inferior */
+    padding: 0;
+    /* Elimina el relleno */
   }
 
-  .obj1, .obj2 {
-    width: 50%; /* Divide el ancho en dos columnas iguales */
-    margin: 0; /* Elimina el margen superior e inferior */
-    padding: 0; /* Elimina el relleno */
+  .obj1,
+  .obj2 {
+    width: 100%;
+    /* Ocupan todo el ancho disponible */
+    margin: 0;
+    /* Elimina el margen superior e inferior */
+    padding: 0;
+    /* Elimina el relleno */
   }
 
-  .obj2 form {
-    margin: 0 auto; /* Ajusta el margen horizontal del formulario */
-    width: 60%; /* Cambia el ancho del formulario en pantallas grandes */
+  /* Estilo para pantallas medianas y grandes */
+  @media (min-width: 768px) {
+    .divP {
+      flex-direction: row;
+      /* Vuelve a la dirección de fila en pantallas más grandes */
+    }
+
+    .obj1,
+    .obj2 {
+      width: 50%;
+      /* Divide el ancho en dos columnas iguales */
+      margin: 0;
+      /* Elimina el margen superior e inferior */
+      padding: 0;
+      /* Elimina el relleno */
+    }
+
+    .obj2 form {
+      margin: 0 auto;
+      /* Ajusta el margen horizontal del formulario */
+      width: 60%;
+      /* Cambia el ancho del formulario en pantallas grandes */
+    }
   }
-}
 </style>
-    
+
 
 
 
 
 <!--css de la chica y sus divs-->
 <style>
- 
   .container {
     position: relative;
     width: 100%;
@@ -87,16 +105,18 @@
   }
 
   .div6 {
-  height: 39%;
-  width: 18%;
-  position: absolute;
-  top: 0;
-  left: 37%;
-  z-index: 3; /* Asegura que div6 esté por encima de otros elementos */
-  background: linear-gradient(to top right, #B60D44,#B60D44, #460080); /* Degradado de rojo a morado */
-  background-size:100% 100% ;
-  background-repeat: no-repeat;
-}
+    height: 39%;
+    width: 18%;
+    position: absolute;
+    top: 0;
+    left: 37%;
+    z-index: 3;
+    /* Asegura que div6 esté por encima de otros elementos */
+    background: linear-gradient(to top right, #B60D44, #B60D44, #460080);
+    /* Degradado de rojo a morado */
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
 
   .div5 {
     height: 39%;
@@ -105,7 +125,8 @@
     top: 0;
     left: 55%;
     background-color: #ffffff;
-    z-index: 3; /* Asegura que div3 esté por encima de otros elementos */
+    z-index: 3;
+    /* Asegura que div3 esté por encima de otros elementos */
   }
 
   .div4 {
@@ -115,9 +136,10 @@
     top: 39%;
     left: 55%;
     background-color: #B60D44;
-    z-index: 3; /* Asegura que div3 esté por encima de otros elementos */
+    z-index: 3;
+    /* Asegura que div3 esté por encima de otros elementos */
   }
-  
+
   .div3 {
     height: 45%;
     width: 27%;
@@ -125,9 +147,10 @@
     top: 55%;
     left: 78%;
     background-color: #B60D44;
-    z-index: 2; /* Asegura que div3 esté por encima de otros elementos */
+    z-index: 2;
+    /* Asegura que div3 esté por encima de otros elementos */
   }
-  
+
   .div2 {
     height: 55%;
     width: 29%;
@@ -135,51 +158,57 @@
     top: 0;
     left: 78%;
     background-color: #ffffff;
-    z-index: 1; /* Asegura que div2 esté por debajo de otros elementos */
+    z-index: 1;
+    /* Asegura que div2 esté por debajo de otros elementos */
   }
-  </style>
+</style>
 
-  <!--css del login-->
-  <style>
-
-
-body {
+<!--css del login-->
+<style>
+  body {
 
     font-family: Helvetica;
     background: #eee;
-  -webkit-font-smoothing: antialiased;
-  border-radius: 5%;
-}
+    -webkit-font-smoothing: antialiased;
+    border-radius: 5%;
+  }
 
-hgroup { 
-    text-align:center;
+  hgroup {
+    text-align: center;
     margin-top: 4em;
-}
+  }
 
-h1, h3 { font-weight: 300; }
+  h1,
+  h3 {
+    font-weight: 300;
+  }
 
-h1 { color: #636363; }
+  h1 {
+    color: #636363;
+  }
 
-h3 { color: #B60D44; }
+  h3 {
+    color: #B60D44;
+  }
 
-form {
-margin-top: 15%;
-  margin-left: 15%;
+  form {
+    margin-top: 15%;
+    margin-left: 15%;
     width: 50%;
-  height: 65%;
+    height: 65%;
     padding: 2em 2em 2em 2em;
     background: #fafafa;
     border: 1px solid #ebebeb;
-    box-shadow: rgba(0,0,0,0.14902) 2px 2px 2px 2px,rgba(0,0,0,0.09804) 2px 2px 2px 2px;
-  border-radius: 5%;
-}
+    box-shadow: rgba(0, 0, 0, 0.14902) 2px 2px 2px 2px, rgba(0, 0, 0, 0.09804) 2px 2px 2px 2px;
+    border-radius: 5%;
+  }
 
-.group { 
-    position: relative; 
-    margin-bottom: 45px; 
-}
+  .group {
+    position: relative;
+    margin-bottom: 45px;
+  }
 
-input {
+  input {
     font-size: 18px;
     padding: 10px 10px 10px 5px;
     -webkit-appearance: none;
@@ -190,15 +219,17 @@ input {
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #757575;
-}
+  }
 
-input:focus { outline: none; }
+  input:focus {
+    outline: none;
+  }
 
 
-/* Label */
+  /* Label */
 
-label {
-    color: #999; 
+  label {
+    color: #999;
     font-size: 18px;
     font-weight: normal;
     position: absolute;
@@ -206,106 +237,124 @@ label {
     left: 5px;
     top: 10px;
     transition: all 0.2s ease;
-}
+  }
 
 
-/* active */
+  /* active */
 
-input:focus ~ label, input.used ~ label {
+  input:focus~label,
+  input.used~label {
     top: -20px;
-  transform: scale(.75); left: -2px;
+    transform: scale(.75);
+    left: -2px;
     /* font-size: 14px; */
     color: #B60D44;
-}
+  }
 
 
-/* Underline */
+  /* Underline */
 
-.bar {
+  .bar {
     position: relative;
     display: block;
     width: 100%;
-}
+  }
 
-.bar:before, .bar:after {
+  .bar:before,
+  .bar:after {
     content: '';
-    height: 2px; 
+    height: 2px;
     width: 0;
-    bottom: 1px; 
+    bottom: 1px;
     position: absolute;
-    background: #B60D44; 
+    background: #B60D44;
     transition: all 0.2s ease;
-}
+  }
 
-.bar:before { left: 50%; }
+  .bar:before {
+    left: 50%;
+  }
 
-.bar:after { right: 50%; }
+  .bar:after {
+    right: 50%;
+  }
 
 
-/* active */
+  /* active */
 
-input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
+  input:focus~.bar:before,
+  input:focus~.bar:after {
+    width: 50%;
+  }
 
 
-/* Highlight */
+  /* Highlight */
 
-.highlight {
+  .highlight {
     position: absolute;
-    height: 60%; 
-    width: 100px; 
-    top: 25%; 
+    height: 60%;
+    width: 100px;
+    top: 25%;
     left: 0;
     pointer-events: none;
     opacity: 0.5;
-}
+  }
 
 
-/* active */
+  /* active */
 
-input:focus ~ .highlight {
+  input:focus~.highlight {
     animation: inputHighlighter 0.3s ease;
-}
+  }
 
 
-/* Animations */
+  /* Animations */
 
-@keyframes inputHighlighter {
-    from { background: #B60D44; }
-    to 	{ width: 0; background: transparent; }
-}
+  @keyframes inputHighlighter {
+    from {
+      background: #B60D44;
+    }
 
-
-/* Button */
-
-.button {
-  height: 35%;
-  position: relative;
-  display: block;
-  margin: 8% auto 0; /* Cambiado el margen superior a 5% */
-  padding: 12px 24px;
-  width: auto;
-  vertical-align: middle;
-  color: #fff;
-  font-size: 16px;
-  line-height: 100%;
-  text-align: center;
-  letter-spacing: 1px;
-  background: transparent;
-  border: 0;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.button:focus { outline: 0; }
-
-.buttonBlue {
-  background: #B60D44;
-  height: 53px;
-}
-
-.buttonBlue:hover { background: #c02659; }
+    to {
+      width: 0;
+      background: transparent;
+    }
+  }
 
 
+  /* Button */
 
-  </style>
+  .button {
+    height: 35%;
+    position: relative;
+    display: block;
+    margin: 8% auto 0;
+    /* Cambiado el margen superior a 5% */
+    padding: 12px 24px;
+    width: auto;
+    vertical-align: middle;
+    color: #fff;
+    font-size: 16px;
+    line-height: 100%;
+    text-align: center;
+    letter-spacing: 1px;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .button:focus {
+    outline: 0;
+  }
+
+  .buttonBlue {
+    background: #B60D44;
+    height: 53px;
+  }
+
+  .buttonBlue:hover {
+    background: #c02659;
+  }
+</style>

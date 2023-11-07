@@ -2,34 +2,28 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { navbarComponent } from './navbarr/navbarr';
 import { loginComponent } from './Login/login';
+import { MenuAdminComponent } from './menu-admin/menu-admin.component';
+import { MenuDocentesComponent } from './menu-docentes/menu-docentes.component';
+import { MenuInglesComponent } from './menu-ingles/menu-ingles.component';
 import { AltadocentesComponent } from './altadocentes/altadocentes.component';
-import { Horarios2Component } from './horarios2/horarios2.component';
-import { menuComponent } from './menu/menu';
+import { HorarioComponent } from './horario/horario.component';
 import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.component';
-import { generarhorarioPruebaComponent } from './generarhorarioPRUEBA/generarhorarioPrueba';
-import { altamaestrosPrueba } from './altamaestrosPRUEBA/altamaestrosPrueba';
-import { imprimirhorarioPruebaComponent } from './imprimirhorarioPRUEBA/imprimirhorarioPrueba';
-import { MenuingComponent } from './menuing/menuing.component';
-import { MenudocentesComponent } from './menudocentes/menudocentes.component';
-import { AsignarmateriasComponent } from './asignarmaterias/asignarmaterias.component';
-import { DisponibilidadComponent } from './disponibilidad/disponibilidad.component';
-import { HorarioinglesComponent } from './horarioingles/horarioingles.component';
-import { EditaruserComponent } from './editaruser/editaruser.component';
+import { AsignarMateriasComponent } from './asignar-materias/asignar-materias.component';
+import { DisponibilidadDocenteComponent } from './disponibilidad-docente/disponibilidad-docente.component';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 const routes: Routes = [
   { path: "", component: loginComponent },
-  { path: "registro", component: AltadocentesComponent },
   { path: "navbarr", component: navbarComponent },
-  { path: "inicio", component: menuComponent },
-  { path: "horarios", component: Horarios2Component },
-  { path: "imprimirh", component: ImprimirhorarioComponent },
-  { path: "menudocentes", component: MenudocentesComponent },
-  { path: "menuingles", component: MenuingComponent },
-  { path: "asignarmaterias", component: AsignarmateriasComponent },
-  { path: "disponibilidad", component: DisponibilidadComponent },
-  { path: "horarioingles", component: HorarioinglesComponent },
-  { path: "editaruser", component: EditaruserComponent }
- 
+  { path: "admin", component: MenuAdminComponent },
+  { path: "docente", component: MenuDocentesComponent },
+  { path: "ingles", component: MenuInglesComponent },
+  { path: "alta", component: AltadocentesComponent },
+  { path: "asignar", component: AsignarMateriasComponent },
+  { path: "horario", component: HorarioComponent },
+  { path: "imprimir", component: ImprimirhorarioComponent },
+  { path: "disponibilidad", component: DisponibilidadDocenteComponent },
+  { path: "configuracion", component: ConfiguracionComponent }
 ];
 
 @NgModule({

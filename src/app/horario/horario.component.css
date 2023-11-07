@@ -5,8 +5,7 @@ body {
 }
 
 
-.titulo
-{
+.titulo {
     height: auto;
     width: 100%;
     margin-top: 3%;
@@ -14,7 +13,7 @@ body {
     justify-content: center;
 }
 
-.contenedor-botones{
+.contenedor-botones {
     width: 2000px;
     vertical-align: middle;
 }
@@ -65,25 +64,13 @@ body {
     margin-left: 5px;
 }
 
-.txtcuadro3 {
-    font-family: 'Roboto Slab';
-    font-size: 22px;
-    font-weight: bold;
-    color: rgb(188, 32, 75);
-    margin-left: 5px;
-}
-
 .contenedor {
     display: flex;
-    align-items: center; 
+    align-items: center;
     margin-right: 0px;
     justify-content: center;
-    align-items: center;
 }
-.contenedora {
-    display: flex;
-    margin-right: 0px;
-}
+
 .contenedor2 {
     display: flex;
     float: left;
@@ -97,10 +84,11 @@ body {
 
 .contenedor4 {
     display: flex;
-    align-items: center; 
+    align-items: center;
     margin-right: 0px;
     justify-content: center;
 }
+
 .a-container {
     overflow: hidden;
 }
@@ -110,33 +98,33 @@ body {
     position: relative;
     display: inline-block;
     margin-left: 8px;
-    width: 217px;
-    border: 2px solid rgb(188,32,75);
+    width: 200px;
+    border: 2px solid rgb(188, 32, 75);
 }
 
 
 
 
 
-.btn{
+.btn {
     font-size: 14px;
     flex: 4;
     padding: 5px 10px;
 }
 
 
-.b2{
+.b2 {
     background-color: rgb(188, 32, 76);
-    color:white; 
+    color: white;
     font-family: 'Roboto Slab';
     height: 50px;
-    font-size:30px;
-    width: 50px; 
-    border-radius: 50%; 
-  text-align: center; 
-  line-height: 20px; 
- margin-bottom: 15px;
-}  
+    font-size: 30px;
+    width: 50px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 15px;
+}
 
 
 
@@ -151,7 +139,7 @@ body {
 
 .horario {
     display: grid;
-    grid-template-columns: 220px repeat(6, 1fr);
+    grid-template-columns: 200px repeat(6, 1fr);
     grid-gap: 3px;
     max-width: 2000px;
     margin: 0 auto;
@@ -161,7 +149,7 @@ body {
 
 
 .dias {
-    background-color: rgb(188,32,75);
+    background-color: rgb(188, 32, 75);
     text-align: center;
     color: white;
     font-family: 'Roboto Slab';
@@ -190,14 +178,10 @@ body {
 
 .dia {
     grid-column: span 1;
-    background-color: rgb(188,32,75);
+    background-color: rgb(188, 32, 75);
     text-align: center;
     color: white;
     font-family: 'Roboto Slab';
-
-
-
-
 }
 
 
@@ -207,94 +191,110 @@ body {
     border: 1px solid #ccc;
     width: 220px;
     height: 100px;
-    font-size: 14px;
+    font-size: 17px;
     font-family: 'Roboto Slab';
     text-align: center;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    line-height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 25px;
 }
 
-.b{
+.b {
     background-color: rgb(188, 32, 76);
-    color:white; 
+    color: white;
     font-family: 'Roboto Slab';
     height: 40px;
-    font-size:16px;
+    font-size: 16px;
     width: 200px;
 }
 
-.b3{
+.b3 {
     background-color: rgb(188, 32, 76);
-    color:white; 
+    color: white;
     font-family: 'Roboto Slab';
     height: 40px;
-    font-size:16px;
-    width: 220px;
-    border: 0px ;
+    font-size: 16px;
+    width: 210px;
+    border: 0px;
     border-radius: 6px;
 }
 
-.b6{
+.b4 {
     background-color: rgb(188, 32, 76);
-    color:white; 
+    color: white;
     font-family: 'Roboto Slab';
     height: 40px;
-    font-size:16px;
+    font-size: 16px;
     width: 210px;
-    border: 0px ;
-    border-radius: 6px;
-    margin-left: 33%;
-}
-
-
-
-.b4{
-    background-color: rgb(188, 32, 76);
-    color:white; 
-    font-family: 'Roboto Slab';
-    height: 40px;
-    font-size:16px;
-    width: 210px;
-    border: 0px ;
+    border: 0px;
     border-radius: 6px;
     margin-left: 26%;
 }
 
-.b1{
+.b1 {
     background-color: rgb(188, 32, 76);
-    color:white; 
+    color: white;
     font-family: 'Roboto Slab';
     height: 50px;
-    font-size:30px;
-    width: 50px; 
-    border-radius: 50%; 
-  text-align: center; 
-  line-height: 20px; 
- 
-}  
+    font-size: 30px;
+    width: 50px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+
+}
 
 
 
-.celda:hover{
-background-color:#eceaea;
+.celda:hover {
+    background-color: #eceaea;
+}
+
+.celdaresaltar:hover {
+    background-color: #e45858;
 }
 
 
 
 .dato-agregado {
     background-color: rgb(188, 32, 76);
-    color:white; 
- }
+    color: white;
+}
 
 
-  .dato-agregado:hover {
+.dato-agregado:hover {
     background-color: rgb(188, 32, 76) !important;
-    color:white; 
-    
-  }
+    color: white;
 
- 
+}
 
- 
+.materia-seminario {
+    background-color: rgb(96, 146, 255);
+    color: white;
+}
+
+.materia-seminario:hover {
+    background-color: rgb(96, 146, 255) !important;
+    color: white;
+}
+
+.materia-costos {
+    background-color: rgb(115, 113, 255);
+    color: white;
+}
+
+.materia-costos:hover {
+    background-color: rgb(115, 113, 255) !important;
+    color: white;
+}
+
+.materia-algebra {
+    background-color: rgb(243, 95, 181);
+    color: white;
+}
+
+.materia-algebra:hover {
+    background-color: rgb(243, 95, 181) !important;
+    color: white;
+}

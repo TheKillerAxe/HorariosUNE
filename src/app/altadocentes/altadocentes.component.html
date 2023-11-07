@@ -1,15 +1,15 @@
-<navbarr></navbarr>
+<navbarr [Usuario]="Usuario"></navbarr>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-  </style>
+</style>
 
-<div class="titulo"> 
+<div class="titulo">
     <div class="titulotxt">
         Registro de Usuarios
     </div>
 </div>
 
-<div class="subtitulo"> 
+<div class="subtitulo">
     <div class="subtitulotxt">
         Registros Individuales
     </div>
@@ -18,50 +18,49 @@
 <div class="parent">
     <div class="div1">
         <label class="texto" for="nombre">Usuario:</label><br>
-        <input class="inputcss" type="text" id="usuario" name="usuario" [(ngModel)]="usuario">
+        <input class="inputcss" type="text" id="usuario" name="usuario" [(ngModel)]="NuevoUsuario.NombreUsuario">
     </div>
-    <div class="div2"> 
+    <div class="div2">
         <label class="texto" for="nombre">Nombre:</label><br>
-        <input class="inputcss" type="text" id="nombre" name="nombre" [(ngModel)]="nombre">
+        <input class="inputcss" type="text" id="nombre" name="nombre" [(ngModel)]="NuevoUsuario.Nombre">
     </div>
-    <div class="div3"> 
+    <div class="div3">
         <label class="texto" for="nombre">Correo:</label><br>
-        <input class="inputcss" type="email" id="correo" name="correo" [(ngModel)]="correo">
+        <input class="inputcss" type="email" id="correo" name="correo" [(ngModel)]="NuevoUsuario.Correo">
     </div>
-    <div class="div4"> 
+    <div class="div4">
         <label class="texto" for="tipoDocente">Tipo de Docente:</label><br>
-        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="tipo">
+        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="NuevoUsuario.TipoMaestro">
             <option value="" disabled selected hidden>--Seleccionar tipo de docente--</option>
-            <option value="B">Honorario</option>
-            <option value="C">Medio Tiempo</option>
-            <option value="D">Tiempo Completo</option>
+            <option value="H">Honorario</option>
+            <option value="MT">Medio Tiempo</option>
+            <option value="TC">Tiempo Completo</option>
         </select>
     </div>
-    <div class="div5"> 
+    <div class="div5">
         <label class="texto" for="contraseña">Contraseña:</label><br>
-        <input class="inputcss" type="password" id="contraseña" name="contraseña" [(ngModel)]="contrasena">
+        <input class="inputcss" type="password" id="contraseña" name="contraseña" [(ngModel)]="NuevoUsuario.Contrasena">
     </div>
-    <div class="div6"> 
-        <button class="botonune" (click)="subirdocente()">Registrar Usuario</button>
+    <div class="div6">
+        <button class="botonune" (click)="registro()">Registrar Usuario</button>
 
     </div>
-    </div>
+</div>
 <hr>
-<div class="subtitulo"> 
+<div class="subtitulo">
     <div class="subtitulotxt">
         Registros Masivos
     </div>
 </div>
-    
-    <div class="parent2">
-        <div class="div3"> 
-            <label class="texto" for="tipoDocente">Archivo de docentes:</label><br>
-            <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile01">
-              </div>            
+
+<div class="parent2">
+    <div class="div3">
+        <label class="texto" for="tipoDocente">Archivo de docentes:</label><br>
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="inputGroupFile01">
         </div>
-        <div class="div6"> 
-            <button class="botonune" (click)="guardar()">Subir Información</button>
-    
-        </div>
-        </div>
+    </div>
+    <div class="div6">
+        <button class="botonune" (click)="subirExcel()">Subir Información</button>
+    </div>
+</div>
