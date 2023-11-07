@@ -19,27 +19,30 @@
     <div class="parent">
         <div class="div2">
             <label class="texto" for="tipoDocente">Carrera:</label><br>
-            <select class="inputcss" id="tipoDocente" name="carrera" [(ngModel)]="Horario.Carrera">
+            <select class="inputcss" id="carrera" name="carrera" (change)="obtenerCiclos()" (change)="obtenerPeriodos()"
+                (change)="buscarHorario()" [(ngModel)]="Horario.Carrera">
                 <option value="" disabled selected hidden>--Seleccionar Carrera--</option>
-                <!---->
+                <option *ngFor="let carrera of Carreras" [value]="carrera.Nombre">{{carrera.IdCarrera}}</option>
             </select>
         </div>
         <div class="div3">
             <label class="texto" for="nombre">Ciclo Escolar:</label><br>
-            <select class="inputcss" id="tipoDocente" name="ciclo" disabled="true" [(ngModel)]="Horario.Ciclo">
+            <select class="inputcss" id="ciclo" name="ciclo" disabled="true" (change)="buscarHorario()"
+                [(ngModel)]="Horario.Ciclo">
                 <option value="" disabled selected hidden>---Seleccionar Ciclo--</option>
-                <!---->
+                <option *ngFor="let ciclo of Ciclos" [value]="ciclo">{{ciclo}}</option>
             </select>
         </div>
         <div class="div4">
             <label class="texto" for="nombre">Periodo:</label><br>
-            <select class="inputcss" id="tipoDocente" name="periodo" disabled="true" [(ngModel)]="Horario.Periodo">
+            <select class="inputcss" id="periodo" name="periodo" disabled="true" (change)="buscarHorario()"
+                [(ngModel)]="Horario.Periodo">
                 <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
-                <!---->
+                <option *ngFor="let periodo of Periodos" [value]="periodo">{{periodo}}</option>
             </select>
         </div>
         <div class="div6">
-            <button class="botonune" (click)="buscarHorario()">Imprimir Horario</button>
+            <button class="botonune" (click)="imprimirHorario()">Imprimir Horario</button>
         </div>
     </div>
     <hr>
@@ -50,15 +53,26 @@
     </div>
 
     <div class="parent2">
+        <div class="div2">
+            <label class="texto" for="tipoDocente">Ciclo:</label><br>
+            <select class="inputcss" id="tipoDocente" name="tipoDocente" (change)="buscarDisponibilidad()"
+                [(ngModel)]="Disponibilidad.Ciclo">
+                <option value="" disabled selected hidden>--Seleccionar Docente--</option>
+                <option>2023-01</option>
+                <option>2023-02</option>
+                <option>2023-03</option>
+            </select>
+        </div>
         <div class="div3">
             <label class="texto" for="tipoDocente">Docente:</label><br>
-            <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="Docente">
+            <select class="inputcss" id="tipoDocente" name="tipoDocente" (change)="buscarDisponibilidad()"
+                [(ngModel)]="Docente">
                 <option value="" disabled selected hidden>--Seleccionar Docente--</option>
-                <!---->
+                <option *ngFor="let docente of Docentes" [value]="docente.NombreUsuario">{{docente.Nombre}}</option>
             </select>
         </div>
         <div class="div6">
-            <button class="botonune" (click)="imprimirDocente()">Imprimir Horario</button>
+            <button class="botonune" (click)="imprimirDisponibilidad()">Imprimir Horario</button>
         </div>
     </div>
 
@@ -77,9 +91,45 @@
                 <div *ngFor="let fila of columna.registro; index as j">
                     <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
                     <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}">
-                        Desarrollo de aplicaciones moviles<br>
-                        Felipe Perez<br>
-                        Aula: 5.3
+                        {{fila.texto}} <br>
+                        {{fila.maestro}} <br>
+                        {{fila.salon}}
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div *ngIf="habilitarIrregular">
+                <div *ngFor="let columna of Horario.HorarioIrregular; index as i;">
+                    <div *ngFor="let fila of columna.registro; index as j">
+                        <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
+                        <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}">
+                            {{fila.texto}} <br>
+                            {{fila.maestro}} <br>
+                            {{fila.salon}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="horario-container" id="asddsa">
+        <div class="horario" id="impresionDocente">
+            <div class="dias">Días</div>
+            <div class="dia">Lunes</div>
+            <div class="dia">Martes</div>
+            <div class="dia">Miercoles</div>
+            <div class="dia">Jueves</div>
+            <div class="dia">Viernes</div>
+            <div class="dia">Sabado</div>
+
+            <div *ngFor="let columna of Disponibilidad.Disponibilidad; index as i;">
+                <div *ngFor="let fila of columna.registro; index as j">
+                    <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
+                    <div *ngIf="i != 0" class="celda">
+                        {{fila.hora}}
                     </div>
                 </div>
             </div>
