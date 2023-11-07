@@ -21,7 +21,7 @@
 
   <div class="div5">
     <label class="texto" for="tipoDocente">Materia:</label><br>
-    <select class="inputcss" id="materia" name="materia" (change)="habilitarBuscador()" (change)="maestrostablamet()"
+    <select class="inputcss" id="materia" name="materia" (change)="maestrostablamet()"
       disabled="true" [(ngModel)]="Materia.Nombre">
       <option value="" disabled selected hidden>--Seleccionar Materia--</option>
       <option *ngFor="let materia of materias" [value]="materia.Nombre">{{materia.Nombre}} </option>
@@ -44,7 +44,7 @@
 
   <div class="div1">
     <label class="texto" for="tipoDocente">Carrera:</label><br>
-    <select class="inputcss" id="tipoDocente" name="tipoDocente" (change)="obtenerPeriodos()"
+    <select class="inputcss" id="tipoDocente" name="tipoDocente"
       [(ngModel)]="Carrera.Nombre">
       <option value="" disabled selected hidden>--Seleccionar Carrera--</option>
       <option *ngFor="let carrera of carreras" [value]="carrera.Nombre">{{carrera.Nombre}}</option>
