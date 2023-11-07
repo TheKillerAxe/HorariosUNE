@@ -25,8 +25,10 @@ export class HorarioComponent {
   materiasOriginales: string[] = ["Seminario de tecnologias", "Algebra", "Costos"];
   materiasDuplicadas: string[] = this.materiasOriginales;
 
-  maestroSeleccionado = "";
-  materiaSeleccionada = "";
+  maestroRegular = "";
+  materiaRegular = "";
+  maestroIrregular = "";
+  materiaIrregular = "";
   HorasDisponibles = 0;
 
   mostrarHorarioIrregular: boolean = false;
@@ -203,7 +205,7 @@ export class HorarioComponent {
   buscarMaestro() {
     const DisponibilidadCol = collection(this.firestore, "DisponibilidadMaestro");
     const Query = query(DisponibilidadCol,
-      where("Nombre", "==", this.maestroSeleccionado),
+      where("Nombre", "==", this.maestroRegular),
       where("Ciclo", "==", this.Horario.Ciclo)
     );
 
@@ -216,7 +218,7 @@ export class HorarioComponent {
 
   resaltarMaestro() {
     if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != "") {
-      if (this.maestroSeleccionado != "") {
+      if (this.maestroRegular != "") {
         for (let i = 0; i < this.Disponibilidad.Disponibilidad.length; i++) {
           for (let j = 0; j < this.Disponibilidad.Disponibilidad[i].registro.length; j++) {
             if (this.Disponibilidad.Disponibilidad[i].registro[j].disponible) {
@@ -247,7 +249,7 @@ export class HorarioComponent {
   }
 
   habilitarHorario() {
-    if (this.maestroSeleccionado != "" && this.materiaSeleccionada != "") {
+    if (this.maestroRegular != "" && this.materiaRegular != "") {
       this.buscarMaestro();
     } else {
       this.horarioHabilitado = false;
@@ -257,8 +259,8 @@ export class HorarioComponent {
   openSwalModalR(i: number, j: number) {
     if (this.horarioHabilitado) {
       if (document.getElementById(`c${i}${j}`)?.classList.contains('dato-agregado')) {
-        const materiaSeleccionada = this.materiaSeleccionada;
-        const maestroSeleccionado = this.maestroSeleccionado;
+        const materiaSeleccionada = this.materiaRegular;
+        const maestroSeleccionado = this.maestroRegular;
 
         Swal.fire({
           title: 'Ingresa el salón',
@@ -316,8 +318,8 @@ export class HorarioComponent {
 
   openSwalModalI(i: number, j: number) {
     if (this.horarioHabilitado) {
-      const materiaSeleccionada = this.materiaSeleccionada;
-      const maestroSeleccionado = this.maestroSeleccionado;
+      const materiaSeleccionada = this.materiaRegular;
+      const maestroSeleccionado = this.maestroRegular;
 
       Swal.fire({
         title: 'Ingresa el salón',

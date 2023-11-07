@@ -11,7 +11,8 @@ export class Usuario {
     public NombreUsuario: string = "";                                             //Nombre de usuario para ingresar.
     public Correo: string = "";                                                    //Correo del usuario.
     public Contrasena: string = "";                                                //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
-    public Materias: string[] = new Array();    
+    public Materias: string[] = new Array();                                       //Materias que imparte el docente.
+    public CambiosRecientes: boolean = false;                                      //Variable auxiliar para el cambio de datos de usuario.
 
     constructor() { }
 
@@ -23,6 +24,7 @@ export class Usuario {
         this.NombreUsuario = data.NombreUsuario;
         this.Correo = data.Correo;
         this.Contrasena = data.Contrasena;
+        this.Materias = data.Materias;
     }
 }
 
@@ -68,7 +70,7 @@ export class Materia {
 
 /* Almacena los datos de la disponibilidad del horario del maestro. */
 export class DisponibilidadMaestro {
-    public IdMaestro: string = "";                                                 //ID del maestro al que pertenece la disponibilidad.
+    public IdDisponibilidad: string = "";                                                 //ID del maestro al que pertenece la disponibilidad.
     public Nombre: string = "";                                                    //Nombre del maestro al que pertenece la disponibilidad.
     public Ciclo: string = "";                                                     //Ciclo escolar al que pertenece la disponibilidad.
     public Disponibilidad: RegistroHorario[] = new Array();                        //Indica cuando está disponible el maestro.
@@ -102,7 +104,7 @@ export class DisponibilidadMaestro {
     }
 
     setData(data: any) {
-        this.IdMaestro = data.IdMaestro;
+        this.IdDisponibilidad = data.IdMaestro;
         this.Nombre = data.Nombre;
         this.Ciclo = data.Ciclo;
         this.Disponibilidad = data.Disponibilidad;

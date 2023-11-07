@@ -11,6 +11,7 @@ import { ImprimirhorarioComponent } from './imprimirhorario/imprimirhorario.comp
 import { AsignarMateriasComponent } from './asignar-materias/asignar-materias.component';
 import { DisponibilidadDocenteComponent } from './disponibilidad-docente/disponibilidad-docente.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
+import { HorarioInglesComponent } from './horario-ingles/horario-ingles.component';
 
 const routes: Routes = [
   { path: "", component: loginComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: "alta", component: AltadocentesComponent },
   { path: "asignar", component: AsignarMateriasComponent },
   { path: "horario", component: HorarioComponent },
+  { path: "horarioIngles", component: HorarioInglesComponent },
   { path: "imprimir", component: ImprimirhorarioComponent },
   { path: "disponibilidad", component: DisponibilidadDocenteComponent },
   { path: "configuracion", component: ConfiguracionComponent }

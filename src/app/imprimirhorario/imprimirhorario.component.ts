@@ -32,25 +32,24 @@ export class ImprimirhorarioComponent {
   }
 
   imprimirHorario() {
-    const DATA: any = document.getElementById('htmlData');
-    const doc = new jsPDF('l', 'pt', 'a4');
-    const options = {
-      background: 'white',
-      scale: 3,
-    };
+    if (this.Horario.Ciclo == '' || this.Horario.Carrera == '' || this.Horario.Periodo == '') {
+      Swal.fire('Por favor, seleccione todos los campos.', '', 'warning');
+      return;
+    } else {
+      const DATA: any = document.getElementById('impresion');
+      const doc = new jsPDF('p', 'pt', 'letter');
 
-    html2canvas(DATA, options).then((canvas) => {
-      const img = canvas.toDataURL('image/PNG');
-      const bufferX = 15; const bufferY = 15;
-      const imgProps = (doc as any).getImageProperties(img);
-      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
-      return doc;
-    }).then((docResult) => {
-      docResult.save(`${this.Horario.IdHorario}.pdf`);
-    });
+      doc.html(DATA!, {
+        html2canvas: {
+          scale: .6,
+        },
+        x: -90,
+        y: 39,
+        callback: function (doc) {
+          doc.save('Horario.pdf');
+        }
+      })
+    }
   }
 
   buscarHorario() {
@@ -81,6 +80,31 @@ export class ImprimirhorarioComponent {
         title: 'Favor de llenar los campos de Ciclo, Carrera y Periodo.',
         showConfirmButton: true
       });
+    }
+  }
+
+  buscarDocente() {
+
+  }
+
+  imprimirDocente() {
+    if (this.Docente === '') {
+      Swal.fire('Por favor seleccione todos los campos.', '', 'warning');
+      return;
+    } else {
+      const DATA: any = document.getElementById('impresion');
+      const doc = new jsPDF('p', 'pt', 'letter');
+
+      doc.html(DATA!, {
+        html2canvas: {
+          scale: .5,
+        },
+        x: -33,
+        y: 30,
+        callback: function (doc) {
+          doc.save('Horario Docente.pdf');
+        }
+      })
     }
   }
 }
