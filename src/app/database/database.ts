@@ -46,7 +46,7 @@ export class Carrera {
         this.Periodicidad = data.Periodicidad;
         this.CantidadPeriodos = data.CantidadPeriodos;
     }
-} 
+}
 
 /* Almacena todos los datos de una materia. */
 export class Materia {
@@ -115,7 +115,8 @@ export class DisponibilidadMaestro {
 
 /* Almacena los datos de la disponibilidad del horario de inglés. */
 export class DisponibilidadIngles {
-    public CicloEscolar: string = "";
+    public IdDisponibilidad: string = "";
+    public Ciclo: string = "";
     public Periodo: string = "";
     public Periodicidad: string = "";
     public Disponibilidad: RegistroHorario[] = new Array();
@@ -144,19 +145,20 @@ export class DisponibilidadIngles {
 
         for (let i = 1; i < 7; i++) {
             for (let j = 0; j < 16; j++) {
-                this.Disponibilidad[i].registro[j] = { texto: "" };
+                this.Disponibilidad[i].registro[j] = { texto: "", periodicidad: "", periodo: "", salon: "" };
                 this.Disponibilidad[i].registro[j].disponible = false;
             }
         }
     }
 
-    setData(data:any) {
-        this.CicloEscolar = data.CicloEscolar;
+    setData(data: any) {
+        this.IdDisponibilidad = data.IdDisponibilidad;
+        this.Ciclo = data.Ciclo;
         this.Periodo = data.Periodo;
         this.Periodicidad = data.Periodicidad;
         this.Disponibilidad = data.Disponibilidad;
     }
-} 
+}
 
 /* Clase auxiliar para las celdas del horario */
 export class RegistroHorario {
