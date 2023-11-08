@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
 import { Materia, Usuario } from '../database/database';
-import { Firestore, arrayUnion } from '@angular/fire/firestore';
-import { collection, query, where, collectionData, deleteField } from '@angular/fire/firestore';
-import { doc, setDoc, updateDoc, getDoc, getDocs, getFirestore, DocumentData, arrayRemove } from 'firebase/firestore';
-import { environment } from 'src/environments/environment';
+import { Firestore } from '@angular/fire/firestore';
+import { collection, query, where, collectionData } from '@angular/fire/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { Carrera } from '../database/database';
+
 import Swal from 'sweetalert2';
-import { realpath } from 'fs';
 
 @Component({
   selector: 'app-asignar-materias',
@@ -16,113 +15,162 @@ import { realpath } from 'fs';
 })
 export class AsignarMateriasComponent {
   Usuario: Usuario = new Usuario();
-  Carrera: Carrera = new Carrera();
-  Materia: Materia = new Materia();
+  docenteSeleccionado: Usuario = new Usuario();
 
-  carreras: DocumentData[] = [];
-  materias: DocumentData[] = [];
-  maestrostabla: DocumentData[] = [];
-
-  maestroBD: string = "";
-  profesorsillo: string[] = new Array();
+  Carreras: Carrera[] = new Array();
+  Materias: Materia[] = new Array();
   Periodos: number[] = new Array();
+  Asignados: Usuario[] = new Array();
+  profesorsillo: string[] = new Array();
+  Buscados: Usuario[] = new Array();
 
-  aidi = "";
-
-  maestrosBuscados: Usuario[] = new Array()
+  Carrera: number = 0;
+  Materia: number = 0;
+  Periodo: number = 0;
+  Maestro: string = "";
+  IdMaestro = "";
 
   constructor(private firestore: Firestore, private router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
       localStorage.setItem('Usuario', JSON.stringify(history.state));
     }
 
-    //this.traerCarreras();
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
 
     if (this.Usuario.TipoUsuario != "Admin") {
       this.router.navigate(['']);
     }
+
+    this.obtenerCarreras();
+  }
+
+  obtenerCarreras() {
+    const CarreraCol = collection(this.firestore, "Carrera");
+    const Query = query(CarreraCol);
+
+    collectionData(Query).subscribe((snapCarreras) => {
+      for (let i = 0; i < snapCarreras.length; i++) {
+        this.Carreras[i] = new Carrera();
+        this.Carreras[i].setData(snapCarreras[i]);
+      }
+    });
+  }
+
+  obtenerPeriodos() {
+    this.Periodos = new Array();
+
+    for (let i = 0; i < this.Carreras[this.Carrera].CantidadPeriodos; i++) {
+      this.Periodos[i] = i + 1;
+    }
+
+    (document.getElementById('periodo') as HTMLInputElement).disabled = false;
   }
 
   buscarMaterias() {
-    if (this.Carrera.Nombre != "" && this.Materia.Periodo != "") {
+    if (this.Carrera > -1 && this.Periodo != 0) {
+      this.Materias = new Array();
       const MateriasC = collection(this.firestore, "Materia");
-      const Query = query(MateriasC, where("Carrera", "==", this.Carrera.Nombre),
-        where("Periodo", "==", this.Materia.Periodo),
+      const Query = query(MateriasC,
+        where("Carrera", "==", this.Carreras[this.Carrera].Nombre),
+        where("Periodo", "==", this.Periodo)
       );
+
       collectionData(Query).subscribe((snapMaterias) => {
-        this.materias = new Array();
         if (snapMaterias.length > 0) {
-          snapMaterias.forEach((item: any) => {
-            let recInf = new Materia();
-            recInf.setData(item);
-            this.materias.push(recInf);
-            (document.getElementById('materia') as HTMLInputElement).disabled = false;
-          });
+          for (let i = 0; i < snapMaterias.length; i++) {
+            this.Materias[i] = new Materia();
+            this.Materias[i].setData(snapMaterias[i]);
+          }
         }
+      });
+
+      (document.getElementById('materia') as HTMLInputElement).disabled = false;
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Llene los campos de Carrera y Periodo.'
       });
     }
   }
 
-    buscaprofes2() {
-      //this.buscador = true
-      if (this.maestroBD.trim() !== '') {
-        const usuacioC = collection(this.firestore, "Usuario");
-        const Q = query(usuacioC, where("Nombre", "<=", this.maestroBD + '\uf8ff'), 
-                                  where("Nombre", ">=", this.maestroBD)); //Mod
-        collectionData(Q).subscribe((SnapMaestros) => {
-          this.maestrosBuscados = new Array()
-          if (SnapMaestros.length > 0) {
-            SnapMaestros.forEach((item: any) => {
-              let maestro = new Usuario();
-              maestro.setData(item);
-              this.maestrosBuscados.push(maestro);
-            })
-          }
-        });
-        };
-      }
-    
+  buscarAsignados() {
+    (document.getElementById('profe') as HTMLInputElement).disabled = false;
 
-    maestrostablamet(){
-      const maestrosC= collection(this.firestore,"Usuario");
-      const QueryM = query(maestrosC, where("Materias", "array-contains" , this.Materia.Nombre));
-      collectionData(QueryM).subscribe((snapM) =>{
-        this.maestrostabla = new Array();
-        if(snapM.length>0){
-          snapM.forEach((item:any)=>{
-            let recInf = new Usuario();
-            recInf.setData(item)
-            this.maestrostabla.push(recInf)
-          })        
+    this.Asignados = new Array();
+    const AsignadosCol = collection(this.firestore, "Usuario");
+    const Query = query(AsignadosCol,
+      where("TipoUsuario", "==", "Maestro"),
+      where("Materias", "array-contains", this.Materias[this.Materia].IdMateria)
+    );
+
+    collectionData(Query).subscribe((snapAsignados) => {
+      if (snapAsignados.length > 0) {
+        for (let i = 0; i < snapAsignados.length; i++) {
+          this.Asignados[i] = new Usuario();
+          this.Asignados[i].setData(snapAsignados[i]);
+        }
+      }
+    });
+  }
+
+  buscador() {
+    if (this.Maestro.trim() !== '') {
+      this.Buscados = new Array();
+      const MaestroCol = collection(this.firestore, "Usuario");
+      const Query = query(MaestroCol,
+        where("Nombre", "<=", this.Maestro + '\uf8ff'),
+        where("Nombre", ">=", this.Maestro)
+      );
+
+      collectionData(Query).subscribe((snapBuscados) => {
+        if (snapBuscados.length > 0) {
+          for (let i = 0; i < snapBuscados.length; i++) {
+            this.Buscados[i] = new Usuario();
+            this.Buscados[i].setData(snapBuscados[i]);
+          }
         }
       });
-    }
-
-    borrarMateria(i: number) {
-      delete this.maestrostabla[i].Materias[this.maestrostabla[i].Materias.indexOf(this.Materia.Nombre)]
-      // const maestrosC= collection(this.firestore,"Usuario")
-      // const QueryM = query(maestrosC);
-      let rutaDoc = doc(this.firestore, "Usuario", this.maestrostabla[i].IdUsuario); 
-       updateDoc(rutaDoc,{
-        Materias: this.maestrostabla[i].Materias
-      })
-    }
-
-    asignarMateria(){
-      if(this.Carrera.Nombre!="" && this.maestroBD!=""){
-       let rutaDoc = doc(this.firestore, "Usuario", this.aidi);
-       updateDoc(rutaDoc,{
-        Materias: arrayUnion(this.Materia.Nombre)
-      })
-    } else {
-      console.log("selecciona una materia y un maestro")
-    }
-
+    };
   }
 
   pasardato(profesor: Usuario) {
-    this.maestroBD = profesor.Nombre;
-    this.aidi = profesor.IdUsuario;
+    this.docenteSeleccionado = profesor;
+    this.Maestro = profesor.Nombre;
+  }
+
+  asignarMateria() {
+    if (this.docenteSeleccionado.IdUsuario != "") {
+      this.docenteSeleccionado.Materias.push(this.Materias[this.Materia].IdMateria);
+
+      let rutaDoc = doc(this.firestore, "Usuario", this.docenteSeleccionado.IdUsuario);
+      let data = {
+        Materias: this.docenteSeleccionado.Materias
+      };
+
+      updateDoc(rutaDoc, data);
+      this.buscarAsignados();
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'No se ha seleccionado ningún docente.'
+      });
+    }
+  }
+
+  borrarMateria(i: number) {
+    const docente = this.Asignados[i];
+    const materia = this.Materias[this.Materia].IdMateria;
+
+    docente.Materias.splice(docente.Materias.indexOf(materia), 1);
+
+    let rutaDoc = doc(this.firestore, "Usuario", docente.IdUsuario);
+    let data = {
+      Materias: docente.Materias
+    };
+
+    updateDoc(rutaDoc, data);
+    this.buscarAsignados();
   }
 }
