@@ -17,6 +17,11 @@ export class MenuAdminComponent {
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
 
+    if (this.Usuario.CambiosRecientes) {
+      this.Usuario.CambiosRecientes = false;
+      this.router.navigate(['configuracion'], { state: this.Usuario });
+    }
+
     if (this.Usuario.TipoUsuario != "Admin") {
       this.router.navigate(['']);
     }
