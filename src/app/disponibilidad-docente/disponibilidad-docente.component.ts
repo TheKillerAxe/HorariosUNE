@@ -17,6 +17,8 @@ export class DisponibilidadDocenteComponent {
   Disponibilidad: DisponibilidadMaestro = new DisponibilidadMaestro();
   DisponibilidadAux: DisponibilidadMaestro = new DisponibilidadMaestro();
 
+  Ciclos: string[] = new Array();
+
   habilitarDisponibilidad: boolean = false;
 
   constructor(private firestore: Firestore, private router: Router) {
@@ -29,13 +31,23 @@ export class DisponibilidadDocenteComponent {
     if (this.Usuario.TipoUsuario != "Maestro") {
       this.router.navigate(['']);
     }
+
+    this.obtenerCiclos();
+  }
+
+  obtenerCiclos() {
+    const añoActual = new Date().getFullYear();
+
+    this.Ciclos.push(`${añoActual}-01`);
+    this.Ciclos.push(`${añoActual}-02`);
+    this.Ciclos.push(`${añoActual}-03`);
   }
 
   cargarDisponibilidad() {
     if (this.Disponibilidad.Ciclo != "") {
       const DisponibilidadCol = collection(this.firestore, "DisponibilidadMaestro");
       const Query = query(DisponibilidadCol,
-        where("IdDisponibilidad", "==", `${this.Usuario.NombreUsuario}_${this.Disponibilidad.Ciclo}`),
+        where("IdDisponibilidad", "==", `${this.Usuario.IdUsuario}_${this.Disponibilidad.Ciclo}`),
         where("Ciclo", "==", this.Disponibilidad.Ciclo)
       );
       
@@ -94,7 +106,7 @@ export class DisponibilidadDocenteComponent {
         confirmButtonText: 'Aceptar'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.Disponibilidad.IdDisponibilidad = `${this.Usuario.NombreUsuario}_${this.Disponibilidad.Ciclo}`;
+          this.Disponibilidad.IdDisponibilidad = `${this.Usuario.IdUsuario}_${this.Disponibilidad.Ciclo}`;
           this.Disponibilidad.Nombre = this.Usuario.Nombre;
 
           let rutaDoc = doc(this.firestore, "DisponibilidadMaestro", this.Disponibilidad.IdDisponibilidad);
