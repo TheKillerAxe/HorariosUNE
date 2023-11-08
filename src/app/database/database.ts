@@ -1,5 +1,5 @@
 
-/* Almacena todos los datos del usuario. */
+/** Guarda toda la información del Usuario. */
 export class Usuario {
     //ID
     public IdUsuario: string = "";                                                 //ID del usuario.
@@ -28,7 +28,7 @@ export class Usuario {
     }
 }
 
-/* Almacena todos los datos de una carrera */
+/** Almacena todos los datos de una carrera */
 export class Carrera {
     //ID
     public IdCarrera: string = "";                                                 //ID de la carrera (Ej. ISCE-R o ISCE-I).
@@ -48,7 +48,7 @@ export class Carrera {
     }
 }
 
-/* Almacena todos los datos de una materia. */
+/** Almacena todos los datos de una materia. */
 export class Materia {
     //ID
     public IdMateria: string = "";                                                 //ID de la materia [INICIALESCARRERA-INICIALESMATERIA].
@@ -70,7 +70,7 @@ export class Materia {
     }
 }
 
-/* Almacena los datos de la disponibilidad del horario del maestro. */
+/** Almacena los datos del horario del maestro. */
 export class DisponibilidadMaestro {
     public IdDisponibilidad: string = "";                                          //ID del maestro al que pertenece la disponibilidad.
     public Nombre: string = "";                                                    //Nombre del maestro al que pertenece la disponibilidad.
@@ -113,7 +113,7 @@ export class DisponibilidadMaestro {
     }
 }
 
-/* Almacena los datos de la disponibilidad del horario de inglés. */
+/** Almacena los datos de la disponibilidad del horario de inglés. */
 export class DisponibilidadIngles {
     public IdDisponibilidad: string = "";
     public Ciclo: string = "";
@@ -160,14 +160,14 @@ export class DisponibilidadIngles {
     }
 }
 
-/* Clase auxiliar para las celdas del horario */
+/** Clase auxiliar para las celdas del horario */
 export class RegistroHorario {
     registro: any[] = new Array();
 
     constructor() { }
 }
 
-/* Almacena los datos de un horario */
+/** Almacena los datos de un horario */
 export class Horario {
     //ID
     public IdHorario: string = "";                                                 //ID del horario (Ej. ISCE-R-7-Horario).
