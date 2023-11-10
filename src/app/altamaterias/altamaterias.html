@@ -1,7 +1,4 @@
 <navbarr [Usuario]="Usuario"></navbarr>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-</style>
 
 <div class="titulo">
     <div class="titulotxt">
@@ -18,37 +15,31 @@
 <div class="parent">
     <div class="div1">
         <label class="texto" for="nombre">Nombre:</label><br>
-        <input class="inputcss" type="text" id="Nombre" name="Nombre">
+        <input class="inputcss" type="text" id="Nombre" placeholder="Nombre de la Materia" name="Nombre"
+            [(ngModel)]="Materia.Nombre">
     </div>
     <div class="div2">
         <label class="texto" for="tipoDocente">Carrera:</label><br>
-        <select class="inputcss" id="Carrera" name="Carrera" >
-            <option value="" disabled selected hidden>--Seleccionar carrera--</option>
-           
+        <select class="inputcss" id="Carrera" name="Carrera" (change)="obtenerPeriodos()" [(ngModel)]="Carrera">
+            <option [value]="-1" disabled selected hidden>--Seleccionar carrera--</option>
+            <option *ngFor="let carrera of Carreras; index as i" [value]="i">{{carrera.Nombre}}</option>
         </select>
     </div>
     <div class="div3">
         <label class="texto" for="tipoDocente">Periodo:</label><br>
-        <select class="inputcss" id="Periodo" name="Periodo" >
+        <select class="inputcss" id="Periodo" name="Periodo" disabled="true" [(ngModel)]="Materia.Periodo">
             <option value="" disabled selected hidden>--Seleccionar Periodo-</option>
-          
+            <option *ngFor="let periodo of Periodos" [value]="periodo.toString()">{{periodo}}</option>
         </select>
     </div>
     <div class="div4">
         <label class="texto" for="tipoDocente">Horas:</label><br>
-        <input class="inputcss" type="number" id="Horas" name="Horas">
-
+        <input class="inputcss" type="number" id="Horas" placeholder="Horas de la Materia" name="Horas" [(ngModel)]="Materia.Horas">
     </div>
-    <!-- <div class="div6">
-        <button class="botonune">Agregar Materia</button>
-
-    </div> -->
-   
-    
 </div>
 
 <div style="width:100%; align-items: center; justify-content: center; display: flex;">
-    <button class="botonune2">Agregar Materia</button>
+    <button class="botonune2" (click)="agregarMateria()">Agregar Materia</button>
 </div>
 <hr>
 <div class="subtitulo">
@@ -65,6 +56,6 @@
         </div>
     </div>
     <div class="div6">
-        <button class="botonune" >Subir Información</button>
+        <button class="botonune">Subir Información</button>
     </div>
 </div>
