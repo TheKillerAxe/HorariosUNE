@@ -66,7 +66,7 @@ export class Materia {
         this.Nombre = data.Nombre;
         this.Carrera = data.Carrera;
         this.Periodo = data.Periodo;
-        this.Horas = 4;
+        this.Horas = data.Horas;
     }
 }
 
