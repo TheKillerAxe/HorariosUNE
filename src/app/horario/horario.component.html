@@ -1,9 +1,5 @@
 <navbarr [Usuario]="Usuario"></navbarr>
 
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-</style>
-
 <div class="titulo">
     <div class="titulotxt">
         GENERAR HORARIO
@@ -17,9 +13,10 @@
         </div>
         <div class="datos">
             <select id="carrera" class="form-select input a" (change)="limpiarMaestroMateria()"
-                (change)="obtenerCiclos()" (change)="obtenerPeriodos()" [(ngModel)]="Horario.Carrera">
-                <option value="" disabled selected hidden>--Seleccionar Carrera--</option>
-                <option *ngFor="let carrera of Carreras" [value]="carrera.Nombre">{{carrera.IdCarrera}}</option>
+                (change)="obtenerCiclos()" (change)="obtenerPeriodos()" (change)="cargarIngles()"
+                [(ngModel)]="Carrera">
+                <option [value]="-1" disabled selected hidden>--Seleccionar Carrera--</option>
+                <option *ngFor="let carrera of Carreras; index as i" [value]="i">{{carrera.Nombre}}</option>
             </select>
         </div>
     </div>
@@ -28,7 +25,8 @@
             Ciclo<br> escolar
         </div>
         <div class="datos">
-            <select id="ciclo" class="form-select input a" disabled="true" [(ngModel)]="Horario.Ciclo">
+            <select id="ciclo" class="form-select input a" disabled="true" (change)="cargarIngles()"
+                [(ngModel)]="Horario.Ciclo">
                 <option value="" disabled selected hidden>--Seleccionar Ciclo--</option>
                 <option *ngFor="let ciclo of Ciclos" [value]="ciclo">{{ciclo}}</option>
             </select>
@@ -41,7 +39,7 @@
         </div>
         <div class="datos">
             <select id="periodo" class="form-select input a" disabled="true" (change)="limpiarMaestroMateria()"
-                [(ngModel)]="Horario.Periodo">
+                (change)="cargarIngles()" [(ngModel)]="Horario.Periodo">
                 <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
                 <option *ngFor="let periodo of Periodos" [value]="periodo">{{periodo}}</option>
             </select>
@@ -69,7 +67,7 @@
         <div class="datos">
             <select id="disabledSelect2" class="form-select input a" disabled="true" (change)="obtenerMaestros()"
                 (change)="obtenerHoras()" [(ngModel)]="materiaRegular">
-                <option [value]="0" disabled selected hidden>--Seleccionar Materia--</option>
+                <option [value]="-1" disabled selected hidden>--Seleccionar Materia--</option>
                 <option *ngFor="let materia of Materias; index as i" [value]="i">{{materia.Nombre}}</option>
             </select>
         </div>
@@ -138,7 +136,8 @@
     </div>
     <div class="contenedor3">
         <div style="align-items: center; justify-content: center; margin-top: 28px;">
-            <button type="button" class="btn b1" (click)="toggleIrregular()" [disabled]="Horario.Periodo == '1'">+</button>
+            <button type="button" class="btn b1" (click)="toggleIrregular()"
+                [disabled]="Horario.Periodo == '1'">+</button>
             <label class="txtcuadro2">Generar Horario Irregular</label>
         </div>
     </div>
@@ -159,7 +158,7 @@
             <div class="datos">
                 <select id="materiaI" class="form-select input a" disabled="true" (change)="obtenerMaestrosI()"
                     (click)="obtenerHorasI()" [(ngModel)]="materiaIrregular" disabled="true">
-                    <option [value]="0" disabled selected hidden>--Seleccionar Materia--</option>
+                    <option [value]="-1" disabled selected hidden>--Seleccionar Materia--</option>
                     <option *ngFor="let materia of Materias; index as i" [value]="i">{{materia.Nombre}}</option>
                 </select>
             </div>

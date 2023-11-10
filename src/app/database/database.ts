@@ -205,8 +205,8 @@ export class Horario {
 
         for (let i = 1; i < 7; i++) {
             for (let j = 0; j < 16; j++) {
-                this.HorarioRegular[i].registro[j] = { texto: "", salon: "", maestro: "" };
-                this.HorarioIrregular[i].registro[j] = { texto: "", salon: "", maestro: "" };
+                this.HorarioRegular[i].registro[j] = { texto: "", salon: "", maestro: "", periodicidad: "", periodo: "" };
+                this.HorarioIrregular[i].registro[j] = { texto: "", salon: "", maestro: "", periodicidad: "", periodo: "" };
             }
         }
     }
