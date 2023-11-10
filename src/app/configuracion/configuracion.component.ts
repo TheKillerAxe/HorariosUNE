@@ -59,7 +59,15 @@ export class ConfiguracionComponent {
         });
 
         this.Usuario.CambiosRecientes = true;
-        this.router.navigate(['docente'], { state: this.Usuario });
+        if (this.Usuario.TipoUsuario == "Admin") {
+          this.router.navigate(['admin'], { state: this.Usuario });
+        }
+        if (this.Usuario.TipoUsuario == "Maestro") {
+          this.router.navigate(['docente'], { state: this.Usuario });
+        }
+        if (this.Usuario.TipoUsuario == "Ingles") {
+          this.router.navigate(['ingles'], { state: this.Usuario });
+        }
       }
     });
   }
