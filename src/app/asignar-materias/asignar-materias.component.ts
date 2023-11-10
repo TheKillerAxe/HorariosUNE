@@ -147,9 +147,20 @@ export class AsignarMateriasComponent {
     this.Maestro = profesor.Nombre;
   }
 
+  eliminarDuplicados<T>(array: T[]) {
+    const result: T[] = [];
+    for (const item of array) {
+      if (!result.includes(item)) {
+        result.push(item);
+      }
+    }
+    return result;
+  }
+
   asignarMateria() {
     if (this.docenteSeleccionado.IdUsuario != "" || this.Materia != -1) {
       this.docenteSeleccionado.Materias.push(this.Materias[this.Materia].IdMateria);
+      this.docenteSeleccionado.Materias = this.eliminarDuplicados(this.docenteSeleccionado.Materias);
 
       let rutaDoc = doc(this.firestore, "Usuario", this.docenteSeleccionado.IdUsuario);
       let data = {
