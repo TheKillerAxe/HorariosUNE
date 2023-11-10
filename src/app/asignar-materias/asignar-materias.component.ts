@@ -24,8 +24,8 @@ export class AsignarMateriasComponent {
   profesorsillo: string[] = new Array();
   Buscados: Usuario[] = new Array();
 
-  Carrera: number = 0;
-  Materia: number = 0;
+  Carrera: number = -1;
+  Materia: number = -1;
   Periodo: number = 0;
   Maestro: string = "";
   IdMaestro = "";
@@ -42,6 +42,14 @@ export class AsignarMateriasComponent {
     }
 
     this.obtenerCarreras();
+  }
+
+  limpiarMaterias() {
+    (document.getElementById('materia') as HTMLInputElement).disabled = true;
+    this.Materia = -1;
+
+    (document.getElementById('profe') as HTMLInputElement).disabled = true;
+    this.Maestro = "";
   }
 
   obtenerCarreras() {
@@ -140,7 +148,7 @@ export class AsignarMateriasComponent {
   }
 
   asignarMateria() {
-    if (this.docenteSeleccionado.IdUsuario != "") {
+    if (this.docenteSeleccionado.IdUsuario != "" || this.Materia != -1) {
       this.docenteSeleccionado.Materias.push(this.Materias[this.Materia].IdMateria);
 
       let rutaDoc = doc(this.firestore, "Usuario", this.docenteSeleccionado.IdUsuario);
@@ -154,7 +162,7 @@ export class AsignarMateriasComponent {
       Swal.fire({
         position: 'center',
         icon: 'error',
-        title: 'No se ha seleccionado ningún docente.'
+        title: 'Seleccione una materia y un docente.'
       });
     }
   }

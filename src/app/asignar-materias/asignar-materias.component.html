@@ -1,9 +1,5 @@
 <navbarr [Usuario]="Usuario"></navbarr>
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-</style>
-
 <div class="titulo">
   <div class="titulotxt">
     Asignación de Materias
@@ -13,18 +9,19 @@
 <div style="margin-left: 10%; width: 80%; margin-top: 2%;" class="parent">
   <div class="div2">
     <label class="texto" for="tipoDocente">Periodo:</label><br>
-    <select class="inputcss" id="periodo" name="periodo" disabled="true" [(ngModel)]="Periodo">
-      <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
+    <select class="inputcss" id="periodo" name="periodo" disabled="true" (change)="limpiarMaterias()"
+      [(ngModel)]="Periodo">
+      <option [value]="0" disabled selected hidden>-- Seleccionar Periodo--</option>
       <option *ngFor="let periodo of Periodos" [value]="periodo">{{periodo}}</option>
     </select>
   </div>
 
   <div class="div5">
     <label class="texto" for="tipoDocente">Materia:</label><br>
-    <select class="inputcss" id="materia" name="materia" disabled="true" (change)="buscarAsignados()"
+    <select class="inputcss" id="materia" name="materia" (change)="buscarAsignados()" disabled="true"
       [(ngModel)]="Materia">
-      <option [value]="0" disabled selected hidden>--Seleccionar Materia--</option>
-      <option *ngFor="let materia of Materias; index as i" [value]="i">{{materia.Nombre}}</option>
+      <option [value]="-1" disabled selected hidden>--Seleccionar Materia--</option>
+      <option *ngFor="let materia of Materias; index as i" [value]="i">{{materia.Nombre}} </option>
     </select>
   </div>
 
@@ -44,8 +41,9 @@
 
   <div class="div1">
     <label class="texto" for="tipoDocente">Carrera:</label><br>
-    <select class="inputcss" id="tipoDocente" name="tipoDocente" (change)="obtenerPeriodos()" [(ngModel)]="Carrera">
-      <option [value]="0" disabled selected hidden>--Seleccionar Carrera--</option>
+    <select class="inputcss" id="tipoDocente" name="tipoDocente" (change)="obtenerPeriodos()"
+      (change)="limpiarMaterias()" [(ngModel)]="Carrera">
+      <option [value]="-1" disabled selected hidden>--Seleccionar Carrera--</option>
       <option *ngFor="let carrera of Carreras; index as i" [value]="i">{{carrera.Nombre}}</option>
     </select>
   </div>
@@ -53,21 +51,26 @@
   <div class="div6">
     <label class="texto" for="tipoDocente">Asignar a Docente:</label><br>
     <div style="display: flex;">
-      <input style="width: 750px;" type="text" class=" inputcss" id="profe" placeholder="Buscar Docente" disabled="true"
-        [(ngModel)]="Maestro">
+      <input type="text" id="profe" class="barra-buscar" placeholder="Buscar Docente" style="color: black !important"
+        disabled="true" [(ngModel)]="Maestro" />
 
-      <button (click)="buscador()">buscar</button>
-
-      <div class="">
-        <div *ngFor="let profes of Buscados; index as i" class="">
-          <div (click)="pasardato(profes)">
-            <label [(ngModel)]="profesorsillo[i]">{{profes.Nombre}}</label>
-          </div>
-        </div>
-      </div>
+      <button style="padding-bottom: 9px;" class="btn b2 " (click)="buscador()"><svg xmlns="http://www.w3.org/2000/svg"
+          width="15" height="15" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+        </svg></button>
 
       <button style="font-size: large;  width: 350px; margin-left: 5px; padding: 2px; background-color: #B60D44;"
         class="btn btn-danger" type="button" (click)="asignarMateria()">Asignar</button>
+    </div>
+    <br>
+    <div class="search-results">
+      <div class="hover" style="padding-top: 2.5px; padding-bottom: 2.5px;" *ngFor="let profes of Buscados; index as i"
+        class="">
+        <div (click)="pasardato(profes)">
+          <label [(ngModel)]="profesorsillo[i]">{{profes.Nombre}}</label>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -88,18 +91,16 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let maestro of Asignados; index as i">
+      <tr *ngFor="let maestro of Asignados, index as i">
         <td>{{maestro.Nombre}}</td>
         <td>{{maestro.TipoMaestro}}</td>
         <td>{{maestro.Correo}}</td>
-        <td>
-          <button (click)="borrarMateria(i)" type="button" class="btn btn-danger eliminar"><svg
+        <td><button (click)="borrarMateria(i)" type="button" class="btn btn-danger eliminar"><svg
               xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill"
               viewBox="0 0 16 16">
               <path
                 d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
-            </svg></button>
-        </td>
+            </svg></button></td>
       </tr>
     </tbody>
   </table>
