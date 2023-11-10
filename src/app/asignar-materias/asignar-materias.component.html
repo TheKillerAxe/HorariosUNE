@@ -14,7 +14,7 @@
   <div class="div2">
     <label class="texto" for="tipoDocente">Periodo:</label><br>
     <select class="inputcss" id="periodo" name="periodo" disabled="true" [(ngModel)]="Periodo">
-      <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
+      <option [value]="0" disabled selected hidden>--Seleccionar Periodo--</option>
       <option *ngFor="let periodo of Periodos" [value]="periodo">{{periodo}}</option>
     </select>
   </div>
