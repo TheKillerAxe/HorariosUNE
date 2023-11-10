@@ -1,9 +1,9 @@
-.todo {
+/* .todo {
     overflow: hidden;
     height: 650px;
     width: 100%;
 
-}
+} */
 
 
 .parent {
@@ -201,7 +201,7 @@
 }
 
 #asddsa {
-    visibility: hidden;
+    /* visibility: hidden; */
     width: 100%;
     height: 100%;
 }
