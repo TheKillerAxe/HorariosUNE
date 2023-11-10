@@ -427,7 +427,7 @@ export class HorarioComponent {
         const maestroSeleccionado = this.maestroRegular;
 
         Swal.fire({
-          title: 'Ingresa el salón',
+          title: 'Ingrese el Aula',
           html: `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
           focusConfirm: false,
           showDenyButton: true,
@@ -443,7 +443,7 @@ export class HorarioComponent {
 
           if (result.isConfirmed) {
             if (valor3 != "") {
-              this.Horario.HorarioRegular[i].registro[j].salon = "Salón: " + valor3;
+              this.Horario.HorarioRegular[i].registro[j].salon = "Aula: " + valor3;
               this.Horario.HorarioRegular[i].registro[j].maestro = maestroSeleccionado;
               this.Horario.HorarioRegular[i].registro[j].texto = materiaSeleccionada;
               this.Disponibilidad.Disponibilidad[i].registro[j].disponible = false;
@@ -727,6 +727,7 @@ export class HorarioComponent {
   }
 
   toggleIrregular() {
+    
     this.mostrarHorarioIrregular = !this.mostrarHorarioIrregular;
   }
 
