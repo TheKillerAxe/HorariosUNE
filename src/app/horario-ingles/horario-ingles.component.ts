@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
+import { Firestore } from '@angular/fire/firestore';
 import { DisponibilidadIngles, Horario, Usuario } from '../database/database';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, query, where, collectionData } from '@angular/fire/firestore';
 
 import Swal from 'sweetalert2';
 
@@ -14,9 +17,11 @@ export class HorarioInglesComponent {
   Horario: Horario = new Horario();
   Disponibilidad: DisponibilidadIngles = new DisponibilidadIngles();
 
-  maestro = "";
+  Ciclos: string[] = new Array();
 
-  constructor(public router: Router) {
+  horasDisponibles: number = 4;
+
+  constructor(private firestore: Firestore, public router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
       localStorage.setItem('Usuario', JSON.stringify(history.state));
     }
@@ -26,6 +31,20 @@ export class HorarioInglesComponent {
     if (this.Usuario.TipoUsuario != "Ingles") {
       this.router.navigate(['']);
     }
+  }
+
+  obtenerCiclos() {
+    this.Ciclos = new Array();
+    const añoActual = new Date().getFullYear();
+
+    this.Ciclos.push(`${añoActual}-01`);
+    this.Ciclos.push(`${añoActual}-02`);
+
+    if (this.Disponibilidad.Periodicidad == "Cuatrimestral") {
+      this.Ciclos.push(`${añoActual}-03`);
+    }
+
+    (document.getElementById('ciclo') as HTMLInputElement).disabled = false;
   }
 
   openSwalModal(i: number, j: number) {
@@ -49,27 +68,80 @@ export class HorarioInglesComponent {
         if (result.isConfirmed) {
           celda.periodicidad = '';
           celda.periodo = '';
+          celda.disponible = false;
+          this.horasDisponibles++;
           if (celdaElement) {
             celdaElement.classList.remove('dato-agregado');
           }
         }
       });
     } else {
+      if (this.horasDisponibles == 0) {
+        Swal.fire('Se alcanzó el límite de horas de la materia.', '', 'error');
+        return;
+      }
+
       celda.periodicidad = this.Disponibilidad.Periodicidad;
       celda.periodo = this.Disponibilidad.Periodo + '° Periodo';
+      celda.disponible = true;
+      this.horasDisponibles--;
       if (celdaElement) {
         celdaElement.classList.add('dato-agregado');
       }
     }
+
+    this.Disponibilidad.Disponibilidad[i].registro[j] = celda;
   }
 
   cambiosguardados() {
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: 'Cambios guardados',
-      showConfirmButton: false,
-      timer: 1500
-    })
+    if (this.horasDisponibles == 0) {
+      this.Disponibilidad.IdDisponibilidad = `${this.Disponibilidad.Periodicidad}_${this.Disponibilidad.Ciclo}_${this.Disponibilidad.Periodo}`;
+      let rutaDoc = doc(this.firestore, "DisponibilidadIngles", this.Disponibilidad.IdDisponibilidad);
+
+      setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Disponibilidad))).then(() => {
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          title: 'Tus datos se guardaron correctamente!',
+          showConfirmButton: false,
+          timer: 1200
+        });
+      });
+    } else {
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Horas Restantes',
+        text: 'Debe completar las horas disponibles antes de guardar.'
+      });
+    }
+  }
+
+  cargarDisponibilidad() {
+    if (this.Disponibilidad.Periodicidad != "" && this.Disponibilidad.Ciclo != "" && this.Disponibilidad.Periodo != "") {
+      const DisponibilidadCol = collection(this.firestore, "DisponibilidadIngles");
+      const Query = query(DisponibilidadCol, where("IdDisponibilidad", "==", `${this.Disponibilidad.Periodicidad}_${this.Disponibilidad.Ciclo}_${this.Disponibilidad.Periodo}`));
+
+      let flag = true;
+      collectionData(Query).subscribe((snapDisponibilidad) => {
+        if (flag) {
+          flag = false;
+
+          if (snapDisponibilidad.length > 0) {
+            this.Disponibilidad.setData(snapDisponibilidad[0]);
+            this.horasDisponibles = 0;
+          } else {
+            let periodicidad = this.Disponibilidad.Periodicidad;
+            let ciclo = this.Disponibilidad.Ciclo;
+            let periodo = this.Disponibilidad.Periodo;
+            this.Disponibilidad = new DisponibilidadIngles();
+            this.Disponibilidad.Periodicidad = periodicidad;
+            this.Disponibilidad.Ciclo = ciclo;
+            this.Disponibilidad.Periodo = periodo;
+            this.horasDisponibles = 4;
+          }
+        }
+      });
+    }
   }
 }

@@ -1,9 +1,5 @@
 <navbarr [Usuario]="Usuario"></navbarr>
 
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-</style>
-
 <div class="titulo">
     <div class="titulotxt">
         CAPTURAR HORARIO INGLES
@@ -13,14 +9,26 @@
 <div class="contenedor-grid">
     <div class="contenedor">
         <div class="txtcuadro">
+            Periodicidad
+        </div>
+        <div class="datos">
+            <select id="periodicidad" class="form-select input a" (change)="obtenerCiclos()"
+                (change)="cargarDisponibilidad()" [(ngModel)]="Disponibilidad.Periodicidad">
+                <option value="" disabled selected hidden>--Seleccionar Periodicidad--</option>
+                <option>Cuatrimestral</option>
+                <option>Semestral</option>
+            </select>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="txtcuadro">
             Ciclo<br> escolar
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Disponibilidad.Ciclo">
+            <select id="ciclo" class="form-select input a" disabled="true" (change)="cargarDisponibilidad()"
+                [(ngModel)]="Disponibilidad.Ciclo">
                 <option value="" disabled selected hidden>--Seleccionar Ciclo--</option>
-                <option>2023/01</option>
-                <option>2023/02</option>
-                <option>2023/03</option>
+                <option *ngFor="let ciclo of Ciclos" [value]="ciclo">{{ciclo}}</option>
             </select>
         </div>
     </div>
@@ -29,23 +37,18 @@
             Periodo
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Disponibilidad.Periodo">
+            <select id="periodo" class="form-select input a" (change)="cargarDisponibilidad()"
+                [(ngModel)]="Disponibilidad.Periodo">
                 <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
-            </select>
-        </div>
-    </div>
-    <div class="contenedor">
-        <div class="txtcuadro">
-            Periodicidad
-        </div>
-        <div class="datos">
-            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Disponibilidad.Periodicidad">
-                <option value="" disabled selected hidden>--Seleccionar Periodicidad--</option>
-                <option>Cuatrimestral</option>
-                <option>Semestral</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
             </select>
         </div>
     </div>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -50,6 +52,7 @@ body {
 
 
 .txtcuadro {
+    margin-left: 15%;
     font-family: 'Roboto Slab';
     font-size: 18px;
     font-weight: bold;
