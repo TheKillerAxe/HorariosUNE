@@ -17,8 +17,7 @@
             Ciclo<br> Escolar
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" (change)="cargarDisponibilidad()"
-                [(ngModel)]="Disponibilidad.Ciclo">
+            <select id="disabledSelect" class="form-select input a" (change)="cargarDisponibilidad()" [(ngModel)]="Disponibilidad.Ciclo">
                 <option *ngFor="let ciclo of Ciclos" [value]="ciclo">{{ciclo}}</option>
             </select>
         </div>

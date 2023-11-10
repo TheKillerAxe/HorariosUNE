@@ -1,0 +1,70 @@
+<navbarr [Usuario]="Usuario"></navbarr>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+</style>
+
+<div class="titulo">
+    <div class="titulotxt">
+        Alta de Materias
+    </div>
+</div>
+
+<div class="subtitulo">
+    <div class="subtitulotxt">
+        Alta Individual
+    </div>
+</div>
+
+<div class="parent">
+    <div class="div1">
+        <label class="texto" for="nombre">Nombre:</label><br>
+        <input class="inputcss" type="text" id="Nombre" name="Nombre">
+    </div>
+    <div class="div2">
+        <label class="texto" for="tipoDocente">Carrera:</label><br>
+        <select class="inputcss" id="Carrera" name="Carrera" >
+            <option value="" disabled selected hidden>--Seleccionar carrera--</option>
+           
+        </select>
+    </div>
+    <div class="div3">
+        <label class="texto" for="tipoDocente">Periodo:</label><br>
+        <select class="inputcss" id="Periodo" name="Periodo" >
+            <option value="" disabled selected hidden>--Seleccionar Periodo-</option>
+          
+        </select>
+    </div>
+    <div class="div4">
+        <label class="texto" for="tipoDocente">Horas:</label><br>
+        <input class="inputcss" type="number" id="Horas" name="Horas">
+
+    </div>
+    <!-- <div class="div6">
+        <button class="botonune">Agregar Materia</button>
+
+    </div> -->
+   
+    
+</div>
+
+<div style="width:100%; align-items: center; justify-content: center; display: flex;">
+    <button class="botonune2">Agregar Materia</button>
+</div>
+<hr>
+<div class="subtitulo">
+    <div class="subtitulotxt">
+        Alta Masiva
+    </div>
+</div>
+
+<div class="parent2">
+    <div class="div3">
+        <label class="texto" for="tipoDocente">Archivo de materias:</label><br>
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="inputGroupFile01">
+        </div>
+    </div>
+    <div class="div6">
+        <button class="botonune" >Subir Información</button>
+    </div>
+</div>

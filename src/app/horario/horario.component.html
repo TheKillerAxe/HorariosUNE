@@ -138,7 +138,7 @@
     </div>
     <div class="contenedor3">
         <div style="align-items: center; justify-content: center; margin-top: 28px;">
-            <button type="button" class="btn b1" (click)="toggleIrregular()">+</button>
+            <button type="button" class="btn b1" (click)="toggleIrregular()" [disabled]="Horario.Periodo == '1'">+</button>
             <label class="txtcuadro2">Generar Horario Irregular</label>
         </div>
     </div>

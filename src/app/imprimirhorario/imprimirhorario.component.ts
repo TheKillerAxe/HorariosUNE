@@ -179,8 +179,8 @@ export class ImprimirhorarioComponent {
         html2canvas: {
           scale: .6,
         },
-        x: -90,
-        y: 39,
+        x: 15,
+        y: 10,
         callback: function (doc) {
           doc.save(`${ID}.pdf`);
         }
@@ -194,4 +194,7 @@ export class ImprimirhorarioComponent {
       });
     }
   }
+
+  
+  
 }
