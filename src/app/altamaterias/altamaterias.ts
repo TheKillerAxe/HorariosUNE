@@ -20,6 +20,7 @@ export class AltamateriasComponent {
 
   Carreras: Carrera[] = new Array();
   Periodos: number[] = new Array();
+  articulos: string[] = ['el', 'la', 'lo', 'los', 'las', 'un', 'una', 'unos', 'unas', 'y', 'El', 'La', 'Lo', 'Los', 'Las', 'Un', 'Una', 'Unos', 'Unas', 'Y', 'en', 'En', 'de', 'De', 'con', 'Con', 'Del','del'];
 
   Carrera: number = -1;
 
@@ -124,6 +125,74 @@ export class AltamateriasComponent {
         title: 'Favor de llenar todos los campos.',
         showConfirmButton: true
       });
+    }
+  }
+
+  subirExcel2() {
+    let ExcelMaterias = <HTMLInputElement>(document.getElementById('inputGroupFile01'));
+    readXlsxFile(ExcelMaterias.files![0]).then((rows) => {
+      rows = rows.slice(0);
+      let flag = true;
+      rows.forEach((fila) => {
+        if (flag) {
+          flag = false;
+        } else {
+          let materia = new Materia();
+          materia.IdMateria = this.idcarrera(fila[1] == null ? '' : fila[1]!.toString()) + "-" + this.idmateria(this.articulos, fila[0] == null ? '' : fila[0]!.toString());
+          materia.Nombre = fila[0] == null ? '' : fila[0]!.toString();
+          materia.Carrera = fila[1] == null ? '' : fila[1]!.toString();
+          materia.Periodo = fila[2] == null ? '' : fila[2]!.toString();
+          materia.Horas = fila[3] == null ? 0 : parseInt(fila[3]!.toString(), 10);
+
+          let rutaDoc = doc(this.firestore, 'Materia', materia.IdMateria);
+          setDoc(rutaDoc, JSON.parse(JSON.stringify(materia)));
+        }
+      });
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Los datos se guardaron correctamente!',
+        showConfirmButton: false,
+        timer: 1200,
+      });
+    });
+  }
+
+  idcarrera(carrera: string) {
+    let mayusculas = '';
+    for (let i = 0; i < carrera.length; i++) {
+      const caracter = carrera[i];
+      if (
+        caracter === caracter.toUpperCase() &&
+        caracter !== caracter.toLowerCase()
+      ) {
+        mayusculas += caracter;
+      }
+    }
+    return mayusculas;
+  }
+
+  idmateria(array: string[], materia: string) {
+    const palabras = materia.split(' ');
+    if (palabras.length > 1) {
+      const uno = materia.split(' ');
+      const palabrasFiltradas = uno.filter(palabra => !array.includes(palabra));
+      const nuevoTexto = palabrasFiltradas.join(' ');
+      let mayusculas = '';
+      for (let i = 0; i < materia.length; i++) {
+        const caracter = materia[i];
+        if (
+          caracter === caracter.toUpperCase() &&
+          caracter !== caracter.toLowerCase()
+        ) {
+          mayusculas += caracter;
+        }
+      }
+      let aidi = mayusculas.replace("[A,Á]", "A")
+      return aidi
+    } else {
+      let idunapalabra = materia.substring(0, 3)
+      return idunapalabra.toUpperCase()
     }
   }
 }
