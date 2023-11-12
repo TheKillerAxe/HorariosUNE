@@ -142,7 +142,7 @@ body {
 
 .horario {
     display: grid;
-    grid-template-columns: 200px repeat(6, 1fr);
+    grid-template-columns: 220px repeat(6, 1fr);
     grid-gap: 3px;
     max-width: 2000px;
     margin: 0 auto;
@@ -262,13 +262,14 @@ background-color:#eceaea;
 
 
 .dato-agregado {
-    background-color: rgb(188, 32, 76);
+    
+    background-color: rgb(111, 132, 160);
     color:white; 
-  }
+ }
 
 
   .dato-agregado:hover {
-    background-color: rgb(188, 32, 76) !important;
+    background-color: rgb(52, 84, 126) !important;
     color:white; 
     
   }

@@ -76,6 +76,8 @@
         </div>
     </div>
 
+    <!--------------------------------------------- HORARIO REGULAR ------------------------------------------------>
+
     <div class="horario-container" id="asddsa">
         <div class="horario" id="impresion">
             <div class="dias">Días</div>
@@ -100,25 +102,14 @@
 
             <br>
 
-            <div *ngIf="habilitarIrregular">
-                <div *ngFor="let columna of Horario.HorarioIrregular; index as i;">
-                    <div *ngFor="let fila of columna.registro; index as j">
-                        <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
-                        <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}">
-                            {{fila.texto}} <br>
-                            {{fila.maestro}} <br>
-                            {{fila.salon}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+           
     </div>
 
-    <!-- <div class="horario-container" id="asddsa">
-        <div class="horario" id="impresionDocente">
-            
+<!--------------------------------------------- HORARIO IRREGULAR ------------------------------------------------>
 
+
+    <div class="horario-container" id="asddsa">
+        <div class="horario" id="impresionIrregular">
             <div class="dias">Días</div>
             <div class="dia">Lunes</div>
             <div class="dia">Martes</div>
@@ -127,16 +118,23 @@
             <div class="dia">Viernes</div>
             <div class="dia">Sabado</div>
 
-            <div *ngFor="let columna of Disponibilidad.Disponibilidad; index as i;">
+
+            <div *ngFor="let columna of Horario.HorarioRegular; index as i;">
                 <div *ngFor="let fila of columna.registro; index as j">
                     <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
-                    <div *ngIf="i != 0" class="celda">
-                        {{fila.hora}}
+                    <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}">
+                        {{fila.texto}} <br>
+                        {{fila.maestro}} <br>
+                        {{fila.salon}}
                     </div>
                 </div>
             </div>
-        </div>
-    </div> -->
+
+            <br>
+
+    </div>
+
+    <!--------------------------------------------- HORARIO DOCENTE ------------------------------------------------>
 
 
     <div id="impresionDocente" style="display: block;">
@@ -174,6 +172,32 @@
             </div>
         </div>
     </div>
+
+    <!-- <div class="horario-container" id="asddsa">
+        <div class="horario" id="impresionDocente">
+            
+
+            <div class="dias">Días</div>
+            <div class="dia">Lunes</div>
+            <div class="dia">Martes</div>
+            <div class="dia">Miercoles</div>
+            <div class="dia">Jueves</div>
+            <div class="dia">Viernes</div>
+            <div class="dia">Sabado</div>
+
+            <div *ngFor="let columna of Disponibilidad.Disponibilidad; index as i;">
+                <div *ngFor="let fila of columna.registro; index as j">
+                    <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
+                    <div *ngIf="i != 0" class="celda">
+                        {{fila.hora}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+    
 
   
     
