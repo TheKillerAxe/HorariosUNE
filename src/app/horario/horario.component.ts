@@ -138,6 +138,21 @@ export class HorarioComponent {
     }
   }
 
+  cargarMaterias() {
+    const MateriaCol = collection(this.firestore, "Materia");
+    const Query = query(MateriaCol,
+      where("Carrera", "==", this.Carreras[this.Carrera].Nombre),
+      where("Periodo", "==", this.Horario.Periodo)
+    );
+
+    collectionData(Query).subscribe((snapMaterias) => {
+      for (let i = 0; i < snapMaterias.length; i++) {
+        this.Materias[i] = new Materia();
+        this.Materias[i].setData(snapMaterias[i]);
+      }
+    });
+  }
+
   buscarHorario() {
     if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != "") {
       this.Horario.IdHorario = `${this.Horario.Ciclo}-${this.Horario.Carrera}-${this.Horario.Periodo}`;
@@ -162,6 +177,7 @@ export class HorarioComponent {
             this.Horario.setData(snapHorarios[0]);
             this.nuevoHorario = false;
 
+            this.cargarMaterias();
             (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
             (document.getElementById('materiaI') as HTMLInputElement).disabled = false;
           } else {
@@ -198,24 +214,12 @@ export class HorarioComponent {
 
                 this.nuevoHorario = true;
 
+                this.cargarMaterias();
                 (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
                 (document.getElementById('materiaI') as HTMLInputElement).disabled = false;
               }
             });
           }
-
-          const MateriaCol = collection(this.firestore, "Materia");
-          const Query = query(MateriaCol,
-            where("Carrera", "==", this.Carreras[this.Carrera].Nombre),
-            where("Periodo", "==", this.Horario.Periodo)
-          );
-
-          collectionData(Query).subscribe((snapMaterias) => {
-            for (let i = 0; i < snapMaterias.length; i++) {
-              this.Materias[i] = new Materia();
-              this.Materias[i].setData(snapMaterias[i]);
-            }
-          });
         }
       });
     } else {
