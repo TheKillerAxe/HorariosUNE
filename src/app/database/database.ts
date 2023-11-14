@@ -91,7 +91,7 @@ export class DisponibilidadMaestro {
         for (let i = 0; i < 16; i++) {
             let Hora2 = Hora+1
             let Formato = Hora + ":00" + " a " + Hora2 + ":00";
-            this.Disponibilidad[0].registro[i] = { texto: Formato, disponible: false, hora: "" };
+            this.Disponibilidad[0].registro[i] = { texto: Formato, disponible: false, hora: "", materia: "", carrera: "", grupo: "", aula: "" };
             if (Hora > 11) {
                 Hora = 1;
             } else {
@@ -101,7 +101,7 @@ export class DisponibilidadMaestro {
 
         for (let i = 1; i < 7; i++) {
             for (let j = 0; j < 16; j++) {
-                this.Disponibilidad[i].registro[j] = { texto: "", disponible: false, hora: "" };
+                this.Disponibilidad[i].registro[j] = { texto: "", disponible: false, hora: "", materia: "", carrera: "", grupo: "", aula: "" };
             }
         }
     }

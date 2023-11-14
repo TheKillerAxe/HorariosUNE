@@ -1,7 +1,4 @@
 <navbarr [Usuario]="Usuario"></navbarr>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-</style>
 
 <div class="titulo">
     <div class="titulotxt">
@@ -32,7 +29,8 @@
         <label class="texto" for="tipoDocente">Tipo de Docente:</label><br>
         <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="NuevoUsuario.TipoMaestro">
             <option value="" disabled selected hidden>--Seleccionar tipo de docente--</option>
-            <option value="H">Honorario</option>
+            <option value="A">Adjunto</option>
+            <option value="HL">Horario Libre</option>
             <option value="MT">Medio Tiempo</option>
             <option value="TC">Tiempo Completo</option>
         </select>
