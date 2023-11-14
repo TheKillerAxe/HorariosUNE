@@ -29,6 +29,7 @@ export class AsignarMateriasComponent {
   Periodo: number = 0;
   Maestro: string = "";
   IdMaestro = "";
+  horasTotales: number = 0;
 
   constructor(private firestore: Firestore, private router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {

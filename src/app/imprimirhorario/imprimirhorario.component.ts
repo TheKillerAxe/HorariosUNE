@@ -95,7 +95,7 @@ export class ImprimirhorarioComponent {
   }
 
   buscarHorario() {
-    if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != "") {
+    if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != 0) {
       this.Horario.IdHorario = `${this.Horario.Ciclo}-${this.Horario.Carrera}-${this.Horario.Periodo}`;
 
       const HorarioCol = collection(this.firestore, "Horario");
@@ -115,7 +115,7 @@ export class ImprimirhorarioComponent {
   }
 
   imprimirHorario() {
-    if (this.Horario.Ciclo == '' || this.Horario.Carrera == '' || this.Horario.Periodo == '') {
+    if (this.Horario.Ciclo == '' || this.Horario.Carrera == '' || this.Horario.Periodo == 0) {
       Swal.fire('Por favor, seleccione todos los campos.', '', 'warning');
     } else {
       const DATA: any = document.getElementById('impresion');
@@ -201,7 +201,4 @@ export class ImprimirhorarioComponent {
       });
     }
   }
-
-  
-  
 }

@@ -13,6 +13,7 @@ export class Usuario {
     public Contrasena: string = "";                                                //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
     public Materias: string[] = new Array();                                       //Materias que imparte el docente.
     public Horas: number = 0;
+    public HorasTotales: number = 0;
     public CambiosRecientes: boolean = false;
 
     constructor() { }
@@ -27,6 +28,7 @@ export class Usuario {
         this.Contrasena = data.Contrasena;
         this.Materias = data.Materias;
         this.Horas = data.Horas;
+        this.HorasTotales = data.Horas;
     }
 }
 
@@ -177,7 +179,7 @@ export class Horario {
     public IdHorario: string = "";                                                 //ID del horario (Ej. ISCE-R-7-Horario).
 
     //Objetos
-    public Periodo: string = "";                                                   //Periodo al que pertenece el horario.
+    public Periodo: number = 0;                                                    //Periodo al que pertenece el horario.
     public Carrera: string = "";                                                   //Carrera a la que pertenece el horario.
     public Ciclo: string = "";                                                     //Ciclo escolar al que pertenece el horario.
     public HorarioRegular: RegistroHorario[] = new Array();                        //Registros de las celdas del horario regular.

@@ -95,7 +95,7 @@
       <tr *ngFor="let maestro of Asignados, index as i">
         <td>{{maestro.Nombre}}</td>
         <td>{{maestro.TipoMaestro}}</td>
-        <td>PONER HORAS</td>
+        <td>{{maestro.HorasTotales}}</td>
         <td>{{maestro.Correo}}</td>
         <td><button (click)="borrarMateria(i)" style= "margin-left: 10%;"type="button" class="btn btn-danger eliminar"><svg
               xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill"

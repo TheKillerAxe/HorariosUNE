@@ -39,7 +39,7 @@
         <div class="datos">
             <select id="periodo" class="form-select input a" disabled="true" (change)="limpiarMaestroMateria()"
                 (change)="cargarIngles()" [(ngModel)]="Horario.Periodo">
-                <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
+                <option [value]="0" disabled selected hidden>--Seleccionar Periodo--</option>
                 <option *ngFor="let periodo of Periodos" [value]="periodo">{{periodo}}</option>
             </select>
         </div>
@@ -137,7 +137,7 @@
     <div class="contenedor3">
         <div style="align-items: center; justify-content: center; margin-top: 28px;">
             <button type="button" class="btn b1" (click)="toggleIrregular()"
-                [disabled]="Horario.Periodo == '1'">+</button>
+                [disabled]="deshabilitarMateriasIrregulares">+</button>
             <label class="txtcuadro2">Generar Horario Irregular</label>
         </div>
     </div>
@@ -156,9 +156,11 @@
                 Materia
             </div>
             <div class="datos">
-                <select id="materiaI" class="form-select input a" disabled="true" disabled="true">
+                <select id="materiaI" class="form-select input a" [disabled]="deshabilitarMateriasIrregulares"
+                    (change)="obtenerMaestrosI()" [(ngModel)]="MateriaIrregular">
                     <option [value]="-1" disabled selected hidden>--Seleccionar Materia--</option>
-                    <option *ngFor="let materia of Materias; index as i" [value]="i">{{materia.Nombre}}</option>
+                    <option *ngFor="let materia of MateriasIrregulares; index as i" [value]="i">{{materia.Nombre}}
+                    </option>
                 </select>
             </div>
         </div>
@@ -168,19 +170,20 @@
                 Maestro
             </div>
             <div class="datos">
-                <select id="maestroI" class="form-select input a" disabled="true" disabled="true">
-                    <option value="" disabled selected hidden>--Seleccionar Maestro--</option>
-                    <!---->
+                <select id="maestroI" class="form-select input a" disabled="true" (change)="buscarDisponibilidadI()" [(ngModel)]="MaestroIrregular">
+                    <option [value]="-1" disabled selected hidden>--Seleccionar Maestro--</option>
+                    <option *ngFor="let maestro of MaestrosIrregulares; index as i" [value]="i">{{maestro.Nombre}}
+                    </option>
                 </select>
             </div>
         </div>
 
         <div class="contenedora">
-            <button class=" b6" id="cargarI">Cargar Disponibilidad</button>
+            <button class=" b6" id="cargarI" (click)="cargarDisponibilidadI()">Cargar Disponibilidad</button>
         </div>
 
         <div class="contenedora">
-            <button class=" b6">Guardar Cambios</button>
+            <button class=" b6" (click)="guardarHorarioI()">Guardar Cambios</button>
         </div>
     </div>
 </div>
@@ -198,7 +201,7 @@
         <div *ngFor="let columna2 of Horario.HorarioIrregular; index as i;">
             <div *ngFor="let fila2 of columna2.registro index as j">
                 <div *ngIf="i==0" class="hora">{{fila2.texto}}</div>
-                <div *ngIf="i!=0" class="celda" id="c{{i}}{{j}}i">
+                <div *ngIf="i!=0" class="celda" id="c{{i}}{{j}}i" (click)="openSwalModalI(i, j)">
                     {{fila2.texto}} <br>
                     {{fila2.maestro}} <br>
                     {{fila2.salon}}

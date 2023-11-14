@@ -46,6 +46,8 @@ export class AltadocentesComponent {
       case "MT": this.NuevoUsuario.Horas = 10; break;
       case "TC": this.NuevoUsuario.Horas = 20; break;
     }
+
+    this.NuevoUsuario.HorasTotales = this.NuevoUsuario.Horas;
   }
 
   registro() {

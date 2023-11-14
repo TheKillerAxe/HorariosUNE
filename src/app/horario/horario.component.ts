@@ -17,23 +17,31 @@ export class HorarioComponent {
   Horario: Horario = new Horario();
   DisponibilidadIngles: DisponibilidadIngles = new DisponibilidadIngles();
   DisponibilidadRegular: DisponibilidadMaestro = new DisponibilidadMaestro();
+  DisponibilidadIrregular: DisponibilidadMaestro = new DisponibilidadMaestro();
 
   Carreras: Carrera[] = new Array();
   Ciclos: string[] = new Array();
   Periodos: number[] = new Array();
   Materias: Materia[] = new Array();
+  MateriasIrregulares: Materia[] = new Array();
   MaestrosRegulares: Usuario[] = new Array();
+  MaestrosIrregulares: Usuario[] = new Array();
 
   Carrera: number = -1;
   MaestroRegular: number = -1;
+  MaestroIrregular: number = -1;
   MateriaRegular: number = -1;
+  MateriaIrregular: number = -1;
   HorasDisponibles: number = 0;
 
   nuevoHorario: boolean = true;
   cambiosRecientes: boolean = false;
+  cambiosRecientesI: boolean = false;
   disponibilidadIngles: boolean = false;
   mostrarHorarioIrregular: boolean = false;
+  deshabilitarMateriasIrregulares: boolean = true;
   horarioRegularHabilitado: boolean = false;
+  horarioIrregularHabilitado: boolean = false;
 
   constructor(public router: Router, private firestore: Firestore) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
@@ -105,19 +113,27 @@ export class HorarioComponent {
 
   limpiarMaestroMateria() {
     (document.getElementById('materia') as HTMLInputElement).disabled = true;
+    this.deshabilitarMateriasIrregulares = true;
     this.Materias = new Array();
+    this.MateriasIrregulares = new Array();
     this.MateriaRegular = -1;
+    this.MateriaIrregular = -1;
 
     (document.getElementById('maestro') as HTMLInputElement).disabled = true;
+    (document.getElementById('maestroI') as HTMLInputElement).disabled = true;
     this.MaestrosRegulares = new Array();
+    this.MaestrosIrregulares = new Array();
     this.MaestroRegular = -1;
+    this.MaestroIrregular = -1;
 
     this.vaciarHorario();
     this.horarioRegularHabilitado = false;
+    this.horarioIrregularHabilitado = false;
+    this.mostrarHorarioIrregular = false;
   }
 
   cargarIngles() {
-    if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != "") {
+    if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != 0) {
       this.DisponibilidadIngles = new DisponibilidadIngles();
       const periodicidad = this.Carreras[this.Carrera].Periodicidad;
       const DisponibilidadCol = collection(this.firestore, "DisponibilidadIngles");
@@ -146,19 +162,47 @@ export class HorarioComponent {
       where("Periodo", "==", this.Horario.Periodo)
     );
 
+    let flag = true;
     collectionData(Query).subscribe((snapMaterias) => {
-      for (let i = 0; i < snapMaterias.length; i++) {
-        this.Materias[i] = new Materia();
-        this.Materias[i].setData(snapMaterias[i]);
+      if (flag) {
+        flag = false;
+
+        for (let i = 0; i < snapMaterias.length; i++) {
+          this.Materias[i] = new Materia();
+          this.Materias[i].setData(snapMaterias[i]);
+        }
       }
     });
 
     (document.getElementById('materia') as HTMLInputElement).disabled = false;
-    (document.getElementById('materiaI') as HTMLInputElement).disabled = false;
+  }
+
+  cargarMateriasI() {
+    if (this.Horario.Periodo > 1) {
+      const MateriaCol = collection(this.firestore, "Materia");
+      const Query = query(MateriaCol,
+        where("Carrera", "==", this.Carreras[this.Carrera].Nombre),
+        where("Periodo", "<", this.Horario.Periodo)
+      );
+
+      let flag = true;
+      collectionData(Query).subscribe((snapMaterias) => {
+        if (flag) {
+          flag = false;
+
+          for (let i = 0; i < snapMaterias.length; i++) {
+            this.MateriasIrregulares[i] = new Materia();
+            this.MateriasIrregulares[i].setData(snapMaterias[i]);
+          }
+        }
+      });
+
+      this.deshabilitarMateriasIrregulares = false;
+    }
   }
 
   buscarHorario() {
-    if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != "") {
+    if (this.Horario.Ciclo != "" && this.Horario.Carrera != "" && this.Horario.Periodo != 0) {
       this.Horario.IdHorario = `${this.Horario.Ciclo}-${this.Horario.Carrera}-${this.Horario.Periodo}`;
 
       const HorarioCol = collection(this.firestore, "Horario");
@@ -236,7 +280,9 @@ export class HorarioComponent {
       });
 
       this.cambiosRecientes = false;
+      this.cambiosRecientesI = false;
       this.cargarMaterias();
+      this.cargarMateriasI();
     } else {
       Swal.fire({
         position: 'center',
@@ -261,6 +307,20 @@ export class HorarioComponent {
     this.horarioRegularHabilitado = false;
   }
 
+  limpiarHorarioI() {
+    const disponibilidadDocente = this.DisponibilidadIrregular.Disponibilidad;
+
+    for (let i = 0; i < disponibilidadDocente.length; i++) {
+      for (let j = 0; j < disponibilidadDocente[i].registro.length; j++) {
+        if (document.getElementById(`c${i}${j}i`)?.classList.contains('dato-agregado')) {
+          document.getElementById(`c${i}${j}i`)?.classList.remove('dato-agregado');
+        }
+      }
+    }
+
+    this.horarioIrregularHabilitado = false;
+  }
+
   obtenerMaestros() {
     this.limpiarHorario();
 
@@ -273,15 +333,47 @@ export class HorarioComponent {
     this.MaestrosRegulares = new Array();
     this.MaestroRegular = -1;
 
+    let flag = true;
     collectionData(Query).subscribe((snapMaestros) => {
-      for (let i = 0; i < snapMaestros.length; i++) {
-        this.MaestrosRegulares[i] = new Usuario();
-        this.MaestrosRegulares[i].setData(snapMaestros[i]);
+      if (flag) {
+        flag = false;
+
+        for (let i = 0; i < snapMaestros.length; i++) {
+          this.MaestrosRegulares[i] = new Usuario();
+          this.MaestrosRegulares[i].setData(snapMaestros[i]);
+        }
       }
     });
 
     this.HorasDisponibles = this.Materias[this.MateriaRegular].Horas;
     (document.getElementById('maestro') as HTMLInputElement).disabled = false;
+  }
+
+  obtenerMaestrosI() {
+    this.limpiarHorarioI();
+
+    const MaestroCol = collection(this.firestore, "Usuario");
+    const Query = query(MaestroCol,
+      where("TipoUsuario", "==", "Maestro"),
+      where("Materias", "array-contains", this.MateriasIrregulares[this.MateriaIrregular].IdMateria)
+    );
+
+    this.MaestrosIrregulares = new Array();
+    this.MaestroIrregular = -1;
+
+    let flag = true;
+    collectionData(Query).subscribe((snapMaestros) => {
+      if (flag) {
+        flag = false;
+
+        for (let i = 0; i < snapMaestros.length; i++) {
+          this.MaestrosIrregulares[i] = new Usuario();
+          this.MaestrosIrregulares[i].setData(snapMaestros[i]);
+        }
+      }
+    });
+
+    (document.getElementById('maestroI') as HTMLInputElement).disabled = false;
   }
 
   buscarDisponibilidad() {
@@ -301,8 +393,25 @@ export class HorarioComponent {
     }
   }
 
+  buscarDisponibilidadI() {
+    if (this.MaestroIrregular > -1 && this.MateriaIrregular > -1) {
+      this.limpiarHorarioI();
+
+      const DisponibilidadCol = collection(this.firestore, "DisponibilidadMaestro");
+      const Query = query(DisponibilidadCol, where("IdDisponibilidad", "==", `${this.MaestrosIrregulares[this.MaestroIrregular].IdUsuario}_${this.Horario.Ciclo}`));
+
+      this.DisponibilidadIrregular = new DisponibilidadMaestro();
+
+      collectionData(Query).subscribe((snapDisponibilidad) => {
+        if (snapDisponibilidad.length > 0) {
+          this.DisponibilidadIrregular.setData(snapDisponibilidad[0]);
+        }
+      });
+    }
+  }
+
   cargarDisponibilidad() {
-    if (this.Horario.Ciclo == "" || this.Horario.Carrera == "" || this.Horario.Periodo == "") {
+    if (this.Horario.Ciclo == "" || this.Horario.Carrera == "" || this.Horario.Periodo == 0) {
       Swal.fire({
         position: 'top',
         icon: 'error',
@@ -363,7 +472,55 @@ export class HorarioComponent {
     });
   }
 
-  iniciarRegular(iniciar: boolean) {
+  cargarDisponibilidadI() {
+    if (this.MaestroIrregular == -1) {
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Faltan Campos',
+        text: 'Seleccione un maestro.'
+      });
+      return;
+    }
+    if (this.DisponibilidadIrregular.IdDisponibilidad == "") {
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Sin Disponibilidad',
+        text: 'Este usuario no tiene una disponibilidad registrada para el ciclo seleccionado.'
+      });
+      return;
+    }
+
+    const disponibilidadDocente = this.DisponibilidadIrregular.Disponibilidad;
+    const horario = this.Horario.HorarioIrregular;
+    const maestro = this.MaestrosIrregulares[this.MaestroIrregular].Nombre;
+    const materia = this.MateriasIrregulares[this.MateriaIrregular].Nombre;
+
+    for (let i = 0; i < disponibilidadDocente.length; i++) {
+      for (let j = 0; j < disponibilidadDocente[i].registro.length; j++) {
+        if (disponibilidadDocente[i].registro[j].disponible
+          || (horario[i].registro[j].maestro == maestro && horario[i].registro[j].texto == materia)) {
+          document.getElementById(`c${i}${j}i`)?.classList.add('dato-agregado');
+        } else if (document.getElementById(`c${i}${j}i`)?.classList.contains('dato-agregado')) {
+          document.getElementById(`c${i}${j}i`)?.classList.remove('dato-agregado');
+        }
+      }
+    }
+
+    this.horarioIrregularHabilitado = true;
+
+    Swal.fire({
+      position: 'top',
+      icon: 'success',
+      title: 'Disponibilidad Cargada!',
+      text: 'Ya puede comenzar a editar su horario.',
+      showConfirmButton: false,
+      timer: 1200
+    });
+  }
+
+  iniciarRegistro(iniciar: boolean) {
     (document.getElementById('carrera') as HTMLInputElement).disabled = iniciar;
     (document.getElementById('ciclo') as HTMLInputElement).disabled = iniciar;
     (document.getElementById('periodo') as HTMLInputElement).disabled = iniciar;
@@ -372,6 +529,10 @@ export class HorarioComponent {
     (document.getElementById('materia') as HTMLInputElement).disabled = iniciar;
     (document.getElementById('maestro') as HTMLInputElement).disabled = iniciar;
     (document.getElementById('cargar') as HTMLButtonElement).disabled = iniciar;
+
+    (document.getElementById('materiaI') as HTMLInputElement).disabled = iniciar;
+    (document.getElementById('maestroI') as HTMLInputElement).disabled = iniciar;
+    (document.getElementById('cargarI') as HTMLButtonElement).disabled = iniciar;
   }
 
   openSwalModalR(i: number, j: number) {
@@ -390,17 +551,9 @@ export class HorarioComponent {
         });
         return;
       }
-      if (maestroSeleccionado.Horas == 0) {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: 'Horas de Docente',
-          text: 'Este maestro alcanzó su límite de horas.'
-        });
-        return;
-      }
 
-      if ((celda?.classList.contains('dato-agregado') && this.HorasDisponibles > 0) || registroHorario.texto == materiaSeleccionada) {
+      if ((celda?.classList.contains('dato-agregado') && this.HorasDisponibles > 0 && maestroSeleccionado.Horas > 0)
+        || registroHorario.texto == materiaSeleccionada) {
         Swal.fire({
           title: 'Ingrese el Aula',
           html: `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
@@ -452,10 +605,10 @@ export class HorarioComponent {
 
           this.Horario.HorarioRegular[i].registro[j] = registroHorario;
           this.DisponibilidadRegular.Disponibilidad[i].registro[j] = disponibilidad;
-          this.MaestrosRegulares[this.MaestroRegular] = maestroSeleccionado;;
+          this.MaestrosRegulares[this.MaestroRegular] = maestroSeleccionado;
 
           if (this.cambiosRecientes) {
-            this.iniciarRegular(true);
+            this.iniciarRegistro(true);
           }
         });
       } else if (celda?.classList.contains('dato-agregado') == false) {
@@ -466,6 +619,14 @@ export class HorarioComponent {
           text: 'Este docente no se encuentra disponible a esta hora.',
           showConfirmButton: true
         });
+      } else if (maestroSeleccionado.Horas == 0) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Horas de Docente',
+          text: 'Este maestro alcanzó su límite de horas.'
+        });
+        return;
       } else if (this.HorasDisponibles == 0) {
         Swal.fire({
           position: 'center',
@@ -474,6 +635,97 @@ export class HorarioComponent {
           text: 'Alcanzó el límite de horas de la materia.',
           showConfirmButton: true
         });
+      }
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Falta Disponibilidad',
+        text: 'Aún no se ha cargado una disponibilidad.',
+        showConfirmButton: true
+      });
+    }
+  }
+
+  openSwalModalI(i: number, j: number) {
+    if (this.horarioIrregularHabilitado) {
+      const materiaSeleccionada = this.MateriasIrregulares[this.MateriaIrregular].Nombre;
+      let maestroSeleccionado = this.MaestrosIrregulares[this.MaestroIrregular];
+      const celda = document.getElementById(`c${i}${j}i`);
+      let registroHorario = this.Horario.HorarioIrregular[i].registro[j];
+
+      if ((celda?.classList.contains('dato-agregado') && maestroSeleccionado.Horas > 0) || registroHorario.texto == materiaSeleccionada) {
+        Swal.fire({
+          title: 'Ingrese el Aula',
+          html: `<input id="valor3" class="swal2-input" placeholder="Valor 3">`,
+          focusConfirm: true,
+          showDenyButton: true,
+          showCloseButton: true,
+          denyButtonText: 'Borrar',
+          preConfirm: () => {
+            const valor3 = (document.getElementById('valor3') as HTMLInputElement).value;
+            return { valor3 };
+          },
+        }).then((result) => {
+          const { valor3 } = result.value;
+          const valorAnterior = registroHorario.salon;
+          const disponibilidad = this.DisponibilidadIrregular.Disponibilidad[i].registro[j];
+
+          if (result.isConfirmed) {
+            if (valor3 != "") {
+              registroHorario.salon = disponibilidad.aula = "Aula: " + valor3;
+              registroHorario.maestro = maestroSeleccionado.Nombre;
+              registroHorario.texto = disponibilidad.materia = materiaSeleccionada;
+              disponibilidad.carrera = this.Carreras[this.Carrera].Nombre;
+              disponibilidad.disponible = false;
+              if (valorAnterior != valor3) {
+                maestroSeleccionado.Horas--;
+                this.cambiosRecientesI = true;
+              }
+            } else {
+              Swal.fire({
+                position: 'top',
+                icon: 'warning',
+                title: 'Faltan Campos',
+                text: 'Debe insertar un número de salón.',
+                showConfirmButton: true
+              });
+            }
+          }
+          if (result.isDenied && registroHorario.salon != "") {
+            registroHorario.salon = disponibilidad.aula = "";
+            registroHorario.maestro = "";
+            registroHorario.texto = disponibilidad.materia = "";
+            disponibilidad.carrera = "";
+            disponibilidad.disponible = true;
+            maestroSeleccionado.Horas++;
+            this.cambiosRecientesI = true;
+          }
+
+          this.Horario.HorarioIrregular[i].registro[j] = registroHorario;
+          this.DisponibilidadIrregular.Disponibilidad[i].registro[j] = disponibilidad;
+          this.MaestrosIrregulares[this.MaestroIrregular] = maestroSeleccionado;
+
+          if (this.cambiosRecientesI) {
+            this.iniciarRegistro(true);
+          }
+        });
+      } else if (celda?.classList.contains('dato-agregado') == false) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Ocupado',
+          text: 'Este docente no se encuentra disponible a esta hora.',
+          showConfirmButton: true
+        });
+      } else if (maestroSeleccionado.Horas == 0) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Horas de Docente',
+          text: 'Este maestro alcanzó su límite de horas.'
+        });
+        return;
       }
     } else {
       Swal.fire({
@@ -544,8 +796,79 @@ export class HorarioComponent {
             };
             updateDoc(rutaDoc3, data);
 
-            this.iniciarRegular(false);
+            this.iniciarRegistro(false);
             this.cambiosRecientes = false;
+
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Cambios Guardados',
+              text: 'El horario se guardó de forma exitosa!',
+              showConfirmButton: false,
+              timer: 1200
+            });
+          }
+        });
+      }
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Falta Disponibilidad',
+        text: 'Aún no se ha cargado una disponibilidad.',
+        showConfirmButton: true
+      });
+    }
+  }
+
+  guardarHorarioI() {
+    if (this.horarioIrregularHabilitado) {
+      if (this.cambiosRecientesI == false) {
+        Swal.fire({
+          position: 'top',
+          icon: 'warning',
+          title: 'Guardado Innecesario',
+          text: 'No hay cambios recientes.',
+          showConfirmButton: true
+        });
+        return;
+      }
+
+      if (this.cambiosRecientesI) {
+        Swal.fire({
+          title: 'Actualización',
+          text: "¿Está seguro de estos cambios?",
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            let rutaDoc = doc(this.firestore, "Horario", this.Horario.IdHorario);
+
+            if (this.nuevoHorario) {
+              setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Horario)));
+              this.nuevoHorario = false;
+            } else {
+              let data = {
+                HorarioIrregular: this.Horario.HorarioIrregular
+              };
+              updateDoc(rutaDoc, data);
+            }
+
+            let rutaDoc2 = doc(this.firestore, "DisponibilidadMaestro", this.DisponibilidadIrregular.IdDisponibilidad);
+            setDoc(rutaDoc2, JSON.parse(JSON.stringify(this.DisponibilidadIrregular)));
+
+            const maestro = this.MaestrosIrregulares[this.MaestroIrregular];
+            let rutaDoc3 = doc(this.firestore, "Usuario", maestro.IdUsuario);
+            let data = {
+              Horas: maestro.Horas
+            };
+            updateDoc(rutaDoc3, data);
+
+            this.iniciarRegistro(false);
+            this.cambiosRecientesI = false;
 
             Swal.fire({
               position: 'center',

@@ -34,7 +34,7 @@
             <label class="texto" for="nombre">Periodo:</label><br>
             <select class="inputcss" id="periodo" name="periodo" disabled="true" (change)="buscarHorario()"
                 [(ngModel)]="Horario.Periodo">
-                <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
+                <option [value]="0" disabled selected hidden>--Seleccionar Periodo--</option>
                 <option *ngFor="let periodo of Periodos" [value]="periodo">{{periodo}}</option>
             </select>
         </div>
