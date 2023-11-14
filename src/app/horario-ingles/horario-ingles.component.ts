@@ -19,8 +19,6 @@ export class HorarioInglesComponent {
 
   Ciclos: string[] = new Array();
 
-  horasDisponibles: number = 4;
-
   constructor(private firestore: Firestore, public router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
       localStorage.setItem('Usuario', JSON.stringify(history.state));
@@ -69,22 +67,15 @@ export class HorarioInglesComponent {
           celda.periodicidad = '';
           celda.periodo = '';
           celda.disponible = false;
-          this.horasDisponibles++;
           if (celdaElement) {
             celdaElement.classList.remove('dato-agregado');
           }
         }
       });
     } else {
-      if (this.horasDisponibles == 0) {
-        Swal.fire('Se alcanzó el límite de horas de la materia.', '', 'error');
-        return;
-      }
-
       celda.periodicidad = this.Disponibilidad.Periodicidad;
       celda.periodo = this.Disponibilidad.Periodo + '° Periodo';
       celda.disponible = true;
-      this.horasDisponibles--;
       if (celdaElement) {
         celdaElement.classList.add('dato-agregado');
       }
@@ -94,27 +85,18 @@ export class HorarioInglesComponent {
   }
 
   cambiosguardados() {
-    if (this.horasDisponibles == 0) {
-      this.Disponibilidad.IdDisponibilidad = `${this.Disponibilidad.Periodicidad}_${this.Disponibilidad.Ciclo}_${this.Disponibilidad.Periodo}`;
-      let rutaDoc = doc(this.firestore, "DisponibilidadIngles", this.Disponibilidad.IdDisponibilidad);
+    this.Disponibilidad.IdDisponibilidad = `${this.Disponibilidad.Periodicidad}_${this.Disponibilidad.Ciclo}_${this.Disponibilidad.Periodo}`;
+    let rutaDoc = doc(this.firestore, "DisponibilidadIngles", this.Disponibilidad.IdDisponibilidad);
 
-      setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Disponibilidad))).then(() => {
-        Swal.fire({
-          position: 'top',
-          icon: 'success',
-          title: 'Tus datos se guardaron correctamente!',
-          showConfirmButton: false,
-          timer: 1200
-        });
-      });
-    } else {
+    setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Disponibilidad))).then(() => {
       Swal.fire({
         position: 'top',
-        icon: 'error',
-        title: 'Horas Restantes',
-        text: 'Debe completar las horas disponibles antes de guardar.'
+        icon: 'success',
+        title: 'Tus datos se guardaron correctamente!',
+        showConfirmButton: false,
+        timer: 1200
       });
-    }
+    });
   }
 
   cargarDisponibilidad() {
@@ -129,7 +111,6 @@ export class HorarioInglesComponent {
 
           if (snapDisponibilidad.length > 0) {
             this.Disponibilidad.setData(snapDisponibilidad[0]);
-            this.horasDisponibles = 0;
           } else {
             let periodicidad = this.Disponibilidad.Periodicidad;
             let ciclo = this.Disponibilidad.Ciclo;
@@ -138,7 +119,6 @@ export class HorarioInglesComponent {
             this.Disponibilidad.Periodicidad = periodicidad;
             this.Disponibilidad.Ciclo = ciclo;
             this.Disponibilidad.Periodo = periodo;
-            this.horasDisponibles = 4;
           }
         }
       });
