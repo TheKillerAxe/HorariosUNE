@@ -13,8 +13,7 @@
         </div>
         <div class="datos">
             <select id="carrera" class="form-select input a" (change)="limpiarMaestroMateria()"
-                (change)="obtenerCiclos()" (change)="obtenerPeriodos()" (change)="cargarIngles()"
-                [(ngModel)]="Carrera">
+                (change)="obtenerCiclos()" (change)="obtenerPeriodos()" (change)="cargarIngles()" [(ngModel)]="Carrera">
                 <option [value]="-1" disabled selected hidden>--Seleccionar Carrera--</option>
                 <option *ngFor="let carrera of Carreras; index as i" [value]="i">{{carrera.Nombre}}</option>
             </select>
@@ -25,8 +24,8 @@
             Ciclo<br> escolar
         </div>
         <div class="datos">
-            <select id="ciclo" class="form-select input a" disabled="true" (change)="cargarIngles()"
-                [(ngModel)]="Horario.Ciclo">
+            <select id="ciclo" class="form-select input a" disabled="true" (change)="limpiarMaestroMateria()"
+                (change)="cargarIngles()" [(ngModel)]="Horario.Ciclo">
                 <option value="" disabled selected hidden>--Seleccionar Ciclo--</option>
                 <option *ngFor="let ciclo of Ciclos" [value]="ciclo">{{ciclo}}</option>
             </select>
@@ -65,8 +64,8 @@
             Materia
         </div>
         <div class="datos">
-            <select id="disabledSelect2" class="form-select input a" disabled="true" (change)="obtenerMaestros()"
-                (change)="obtenerHoras()" [(ngModel)]="materiaRegular">
+            <select id="materia" class="form-select input a" disabled="true" (change)="obtenerMaestros()"
+                [(ngModel)]="MateriaRegular">
                 <option [value]="-1" disabled selected hidden>--Seleccionar Materia--</option>
                 <option *ngFor="let materia of Materias; index as i" [value]="i">{{materia.Nombre}}</option>
             </select>
@@ -78,16 +77,16 @@
             Maestro
         </div>
         <div class="datos">
-            <select id="disabledSelect3" class="form-select input a" disabled="true" (change)="buscarMaestro()"
-                [(ngModel)]="maestroRegular">
-                <option value="" disabled selected hidden>--Seleccionar Maestro--</option>
-                <option *ngFor="let maestro of MaestrosRegulares" [value]="maestro.Nombre">{{maestro.Nombre}}</option>
+            <select id="maestro" class="form-select input a" disabled="true" (change)="buscarDisponibilidad()"
+                [(ngModel)]="MaestroRegular">
+                <option [value]="-1" disabled selected hidden>--Seleccionar Maestro--</option>
+                <option *ngFor="let maestro of MaestrosRegulares; index as i" [value]="i">{{maestro.Nombre}}</option>
             </select>
         </div>
     </div>
 
     <div class="contenedora">
-        <button class=" b6" id="cargar" (click)="resaltarMaestro()">Cargar Disponibilidad</button>
+        <button class=" b6" id="cargar" (click)="cargarDisponibilidad()">Cargar Disponibilidad</button>
     </div>
 </div>
 
@@ -96,6 +95,7 @@
         <button class=" b3">Dividir materia</button>
     </div>
     <div class="contenedor2">
+        <div *ngIf="horarioRegularHabilitado" class="txtcuadro">Horas Restantes: {{HorasDisponibles}}</div>
     </div>
     <div class="contenedor2">
     </div>
@@ -156,8 +156,7 @@
                 Materia
             </div>
             <div class="datos">
-                <select id="materiaI" class="form-select input a" disabled="true" (change)="obtenerMaestrosI()"
-                    (click)="obtenerHorasI()" [(ngModel)]="materiaIrregular" disabled="true">
+                <select id="materiaI" class="form-select input a" disabled="true" disabled="true">
                     <option [value]="-1" disabled selected hidden>--Seleccionar Materia--</option>
                     <option *ngFor="let materia of Materias; index as i" [value]="i">{{materia.Nombre}}</option>
                 </select>
@@ -169,21 +168,19 @@
                 Maestro
             </div>
             <div class="datos">
-                <select id="maestroI" class="form-select input a" disabled="true" (click)="buscarMaestroI()"
-                    [(ngModel)]="maestroIrregular" disabled="true">
+                <select id="maestroI" class="form-select input a" disabled="true" disabled="true">
                     <option value="" disabled selected hidden>--Seleccionar Maestro--</option>
-                    <option *ngFor="let maestro of MaestrosIrregulares" [value]="maestro.Nombre">{{maestro.Nombre}}
-                    </option>
+                    <!---->
                 </select>
             </div>
         </div>
 
         <div class="contenedora">
-            <button class=" b6" id="cargarI" (click)="resaltarMaestroI()">Cargar Disponibilidad</button>
+            <button class=" b6" id="cargarI">Cargar Disponibilidad</button>
         </div>
 
         <div class="contenedora">
-            <button class=" b6" (click)="guardarHorarioI()">Guardar Cambios</button>
+            <button class=" b6">Guardar Cambios</button>
         </div>
     </div>
 </div>
@@ -201,7 +198,7 @@
         <div *ngFor="let columna2 of Horario.HorarioIrregular; index as i;">
             <div *ngFor="let fila2 of columna2.registro index as j">
                 <div *ngIf="i==0" class="hora">{{fila2.texto}}</div>
-                <div *ngIf="i!=0" class="celda" id="c{{i}}{{j}}i" (click)="openSwalModalI(i, j)">
+                <div *ngIf="i!=0" class="celda" id="c{{i}}{{j}}i">
                     {{fila2.texto}} <br>
                     {{fila2.maestro}} <br>
                     {{fila2.salon}}
