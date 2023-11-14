@@ -180,6 +180,7 @@ export class HorarioComponent {
             this.cargarMaterias();
             (document.getElementById('disabledSelect2') as HTMLInputElement).disabled = false;
             (document.getElementById('materiaI') as HTMLInputElement).disabled = false;
+            
           } else {
             Swal.fire({
               position: 'top',

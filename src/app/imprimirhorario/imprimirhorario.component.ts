@@ -129,6 +129,7 @@ export class ImprimirhorarioComponent {
       Swal.fire('Por favor, seleccione todos los campos.', '', 'warning');
     } else {
       const DATA: any = document.getElementById('impresion');
+      const DATA2: any = document.getElementById('impresionIrregular');
       const doc = new jsPDF('p', 'pt', 'letter');
       const ID = this.Horario.IdHorario;
 
@@ -143,6 +144,17 @@ export class ImprimirhorarioComponent {
         }
       })
 
+      doc.html(DATA2!, {
+        html2canvas: {
+          scale: .6,
+        },
+        x: -90,
+        y: 39,
+        callback: function (doc) {
+          doc.save(`${ID}-Irregular.pdf`);
+        }
+      })
+
       Swal.fire({
         position: 'top',
         icon: 'success',
@@ -151,6 +163,9 @@ export class ImprimirhorarioComponent {
       });
     }
   }
+
+
+
 
   buscarDisponibilidad() {
     if (this.Disponibilidad.Ciclo != "" && this.Docente != "") {

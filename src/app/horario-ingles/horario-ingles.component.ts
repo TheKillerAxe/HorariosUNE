@@ -28,7 +28,7 @@ export class HorarioInglesComponent {
 
     this.Usuario = JSON.parse(localStorage.getItem('Usuario')!);
 
-    if (this.Usuario.TipoUsuario != "Ingles") {
+    if (this.Usuario.TipoUsuario != "Admin") {
       this.router.navigate(['']);
     }
   }

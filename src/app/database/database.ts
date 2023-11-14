@@ -89,9 +89,10 @@ export class DisponibilidadMaestro {
 
         let Hora = 7;
         for (let i = 0; i < 16; i++) {
-            let Formato = Hora + ":00";
+            let Hora2 = Hora+1
+            let Formato = Hora + ":00" + " a " + Hora2 + ":00";
             this.Disponibilidad[0].registro[i] = { texto: Formato, disponible: false, hora: "" };
-            if (Hora > 12) {
+            if (Hora > 11) {
                 Hora = 1;
             } else {
                 Hora++;
@@ -133,10 +134,11 @@ export class DisponibilidadIngles {
 
         let Hora = 7;
         for (let i = 0; i < 16; i++) {
-            let Formato = Hora + ":00";
+            let Hora2 = Hora+1
+            let Formato = Hora + ":00" + " a " + Hora2 + ":00";
             this.Disponibilidad[0].registro[i] = { texto: Formato };
             this.Disponibilidad[0].registro[i].disponible = false;
-            if (Hora > 12) {
+            if (Hora > 11) {
                 Hora = 1;
             } else {
                 Hora++;
@@ -193,10 +195,11 @@ export class Horario {
 
         let Hora = 7;
         for (let i = 0; i < 16; i++) {
-            let Formato = Hora + ":00";
+            let Hora2 = Hora+1
+            let Formato = Hora + ":00" + " a " + Hora2 + ":00";
             this.HorarioRegular[0].registro[i] = { texto: Formato };
             this.HorarioIrregular[0].registro[i] = { texto: Formato };
-            if (Hora > 12) {
+            if (Hora > 11) {
                 Hora = 1;
             } else {
                 Hora++;

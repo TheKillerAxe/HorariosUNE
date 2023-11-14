@@ -24,7 +24,8 @@
 .cuadros {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+    gap:1.2%;
     height: auto;
     width: 85%;
     margin: 0 auto; 
