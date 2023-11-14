@@ -22,7 +22,8 @@ export class ImprimirhorarioComponent {
   Periodos: number[] = new Array();
   Docentes: Usuario[] = new Array();
 
-  Docente: string = "";
+  Carrera: number = -1;
+  Docente: number = -1;
 
   habilitarIrregular: boolean = false;
 
@@ -59,14 +60,7 @@ export class ImprimirhorarioComponent {
     this.Ciclos.push(`${añoActual}-01`);
     this.Ciclos.push(`${añoActual}-02`);
 
-    const carreraSeleccionada = this.Horario.Carrera;
-    let periodicidad = "";
-
-    this.Carreras.forEach(function (carrera) {
-      if (carrera.Nombre == carreraSeleccionada) {
-        periodicidad = carrera.Periodicidad;
-      }
-    });
+    const periodicidad = this.Carreras[this.Carrera].Periodicidad;
 
     if (periodicidad == "Cuatrimestral") {
       this.Ciclos.push(`${añoActual}-03`);
@@ -76,16 +70,10 @@ export class ImprimirhorarioComponent {
   }
 
   obtenerPeriodos() {
+    this.Horario.Carrera = this.Carreras[this.Carrera].IdCarrera;
     this.Periodos = new Array();
 
-    const carreraSeleccionada = this.Horario.Carrera;
-    let periodos = 0;
-
-    this.Carreras.forEach(function (carrera) {
-      if (carrera.Nombre == carreraSeleccionada) {
-        periodos = carrera.CantidadPeriodos;
-      }
-    });
+    const periodos = this.Carreras[this.Carrera].CantidadPeriodos;
 
     for (let i = 1; i <= periodos; i++) {
       this.Periodos[i - 1] = i;
@@ -113,12 +101,14 @@ export class ImprimirhorarioComponent {
       const HorarioCol = collection(this.firestore, "Horario");
       const Query = query(HorarioCol, where("IdHorario", "==", this.Horario.IdHorario));
 
+      let flag = true;
       collectionData(Query).subscribe((snapHorarios) => {
-        if (snapHorarios.length > 0) {
-          this.Horario.setData(snapHorarios[0]);
-          /*if (this.Horario.HorarioIrregular != this.HorarioAux.HorarioIrregular) {
-            this.habilitarIrregular = true;
-          }*/
+        if (flag) {
+          flag = false;
+
+          if (snapHorarios.length > 0) {
+            this.Horario.setData(snapHorarios[0]);
+          }
         }
       });
     }
@@ -164,26 +154,28 @@ export class ImprimirhorarioComponent {
     }
   }
 
-
-
-
   buscarDisponibilidad() {
-    if (this.Disponibilidad.Ciclo != "" && this.Docente != "") {
-      this.Disponibilidad.IdDisponibilidad = `${this.Docente}_${this.Disponibilidad.Ciclo}`;
+    if (this.Disponibilidad.Ciclo != "" && this.Docente > -1) {
+      this.Disponibilidad.IdDisponibilidad = `${this.Docentes[this.Docente].IdUsuario}_${this.Disponibilidad.Ciclo}`;
 
       const DisponibilidadCol = collection(this.firestore, "DisponibilidadMaestro");
       const Query = query(DisponibilidadCol, where("IdDisponibilidad", "==", this.Disponibilidad.IdDisponibilidad));
 
+      let flag = true;
       collectionData(Query).subscribe((snapDisponibilidad) => {
-        if (snapDisponibilidad.length > 0) {
-          this.Disponibilidad.setData(snapDisponibilidad[0]);
+        if (flag) {
+          flag = false;
+
+          if (snapDisponibilidad.length > 0) {
+            this.Disponibilidad.setData(snapDisponibilidad[0]);
+          }
         }
       });
     }
   }
 
   imprimirDisponibilidad() {
-    if (this.Disponibilidad.Ciclo == '' || this.Docente == '') {
+    if (this.Disponibilidad.Ciclo == '' || this.Docente == -1) {
       Swal.fire('Por favor, seleccione todos los campos.', '', 'warning');
     } else {
       const DATA: any = document.getElementById('impresionDocente');

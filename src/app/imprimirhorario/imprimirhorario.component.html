@@ -1,8 +1,5 @@
 <navbarr [Usuario]="Usuario"></navbarr>
 
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-</style>
 <div class="todo">
     <div class="titulo">
         <div class="titulotxt">
@@ -20,9 +17,9 @@
         <div class="div2">
             <label class="texto" for="tipoDocente">Carrera:</label><br>
             <select class="inputcss" id="carrera" name="carrera" (change)="obtenerCiclos()" (change)="obtenerPeriodos()"
-                (change)="buscarHorario()" [(ngModel)]="Horario.Carrera">
-                <option value="" disabled selected hidden>--Seleccionar Carrera--</option>
-                <option *ngFor="let carrera of Carreras" [value]="carrera.Nombre">{{carrera.IdCarrera}}</option>
+                (change)="buscarHorario()" [(ngModel)]="Carrera">
+                <option [value]="-1" disabled selected hidden>--Seleccionar Carrera--</option>
+                <option *ngFor="let carrera of Carreras; index as i" [value]="i">{{carrera.Nombre}}</option>
             </select>
         </div>
         <div class="div3">
@@ -57,7 +54,7 @@
             <label class="texto" for="tipoDocente">Ciclo:</label><br>
             <select class="inputcss" id="tipoDocente" name="tipoDocente" (change)="buscarDisponibilidad()"
                 [(ngModel)]="Disponibilidad.Ciclo">
-                <option value="" disabled selected hidden>--Seleccionar Docente--</option>
+                <option value="" disabled selected hidden>--Seleccionar Ciclo--</option>
                 <option>2023-01</option>
                 <option>2023-02</option>
                 <option>2023-03</option>
@@ -67,8 +64,8 @@
             <label class="texto" for="tipoDocente">Docente:</label><br>
             <select class="inputcss" id="tipoDocente" name="tipoDocente" (change)="buscarDisponibilidad()"
                 [(ngModel)]="Docente">
-                <option value="" disabled selected hidden>--Seleccionar Docente--</option>
-                <option *ngFor="let docente of Docentes" [value]="docente.NombreUsuario">{{docente.Nombre}}</option>
+                <option [value]="-1" disabled selected hidden>--Seleccionar Docente--</option>
+                <option *ngFor="let docente of Docentes; index as i" [value]="i">{{docente.Nombre}}</option>
             </select>
         </div>
         <div class="div6">
@@ -99,59 +96,14 @@
                     </div>
                 </div>
             </div>
-
             <br>
-
-           
-    </div>
-
-<!--------------------------------------------- HORARIO IRREGULAR ------------------------------------------------>
-
-
-    <div class="horario-container" id="asddsa">
-        <div class="horario" id="impresionIrregular">
-            <div class="dias">Días</div>
-            <div class="dia">Lunes</div>
-            <div class="dia">Martes</div>
-            <div class="dia">Miercoles</div>
-            <div class="dia">Jueves</div>
-            <div class="dia">Viernes</div>
-            <div class="dia">Sabado</div>
-
-
-            <div *ngFor="let columna of Horario.HorarioRegular; index as i;">
-                <div *ngFor="let fila of columna.registro; index as j">
-                    <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
-                    <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}">
-                        {{fila.texto}} <br>
-                        {{fila.maestro}} <br>
-                        {{fila.salon}}
-                    </div>
-                </div>
-            </div>
-
-            <br>
-
-    </div>
-
-    <!--------------------------------------------- HORARIO DOCENTE ------------------------------------------------>
-
-
-    <div id="impresionDocente" style="display: block;">
-
-        <div class="aaa">
-            <b>DOCENTE: {{Docente}}</b>
         </div>
-        <div class="aaa">
-            <b>CICLO: {{Disponibilidad.Ciclo}}</b>
-        </div>
-        <div class="horario-container"  >
-        
-        
-            <div class="horario" >
-        
-                
-        
+
+        <!--------------------------------------------- HORARIO IRREGULAR ------------------------------------------------>
+
+
+        <div class="horario-container" id="asddsa">
+            <div class="horario" id="impresionIrregular">
                 <div class="dias">Días</div>
                 <div class="dia">Lunes</div>
                 <div class="dia">Martes</div>
@@ -159,46 +111,54 @@
                 <div class="dia">Jueves</div>
                 <div class="dia">Viernes</div>
                 <div class="dia">Sabado</div>
-    
-                <div *ngFor="let columna of Disponibilidad.Disponibilidad; index as i;">
+
+
+                <div *ngFor="let columna of Horario.HorarioRegular; index as i;">
                     <div *ngFor="let fila of columna.registro; index as j">
                         <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
-                        <div *ngIf="i != 0" class="celda">
-                            {{fila.hora}}
+                        <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}">
+                            {{fila.texto}} <br>
+                            {{fila.maestro}} <br>
+                            {{fila.salon}}
                         </div>
                     </div>
                 </div>
-        
+                <br>
             </div>
-        </div>
-    </div>
 
-    <!-- <div class="horario-container" id="asddsa">
-        <div class="horario" id="impresionDocente">
-            
+            <!--------------------------------------------- HORARIO DOCENTE ------------------------------------------------>
 
-            <div class="dias">Días</div>
-            <div class="dia">Lunes</div>
-            <div class="dia">Martes</div>
-            <div class="dia">Miercoles</div>
-            <div class="dia">Jueves</div>
-            <div class="dia">Viernes</div>
-            <div class="dia">Sabado</div>
+            <div id="impresionDocente" style="display: block;">
 
-            <div *ngFor="let columna of Disponibilidad.Disponibilidad; index as i;">
-                <div *ngFor="let fila of columna.registro; index as j">
-                    <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
-                    <div *ngIf="i != 0" class="celda">
-                        {{fila.hora}}
+                <div class="aaa">
+                    <b>DOCENTE: {{Docente}}</b>
+                </div>
+                <div class="aaa">
+                    <b>CICLO: {{Disponibilidad.Ciclo}}</b>
+                </div>
+                <div class="horario-container">
+                    <div class="horario">
+                        <div class="dias">Días</div>
+                        <div class="dia">Lunes</div>
+                        <div class="dia">Martes</div>
+                        <div class="dia">Miercoles</div>
+                        <div class="dia">Jueves</div>
+                        <div class="dia">Viernes</div>
+                        <div class="dia">Sabado</div>
+
+                        <div *ngFor="let columna of Disponibilidad.Disponibilidad; index as i;">
+                            <div *ngFor="let fila of columna.registro; index as j">
+                                <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
+                                <div *ngIf="i != 0" class="celda">
+                                    {{fila.carrera}} <br>
+                                    {{fila.materia}} <br>
+                                    {{fila.aula}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> -->
-
-
-    
-
-  
-    
+    </div>
 </div>
