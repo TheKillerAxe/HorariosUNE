@@ -113,7 +113,7 @@
                 <div class="dia">Sabado</div>
 
 
-                <div *ngFor="let columna of Horario.HorarioRegular; index as i;">
+                <div *ngFor="let columna of Horario.HorarioIrregular; index as i;">
                     <div *ngFor="let fila of columna.registro; index as j">
                         <div *ngIf="i == 0" class="hora">{{fila.texto}}</div>
                         <div *ngIf="i != 0" class="celda" id="c{{i}}{{j}}">
