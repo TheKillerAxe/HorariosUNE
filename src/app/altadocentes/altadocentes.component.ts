@@ -39,6 +39,15 @@ export class AltadocentesComponent {
     }
   }
 
+  obtenerHoras() {
+    switch (this.NuevoUsuario.TipoMaestro) {
+      case "A": this.NuevoUsuario.Horas = 5; break;
+      case "HL": this.NuevoUsuario.Horas = 10; break;
+      case "MT": this.NuevoUsuario.Horas = 10; break;
+      case "TC": this.NuevoUsuario.Horas = 20; break;
+    }
+  }
+
   registro() {
     if (this.NuevoUsuario.NombreUsuario == "" || this.NuevoUsuario.Nombre == "" || this.NuevoUsuario.Correo == "" ||
         this.NuevoUsuario.TipoMaestro == "" || this.NuevoUsuario.Contrasena == "") {

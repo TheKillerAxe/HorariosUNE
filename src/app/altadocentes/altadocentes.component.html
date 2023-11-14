@@ -27,7 +27,7 @@
     </div>
     <div class="div4">
         <label class="texto" for="tipoDocente">Tipo de Docente:</label><br>
-        <select class="inputcss" id="tipoDocente" name="tipoDocente" [(ngModel)]="NuevoUsuario.TipoMaestro">
+        <select class="inputcss" id="tipoDocente" name="tipoDocente" (change)="obtenerHoras()" [(ngModel)]="NuevoUsuario.TipoMaestro">
             <option value="" disabled selected hidden>--Seleccionar tipo de docente--</option>
             <option value="A">Adjunto</option>
             <option value="HL">Horario Libre</option>

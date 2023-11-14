@@ -12,7 +12,8 @@ export class Usuario {
     public Correo: string = "";                                                    //Correo del usuario.
     public Contrasena: string = "";                                                //Contraseña del usuario (fecha de nacimiento: [ddmmaaaa]).
     public Materias: string[] = new Array();                                       //Materias que imparte el docente.
-    public CambiosRecientes: boolean = false;                                      //Variable auxiliar para el cambio de datos de usuario.
+    public Horas: number = 0;
+    public CambiosRecientes: boolean = false;
 
     constructor() { }
 
@@ -25,6 +26,7 @@ export class Usuario {
         this.Correo = data.Correo;
         this.Contrasena = data.Contrasena;
         this.Materias = data.Materias;
+        this.Horas = data.Horas;
     }
 }
 
