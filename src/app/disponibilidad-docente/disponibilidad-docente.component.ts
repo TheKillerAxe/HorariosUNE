@@ -65,32 +65,24 @@ export class DisponibilidadDocenteComponent {
           }
         }
       });
-    }
-  }
-
-  resaltarDisponibilidad() {
-    if (this.Disponibilidad.Ciclo != "") {
-      for (let i = 0; i < this.Disponibilidad.Disponibilidad.length; i++) {
-        for (let j = 0; j < this.Disponibilidad.Disponibilidad[i].registro.length; j++) {
-          if (this.Disponibilidad.Disponibilidad[i].registro[j].disponible) {
-            document.getElementById(`c${i}${j}`)?.classList.add('dato-agregado');
-          } else if (document.getElementById(`c${i}${j}`)?.classList.contains('dato-agregado')) {
-            document.getElementById(`c${i}${j}`)?.classList.remove('dato-agregado');
-          }
-        }
-      }
 
       this.habilitarDisponibilidad = true;
 
       Swal.fire({
-        position: 'top',
+        position: 'center',
         icon: 'success',
-        title: 'Disponibilidad cargada!',
+        title: 'Disponibilidad Cargada',
+        text: 'Puede comenzar a editar su disponibilidad.',
         showConfirmButton: false,
         timer: 1200
       });
     } else {
-      Swal.fire('Debe seleccionar un ciclo antes de cargar la disponibilidad.', '', 'error');
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Faltan Campos',
+        text: 'Seleccione un ciclo para cargar la disponibilidad.'
+      });
     }
   }
 
@@ -122,20 +114,30 @@ export class DisponibilidadDocenteComponent {
         }
       });
     } else {
-      Swal.fire('Por favor, seleccione un ciclo y cargue la disponibilidad antes de comenzar.', '', 'warning');
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Faltan Campos',
+        text: 'Por favor, seleccione un ciclo y cargue la disponibilidad antes de comenzar.'
+      });
     }
   }
 
   openSwalModal(i: number, j: number) {
     if (this.habilitarDisponibilidad == false) {
-      Swal.fire('Por favor, seleccione un ciclo y cargue la disponibilidad antes de comenzar.', '', 'warning');
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Faltan Campos',
+        text: 'Por favor, seleccione un ciclo y cargue la disponibilidad antes de comenzar.'
+      });
       return;
     }
 
     if (this.Disponibilidad.Disponibilidad[i].registro[j].hora) {
       Swal.fire({
-        title: 'Eliminar hora',
-        text: '¿Deseas eliminar la hora seleccionada?',
+        title: 'Eliminar Hora',
+        text: '¿Desea eliminar la hora seleccionada?',
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Sí',

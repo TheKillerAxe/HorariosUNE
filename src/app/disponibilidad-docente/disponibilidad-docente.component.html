@@ -1,9 +1,5 @@
 <navbarr [Usuario]="Usuario"></navbarr>
 
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-</style>
-
 <div class="titulo">
     <div class="titulotxt">
         Registrar Disponibilidad
@@ -17,14 +13,14 @@
             Ciclo<br> Escolar
         </div>
         <div class="datos">
-            <select id="disabledSelect" class="form-select input a" (change)="cargarDisponibilidad()" [(ngModel)]="Disponibilidad.Ciclo">
+            <select id="disabledSelect" class="form-select input a" [(ngModel)]="Disponibilidad.Ciclo">
                 <option *ngFor="let ciclo of Ciclos" [value]="ciclo">{{ciclo}}</option>
             </select>
         </div>
     </div>
 
     <div class="contenedor">
-        <button class=" b3" (click)="resaltarDisponibilidad()">Cargar Disponibilidad</button>
+        <button class=" b3" (click)="cargarDisponibilidad()">Cargar Disponibilidad</button>
     </div>
 
 
