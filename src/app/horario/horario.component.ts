@@ -530,7 +530,7 @@ export class HorarioComponent {
     (document.getElementById('maestro') as HTMLInputElement).disabled = iniciar;
     (document.getElementById('cargar') as HTMLButtonElement).disabled = iniciar;
 
-    if (this.deshabilitarMateriasIrregulares == false) {
+    if (this.deshabilitarMateriasIrregulares == true) {
       (document.getElementById('materiaI') as HTMLInputElement).disabled = iniciar;
       (document.getElementById('maestroI') as HTMLInputElement).disabled = iniciar;
       (document.getElementById('cargarI') as HTMLButtonElement).disabled = iniciar;
