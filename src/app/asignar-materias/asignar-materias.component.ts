@@ -31,6 +31,8 @@ export class AsignarMateriasComponent {
   IdMaestro = "";
   horasTotales: number = 0;
 
+  mostrarBusqueda = false
+
   constructor(private firestore: Firestore, private router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
       localStorage.setItem('Usuario', JSON.stringify(history.state));
@@ -125,6 +127,7 @@ export class AsignarMateriasComponent {
 
   buscador() {
     if (this.Maestro.trim() !== '') {
+      this.mostrarBusqueda = true
       this.Buscados = new Array();
       const MaestroCol = collection(this.firestore, "Usuario");
       const Query = query(MaestroCol,
@@ -170,6 +173,16 @@ export class AsignarMateriasComponent {
 
       updateDoc(rutaDoc, data);
       this.buscarAsignados();
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Maestro Asignado Correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      this.Maestro = "";
+      this.mostrarBusqueda = false
+
     } else {
       Swal.fire({
         position: 'center',
