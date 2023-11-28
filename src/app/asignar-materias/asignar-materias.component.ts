@@ -28,7 +28,6 @@ export class AsignarMateriasComponent {
   Materia: number = -1;
   Periodo: number = 0;
   Maestro: string = "";
-  IdMaestro = "";
   horasTotales: number = 0;
 
   constructor(private firestore: Firestore, private router: Router) {
@@ -46,6 +45,8 @@ export class AsignarMateriasComponent {
   }
 
   limpiarMaterias() {
+    this.Asignados = new Array();
+
     (document.getElementById('materia') as HTMLInputElement).disabled = true;
     this.Materia = -1;
 
@@ -109,7 +110,6 @@ export class AsignarMateriasComponent {
     this.Asignados = new Array();
     const AsignadosCol = collection(this.firestore, "Usuario");
     const Query = query(AsignadosCol,
-      where("TipoUsuario", "==", "Maestro"),
       where("Materias", "array-contains", this.Materias[this.Materia].IdMateria)
     );
 
@@ -162,6 +162,7 @@ export class AsignarMateriasComponent {
     if (this.docenteSeleccionado.IdUsuario != "" || this.Materia != -1) {
       this.docenteSeleccionado.Materias.push(this.Materias[this.Materia].IdMateria);
       this.docenteSeleccionado.Materias = this.eliminarDuplicados(this.docenteSeleccionado.Materias);
+      this.Asignados.push(this.docenteSeleccionado);
 
       let rutaDoc = doc(this.firestore, "Usuario", this.docenteSeleccionado.IdUsuario);
       let data = {
@@ -169,7 +170,6 @@ export class AsignarMateriasComponent {
       };
 
       updateDoc(rutaDoc, data);
-      this.buscarAsignados();
     } else {
       Swal.fire({
         position: 'center',
@@ -182,8 +182,10 @@ export class AsignarMateriasComponent {
   borrarMateria(i: number) {
     const docente = this.Asignados[i];
     const materia = this.Materias[this.Materia].IdMateria;
+    console.log(docente);
 
     docente.Materias.splice(docente.Materias.indexOf(materia), 1);
+    this.Asignados.splice(i, 1);
 
     let rutaDoc = doc(this.firestore, "Usuario", docente.IdUsuario);
     let data = {
@@ -191,6 +193,5 @@ export class AsignarMateriasComponent {
     };
 
     updateDoc(rutaDoc, data);
-    this.buscarAsignados();
   }
 }

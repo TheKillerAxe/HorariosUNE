@@ -52,7 +52,7 @@
     <label class="texto" for="tipoDocente">Asignar a Docente:</label><br>
     <div style="display: flex;">
       <input type="text" id="profe" class="barra-buscar" placeholder="Buscar Docente" style="color: black !important"
-        disabled="true" [(ngModel)]="Maestro" />
+        disabled="true" name="buscado" [(ngModel)]="Maestro" />
 
       <button style="padding-bottom: 9px;" class="btn b2 " (click)="buscador()"><svg xmlns="http://www.w3.org/2000/svg"
           width="15" height="15" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -68,7 +68,7 @@
       <div class="hover" style="padding-top: 2.5px; padding-bottom: 2.5px;" *ngFor="let profes of Buscados; index as i"
         class="">
         <div (click)="pasardato(profes)">
-          <label [(ngModel)]="profesorsillo[i]">{{profes.Nombre}}</label>
+          <label name="profebuscado" ngDefaultControl [(ngModel)]="profesorsillo[i]">{{profes.Nombre}}</label>
         </div>
       </div>
     </div>
