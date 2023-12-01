@@ -115,8 +115,10 @@ export class AsignarMateriasComponent {
       where("Materias", "array-contains", this.Materias[this.Materia].IdMateria)
     );
 
+    let flagCmbMaterias = true;
     collectionData(Query).subscribe((snapAsignados) => {
-      if (snapAsignados.length > 0) {
+      if (snapAsignados.length > 0 && flagCmbMaterias) {
+        flagCmbMaterias = false;
         for (let i = 0; i < snapAsignados.length; i++) {
           this.Asignados[i] = new Usuario();
           this.Asignados[i].setData(snapAsignados[i]);

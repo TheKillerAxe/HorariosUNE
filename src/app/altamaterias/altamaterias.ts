@@ -104,6 +104,7 @@ export class AltamateriasComponent {
   agregarMateria() {
     if (this.Materia.Nombre != "" && this.Materia.Carrera != "" && this.Materia.Periodo != "" && this.Materia.Horas > 0) {
       this.Materia.IdMateria = `${this.inicialesCarrera()}-${this.inicialesMateria()}`;
+      this.Materia.HorasDisponibles = this.Materia.Horas;
 
       let rutaDoc = doc(this.firestore, "Materia", this.Materia.IdMateria);
 

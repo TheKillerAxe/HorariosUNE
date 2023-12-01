@@ -62,6 +62,7 @@ export class Materia {
     public Carrera: string = "";                                                   //Nombre de la carrera en la que se imparte la materia.
     public Periodo: string = "";                                                   //Periodo en el que se imparte la materia.
     public Horas: number = 0;                                                      //Cantidad de horas que se debe impartir la materia.
+    public HorasDisponibles: number = 0;
 
     constructor() { }
 
@@ -71,6 +72,7 @@ export class Materia {
         this.Carrera = data.Carrera;
         this.Periodo = data.Periodo;
         this.Horas = data.Horas;
+        this.HorasDisponibles = data.HorasDisponibles;
     }
 }
 

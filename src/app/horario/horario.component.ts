@@ -42,6 +42,7 @@ export class HorarioComponent {
   deshabilitarMateriasIrregulares: boolean = true;
   horarioRegularHabilitado: boolean = false;
   horarioIrregularHabilitado: boolean = false;
+  materiaDuplicada: boolean = false;
 
   constructor(public router: Router, private firestore: Firestore) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
@@ -120,7 +121,9 @@ export class HorarioComponent {
     this.MateriaIrregular = -1;
 
     (document.getElementById('maestro') as HTMLInputElement).disabled = true;
-    (document.getElementById('maestroI') as HTMLInputElement).disabled = true;
+    if (this.mostrarHorarioIrregular) {
+      (document.getElementById('maestroI') as HTMLInputElement).disabled = true;
+    }
     this.MaestrosRegulares = new Array();
     this.MaestrosIrregulares = new Array();
     this.MaestroRegular = -1;
@@ -198,6 +201,79 @@ export class HorarioComponent {
       });
 
       this.deshabilitarMateriasIrregulares = false;
+    }
+  }
+
+  duplicarMaterias() {
+    if (this.MateriaRegular > -1) {
+      let materia = this.Materias[this.MateriaRegular];
+      let materia1 = new Materia();
+      let materia2 = new Materia();
+
+      if (materia.HorasDisponibles == materia.Horas) {
+        let nombre = materia.Nombre;
+
+        materia1.setData(materia);
+        materia1.Nombre += " (Grupo A)";
+        this.Materias.push(materia1);
+
+        materia2.setData(materia);
+        materia2.Nombre += " (Grupo B)";
+        this.Materias.push(materia2);
+
+        this.Materias.splice(this.MateriaRegular, 1);
+      } else {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Materia Registrada',
+          text: 'No se puede duplicar la materia porque está registrada en el horario.'
+        });
+      }
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Faltan Campos',
+        text: 'Seleccione una materia para dividir.'
+      });
+    }
+  }
+
+  combinarMaterias() {
+    if (this.MateriaRegular > -1) {
+      let materia1 = this.Materias[this.MateriaRegular];
+      let i = this.MateriaRegular;
+
+      if (materia1.HorasDisponibles == materia1.Horas) {
+        let grupo = materia1.Nombre.substring(materia1.Nombre.indexOf('('));
+        const nombre = `${materia1.Nombre.substring(0, materia1.Nombre.indexOf('(') - 1)}`;
+
+        if (grupo == "(Grupo A)") {
+          this.Materias.splice(i, 2);
+        } else if (grupo == "(Grupo B)") {
+          i--;
+          this.Materias.splice(i, 2);
+        }
+
+        materia1.Nombre = nombre;
+        this.Materias.push(materia1);
+        this.MateriaRegular = this.Materias.length - 1;
+      } else {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Materia Registrada',
+          text: 'No se puede combinar la materia porque está registrada en el horario.'
+        });
+      }
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Faltan Campos',
+        text: 'Seleccione la materia para combinar.'
+      });
     }
   }
 
@@ -304,6 +380,13 @@ export class HorarioComponent {
       }
     }
 
+    let materia = this.Materias[this.MateriaRegular].Nombre;
+    if (materia.indexOf('(') > 0) {
+      this.materiaDuplicada = true;
+    } else {
+      this.materiaDuplicada = false;
+    }
+
     this.horarioRegularHabilitado = false;
   }
 
@@ -345,7 +428,7 @@ export class HorarioComponent {
       }
     });
 
-    this.HorasDisponibles = this.Materias[this.MateriaRegular].Horas;
+    this.HorasDisponibles = this.Materias[this.MateriaRegular].HorasDisponibles;
     (document.getElementById('maestro') as HTMLInputElement).disabled = false;
   }
 
@@ -446,7 +529,7 @@ export class HorarioComponent {
 
     for (let i = 0; i < disponibilidadDocente.length; i++) {
       for (let j = 0; j < disponibilidadDocente[i].registro.length; j++) {
-        if ((disponibilidadDocente[i].registro[j].disponible
+        if (((disponibilidadDocente[i].registro[j].disponible && horario[i].registro[j].maestro == "")
           || (horario[i].registro[j].maestro == maestro && horario[i].registro[j].texto == materia))
           && horario[i].registro[j].maestro != "INGLÉS") {
           document.getElementById(`c${i}${j}r`)?.classList.add('dato-agregado');
@@ -454,12 +537,13 @@ export class HorarioComponent {
           document.getElementById(`c${i}${j}r`)?.classList.remove('dato-agregado');
         }
 
-        if (horario[i].registro[j].texto == materia) {
+        if (horario[i].registro[j].texto == materia && this.materiaDuplicada) {
           this.HorasDisponibles--;
         }
       }
     }
 
+    this.Materias[this.MateriaRegular].HorasDisponibles = this.HorasDisponibles;
     this.horarioRegularHabilitado = true;
 
     Swal.fire({
@@ -608,6 +692,7 @@ export class HorarioComponent {
           this.Horario.HorarioRegular[i].registro[j] = registroHorario;
           this.DisponibilidadRegular.Disponibilidad[i].registro[j] = disponibilidad;
           this.MaestrosRegulares[this.MaestroRegular] = maestroSeleccionado;
+          this.Materias[this.MateriaRegular].HorasDisponibles = this.HorasDisponibles;
 
           if (this.cambiosRecientes) {
             this.iniciarRegistro(true);
@@ -777,15 +862,15 @@ export class HorarioComponent {
         }).then((result) => {
           if (result.isConfirmed) {
             let rutaDoc = doc(this.firestore, "Horario", this.Horario.IdHorario);
+            setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Horario)));
 
             if (this.nuevoHorario) {
-              setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Horario)));
               this.nuevoHorario = false;
-            } else {
-              let data = {
-                HorarioRegular: this.Horario.HorarioRegular
-              };
-              updateDoc(rutaDoc, data);
+            }
+
+            if (this.materiaDuplicada == false) {
+              let rutaDoc1 = doc(this.firestore, "Materia", this.Materias[this.MateriaRegular].IdMateria);
+              setDoc(rutaDoc1, JSON.parse(JSON.stringify(this.Materias[this.MateriaRegular])));
             }
 
             let rutaDoc2 = doc(this.firestore, "DisponibilidadMaestro", this.DisponibilidadRegular.IdDisponibilidad);
@@ -848,15 +933,10 @@ export class HorarioComponent {
         }).then((result) => {
           if (result.isConfirmed) {
             let rutaDoc = doc(this.firestore, "Horario", this.Horario.IdHorario);
+            setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Horario)));
 
             if (this.nuevoHorario) {
-              setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Horario)));
               this.nuevoHorario = false;
-            } else {
-              let data = {
-                HorarioIrregular: this.Horario.HorarioIrregular
-              };
-              updateDoc(rutaDoc, data);
             }
 
             let rutaDoc2 = doc(this.firestore, "DisponibilidadMaestro", this.DisponibilidadIrregular.IdDisponibilidad);
