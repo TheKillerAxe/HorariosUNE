@@ -18,6 +18,7 @@ export class HorarioInglesComponent {
   Disponibilidad: DisponibilidadIngles = new DisponibilidadIngles();
 
   Ciclos: string[] = new Array();
+  Periodos: number[] = new Array();
 
   constructor(private firestore: Firestore, public router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {
@@ -32,6 +33,10 @@ export class HorarioInglesComponent {
   }
 
   obtenerCiclos() {
+    (document.getElementById('periodo') as HTMLInputElement).disabled = true;
+    this.Periodos = new Array();
+    this.Disponibilidad.Periodo = "";
+
     this.Ciclos = new Array();
     const añoActual = new Date().getFullYear();
 
@@ -43,6 +48,53 @@ export class HorarioInglesComponent {
     }
 
     (document.getElementById('ciclo') as HTMLInputElement).disabled = false;
+  }
+
+  obtenerPeriodos() {
+    this.Periodos = new Array();
+    const ciclo = this.Disponibilidad.Ciclo;
+    const periodicidad = this.Disponibilidad.Periodicidad;
+    const periodos = 9;
+
+    try {
+      switch (ciclo) {
+        case this.Ciclos[0]:
+          switch (periodicidad) {
+            case "Semestral":
+              for (let i = 2; i <= periodos; i = i + 2) {
+                this.Periodos.push(i);
+              }
+              break;
+            case "Cuatrimestral":
+              for (let i = 2; i <= periodos; i = i + 3) {
+                this.Periodos.push(i);
+              }
+              break;
+          }
+          break;
+        case this.Ciclos[1]:
+          switch (periodicidad) {
+            case "Semestral":
+              for (let i = 1; i <= periodos; i = i + 2) {
+                this.Periodos.push(i);
+              }
+              break;
+            case "Cuatrimestral":
+              for (let i = 3; i <= periodos; i = i + 3) {
+                this.Periodos.push(i);
+              }
+              break;
+          }
+          break;
+        case this.Ciclos[2]:
+          for (let i = 1; i <= periodos; i = i + 3) {
+            this.Periodos.push(i);
+          }
+          break;
+      }
+    } catch {}
+
+    (document.getElementById('periodo') as HTMLInputElement).disabled = false;
   }
 
   openSwalModal(i: number, j: number) {

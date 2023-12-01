@@ -55,6 +55,10 @@ export class ImprimirhorarioComponent {
   }
 
   obtenerCiclos() {
+    (document.getElementById('periodo') as HTMLInputElement).disabled = true;
+    this.Horario.Ciclo = "";
+    this.Horario.Periodo = 0;
+
     this.Ciclos = new Array();
     const añoActual = new Date().getFullYear();
     this.Ciclos.push(`${añoActual}-01`);
@@ -70,16 +74,52 @@ export class ImprimirhorarioComponent {
   }
 
   obtenerPeriodos() {
-    this.Horario.Carrera = this.Carreras[this.Carrera].IdCarrera;
     this.Periodos = new Array();
+    this.Horario.Periodo = 0;
 
+    const ciclo = this.Horario.Ciclo;
+    const periodicidad = this.Carreras[this.Carrera].Periodicidad;
     const periodos = this.Carreras[this.Carrera].CantidadPeriodos;
 
-    for (let i = 1; i <= periodos; i++) {
-      this.Periodos[i - 1] = i;
-    }
+    try {
+      switch (ciclo) {
+        case this.Ciclos[0]:
+          switch (periodicidad) {
+            case "Semestral":
+              for (let i = 2; i <= periodos; i = i + 2) {
+                this.Periodos.push(i);
+              }
+              break;
+            case "Cuatrimestral":
+              for (let i = 2; i <= periodos; i = i + 3) {
+                this.Periodos.push(i);
+              }
+              break;
+          }
+          break;
+        case this.Ciclos[1]:
+          switch (periodicidad) {
+            case "Semestral":
+              for (let i = 1; i <= periodos; i = i + 2) {
+                this.Periodos.push(i);
+              }
+              break;
+            case "Cuatrimestral":
+              for (let i = 3; i <= periodos; i = i + 3) {
+                this.Periodos.push(i);
+              }
+              break;
+          }
+          break;
+        case this.Ciclos[2]:
+          for (let i = 1; i <= periodos; i = i + 3) {
+            this.Periodos.push(i);
+          }
+          break;
+      }
+    } catch {}
 
-    (document.getElementById('periodo') as HTMLInputElement).disabled = false;
+    (document.getElementById('periodo') as HTMLInputElement).disabled = false;;
   }
 
   obtenerDocentes() {

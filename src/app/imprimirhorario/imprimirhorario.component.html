@@ -16,7 +16,7 @@
     <div class="parent">
         <div class="div2">
             <label class="texto" for="tipoDocente">Carrera:</label><br>
-            <select class="inputcss" id="carrera" name="carrera" (change)="obtenerCiclos()" (change)="obtenerPeriodos()"
+            <select class="inputcss" id="carrera" name="carrera" (change)="obtenerCiclos()"
                 (change)="buscarHorario()" [(ngModel)]="Carrera">
                 <option [value]="-1" disabled selected hidden>--Seleccionar Carrera--</option>
                 <option *ngFor="let carrera of Carreras; index as i" [value]="i">{{carrera.Nombre}}</option>
@@ -24,7 +24,7 @@
         </div>
         <div class="div3">
             <label class="texto" for="nombre">Ciclo Escolar:</label><br>
-            <select class="inputcss" id="ciclo" name="ciclo" disabled="true" (change)="buscarHorario()"
+            <select class="inputcss" id="ciclo" name="ciclo" disabled="true" (change)="obtenerPeriodos()"
                 [(ngModel)]="Horario.Ciclo">
                 <option value="" disabled selected hidden>---Seleccionar Ciclo--</option>
                 <option *ngFor="let ciclo of Ciclos" [value]="ciclo">{{ciclo}}</option>

@@ -13,7 +13,7 @@
         </div>
         <div class="datos">
             <select id="carrera" class="form-select input a" (change)="limpiarMaestroMateria()"
-                (change)="obtenerCiclos()" (change)="obtenerPeriodos()" (change)="cargarIngles()" [(ngModel)]="Carrera">
+                (change)="obtenerCiclos()" (change)="cargarIngles()" [(ngModel)]="Carrera">
                 <option [value]="-1" disabled selected hidden>--Seleccionar Carrera--</option>
                 <option *ngFor="let carrera of Carreras; index as i" [value]="i">{{carrera.Nombre}}</option>
             </select>
@@ -25,7 +25,7 @@
         </div>
         <div class="datos">
             <select id="ciclo" class="form-select input a" disabled="true" (change)="limpiarMaestroMateria()"
-                (change)="cargarIngles()" [(ngModel)]="Horario.Ciclo">
+                (change)="obtenerPeriodos()" (change)="cargarIngles()" [(ngModel)]="Horario.Ciclo">
                 <option value="" disabled selected hidden>--Seleccionar Ciclo--</option>
                 <option *ngFor="let ciclo of Ciclos" [value]="ciclo">{{ciclo}}</option>
             </select>
@@ -92,10 +92,10 @@
 
 <div class="contenedor-grid2">
     <div *ngIf="materiaDuplicada == false" class="contenedor2" style="float: left;">
-        <button class=" b3" (click)="duplicarMaterias()">Dividir Materia</button>
+        <button id="dividir" class=" b3" (click)="duplicarMaterias()">Dividir Materia</button>
     </div>
     <div *ngIf="materiaDuplicada" class="contenedor2" style="float: left;">
-        <button class=" b3" (click)="combinarMaterias()">Combinar Materias</button>
+        <button id="combinar" class=" b3" (click)="combinarMaterias()">Combinar Materias</button>
     </div>
     <div class="contenedor2">
         <div *ngIf="horarioRegularHabilitado" class="txtcuadro">Horas Restantes: {{HorasDisponibles}}</div>
@@ -173,7 +173,8 @@
                 Maestro
             </div>
             <div class="datos">
-                <select id="maestroI" class="form-select input a" disabled="true" (change)="buscarDisponibilidadI()" [(ngModel)]="MaestroIrregular">
+                <select id="maestroI" class="form-select input a" disabled="true" (change)="buscarDisponibilidadI()"
+                    [(ngModel)]="MaestroIrregular">
                     <option [value]="-1" disabled selected hidden>--Seleccionar Maestro--</option>
                     <option *ngFor="let maestro of MaestrosIrregulares; index as i" [value]="i">{{maestro.Nombre}}
                     </option>
@@ -182,7 +183,8 @@
         </div>
 
         <div class="contenedora">
-            <button class=" b6" id="cargarI" (click)="cargarDisponibilidadI()">Cargar Disponibilidad</button>
+            <button class=" b6" id="cargarI" [disabled]="horarioIrregularHabilitado"
+                (click)="cargarDisponibilidadI()">Cargar Disponibilidad</button>
         </div>
 
         <div class="contenedora">

@@ -85,7 +85,10 @@ export class HorarioComponent {
   }
 
   obtenerCiclos() {
+    (document.getElementById('periodo') as HTMLInputElement).disabled = true;
     this.Horario.Carrera = this.Carreras[this.Carrera].IdCarrera;
+    this.Horario.Ciclo = "";
+    this.Horario.Periodo = 0;
 
     this.Ciclos = new Array();
     const añoActual = new Date().getFullYear();
@@ -102,12 +105,49 @@ export class HorarioComponent {
   }
 
   obtenerPeriodos() {
-    const periodos = this.Carreras[this.Carrera].CantidadPeriodos;
     this.Periodos = new Array();
+    this.Horario.Periodo = 0;
+    const ciclo = this.Horario.Ciclo;
+    const periodicidad = this.Carreras[this.Carrera].Periodicidad;
+    const periodos = this.Carreras[this.Carrera].CantidadPeriodos;
 
-    for (let i = 1; i <= periodos; i++) {
-      this.Periodos[i - 1] = i;
-    }
+    try {
+      switch (ciclo) {
+        case this.Ciclos[0]:
+          switch (periodicidad) {
+            case "Semestral":
+              for (let i = 2; i <= periodos; i = i + 2) {
+                this.Periodos.push(i);
+              }
+              break;
+            case "Cuatrimestral":
+              for (let i = 2; i <= periodos; i = i + 3) {
+                this.Periodos.push(i);
+              }
+              break;
+          }
+          break;
+        case this.Ciclos[1]:
+          switch (periodicidad) {
+            case "Semestral":
+              for (let i = 1; i <= periodos; i = i + 2) {
+                this.Periodos.push(i);
+              }
+              break;
+            case "Cuatrimestral":
+              for (let i = 3; i <= periodos; i = i + 3) {
+                this.Periodos.push(i);
+              }
+              break;
+          }
+          break;
+        case this.Ciclos[2]:
+          for (let i = 1; i <= periodos; i = i + 3) {
+            this.Periodos.push(i);
+          }
+          break;
+      }
+    } catch {}
 
     (document.getElementById('periodo') as HTMLInputElement).disabled = false;
   }
@@ -211,8 +251,6 @@ export class HorarioComponent {
       let materia2 = new Materia();
 
       if (materia.HorasDisponibles == materia.Horas) {
-        let nombre = materia.Nombre;
-
         materia1.setData(materia);
         materia1.Nombre += " (Grupo A)";
         this.Materias.push(materia1);
@@ -222,6 +260,7 @@ export class HorarioComponent {
         this.Materias.push(materia2);
 
         this.Materias.splice(this.MateriaRegular, 1);
+        this.MateriaRegular = this.Materias.length - 2;
       } else {
         Swal.fire({
           position: 'center',
@@ -614,7 +653,13 @@ export class HorarioComponent {
     (document.getElementById('maestro') as HTMLInputElement).disabled = iniciar;
     (document.getElementById('cargar') as HTMLButtonElement).disabled = iniciar;
 
-    if (this.deshabilitarMateriasIrregulares == true) {
+    if(this.materiaDuplicada) {
+      (document.getElementById('combinar') as HTMLButtonElement).disabled = iniciar;
+    } else {
+      (document.getElementById('dividir') as HTMLButtonElement).disabled = iniciar;
+    }
+
+    if (this.mostrarHorarioIrregular) {
       (document.getElementById('materiaI') as HTMLInputElement).disabled = iniciar;
       (document.getElementById('maestroI') as HTMLInputElement).disabled = iniciar;
       (document.getElementById('cargarI') as HTMLButtonElement).disabled = iniciar;
@@ -765,10 +810,7 @@ export class HorarioComponent {
               registroHorario.texto = disponibilidad.materia = materiaSeleccionada;
               disponibilidad.carrera = this.Carreras[this.Carrera].Nombre;
               disponibilidad.disponible = false;
-              if (valorAnterior != valor3) {
-                maestroSeleccionado.Horas--;
-                this.cambiosRecientesI = true;
-              }
+              this.cambiosRecientesI = true;
             } else {
               Swal.fire({
                 position: 'top',
@@ -785,7 +827,6 @@ export class HorarioComponent {
             registroHorario.texto = disponibilidad.materia = "";
             disponibilidad.carrera = "";
             disponibilidad.disponible = true;
-            maestroSeleccionado.Horas++;
             this.cambiosRecientesI = true;
           }
 

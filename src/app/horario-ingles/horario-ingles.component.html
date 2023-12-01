@@ -2,7 +2,7 @@
 
 <div class="titulo">
     <div class="titulotxt">
-        Disponibilidad Horario Ingles 
+        Disponibilidad Horario Ingles
     </div>
 </div>
 
@@ -25,8 +25,8 @@
             Ciclo<br> escolar
         </div>
         <div class="datos">
-            <select id="ciclo" class="form-select input a" disabled="true" (change)="cargarDisponibilidad()"
-                [(ngModel)]="Disponibilidad.Ciclo">
+            <select id="ciclo" class="form-select input a" disabled="true" (change)="obtenerPeriodos()"
+                (change)="cargarDisponibilidad()" [(ngModel)]="Disponibilidad.Ciclo">
                 <option value="" disabled selected hidden>--Seleccionar Ciclo--</option>
                 <option *ngFor="let ciclo of Ciclos" [value]="ciclo">{{ciclo}}</option>
             </select>
@@ -37,18 +37,10 @@
             Periodo
         </div>
         <div class="datos">
-            <select id="periodo" class="form-select input a" (change)="cargarDisponibilidad()"
+            <select id="periodo" class="form-select input a" disabled="true" (change)="cargarDisponibilidad()"
                 [(ngModel)]="Disponibilidad.Periodo">
                 <option value="" disabled selected hidden>--Seleccionar Periodo--</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
+                <option *ngFor="let periodo of Periodos" [value]="periodo">{{periodo}}</option>
             </select>
         </div>
     </div>
