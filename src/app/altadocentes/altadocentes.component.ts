@@ -116,6 +116,15 @@ export class AltadocentesComponent {
           newUser.Correo = fila[3] == null ? '' : fila[3]!.toString()
           newUser.Contrasena = this.generateID(fila[4] == null ? '' : fila[4]!.toString())
 
+          switch (newUser.TipoMaestro) {
+            case "A": newUser.Horas = 5; break;
+            case "HL": newUser.Horas = 10; break;
+            case "MT": newUser.Horas = 10; break;
+            case "TC": newUser.Horas = 20; break;
+          }
+      
+          newUser.HorasTotales = newUser.Horas;
+
           let rutaDoc = doc(this.firestore, 'Usuario', newUser.IdUsuario);
           setDoc(rutaDoc, JSON.parse(JSON.stringify(newUser)))
 
