@@ -21,7 +21,6 @@ export class AsignarMateriasComponent {
   Materias: Materia[] = new Array();
   Periodos: number[] = new Array();
   Asignados: Usuario[] = new Array();
-  profesorsillo: string[] = new Array();
   Buscados: Usuario[] = new Array();
 
   Carrera: number = -1;
@@ -196,18 +195,29 @@ export class AsignarMateriasComponent {
   }
 
   borrarMateria(i: number) {
-    const docente = this.Asignados[i];
-    const materia = this.Materias[this.Materia].IdMateria;
-    console.log(docente);
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: '¿Desasignar docente?',
+      text: 'Desasignar a este docente eliminará los registros de horario existentes ' +
+        'que contengan a este docente impartiendo esta materia.',
+      showDenyButton: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const docente = this.Asignados[i];
+        const materia = this.Materias[this.Materia].IdMateria;
+        console.log(docente);
 
-    docente.Materias.splice(docente.Materias.indexOf(materia), 1);
-    this.Asignados.splice(i, 1);
+        docente.Materias.splice(docente.Materias.indexOf(materia), 1);
+        this.Asignados.splice(i, 1);
 
-    let rutaDoc = doc(this.firestore, "Usuario", docente.IdUsuario);
-    let data = {
-      Materias: docente.Materias
-    };
+        let rutaDoc = doc(this.firestore, "Usuario", docente.IdUsuario);
+        let data = {
+          Materias: docente.Materias
+        };
 
-    updateDoc(rutaDoc, data);
+        updateDoc(rutaDoc, data);
+      }
+    });
   }
 }

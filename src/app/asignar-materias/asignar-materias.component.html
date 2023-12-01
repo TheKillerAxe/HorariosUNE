@@ -68,7 +68,7 @@
       <div class="hover" style="padding-top: 2.5px; padding-bottom: 2.5px;" *ngFor="let profes of Buscados; index as i"
         class="">
         <div (click)="pasardato(profes)">
-          <label name="profesorsillo" [(ngModel)]="profesorsillo[i]">{{profes.Nombre}}</label>
+          <label>{{profes.Nombre}}</label>
         </div>
       </div>
     </div>

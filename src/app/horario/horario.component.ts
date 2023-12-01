@@ -147,7 +147,7 @@ export class HorarioComponent {
           }
           break;
       }
-    } catch {}
+    } catch { }
 
     (document.getElementById('periodo') as HTMLInputElement).disabled = false;
   }
@@ -653,7 +653,7 @@ export class HorarioComponent {
     (document.getElementById('maestro') as HTMLInputElement).disabled = iniciar;
     (document.getElementById('cargar') as HTMLButtonElement).disabled = iniciar;
 
-    if(this.materiaDuplicada) {
+    if (this.materiaDuplicada) {
       (document.getElementById('combinar') as HTMLButtonElement).disabled = iniciar;
     } else {
       (document.getElementById('dividir') as HTMLButtonElement).disabled = iniciar;
@@ -866,6 +866,129 @@ export class HorarioComponent {
     }
   }
 
+  eliminarDuplicados<T>(array: T[]) {
+    const result: T[] = [];
+    for (const item of array) {
+      if (!result.includes(item)) {
+        result.push(item);
+      }
+    }
+    return result;
+  }
+
+  adddelMaestro() {
+    const horario = this.Horario.HorarioRegular;
+    const horarioI = this.Horario.HorarioIrregular;
+    const maestro = this.MaestrosRegulares[this.MaestroRegular];
+
+    for (let i = 0; i < horario.length; i++) {
+      for (let j = 0; j < horario[i].registro.length; j++) {
+        if (horario[i].registro[j].maestro == maestro.Nombre) {
+          this.Horario.Maestros.push(maestro.IdUsuario);
+          this.Horario.Maestros = this.eliminarDuplicados(this.Horario.Maestros);
+          return;
+        }
+      }
+    }
+
+    for (let i = 0; i < horarioI.length; i++) {
+      for (let j = 0; j < horarioI[i].registro.length; j++) {
+        if (horarioI[i].registro[j].maestro == maestro.Nombre) {
+          this.Horario.Maestros.push(maestro.IdUsuario);
+          this.Horario.Maestros = this.eliminarDuplicados(this.Horario.Maestros);
+          return;
+        }
+      }
+    }
+
+    try {
+      this.Horario.Maestros.splice(this.Horario.Maestros.indexOf(maestro.IdUsuario), 1);
+    } catch { }
+  }
+
+  adddelMateria() {
+    const horarioI = this.Horario.HorarioIrregular;
+    const materia = this.Materias[this.MateriaRegular];
+
+    if (materia.HorasDisponibles == 0) {
+      this.Horario.Materias.push(materia.IdMateria);
+    } else {
+      for (let i = 0; i < horarioI.length; i++) {
+        for (let j = 0; j < horarioI[i].registro.length; j++) {
+          if (horarioI[i].registro[j].texto == materia.Nombre) {
+            this.Horario.Materias.push(materia.IdMateria);
+            this.Horario.Materias = this.eliminarDuplicados(this.Horario.Materias);
+            return;
+          }
+        }
+      }
+
+      try {
+        this.Horario.Materias.splice(this.Horario.Materias.indexOf(materia.IdMateria), 1);
+      } catch { }
+    }
+  }
+
+  adddelMaestroI() {
+    const horario = this.Horario.HorarioIrregular;
+    const horarioR = this.Horario.HorarioRegular;
+    const maestro = this.MaestrosIrregulares[this.MaestroIrregular];
+
+    for (let i = 0; i < horario.length; i++) {
+      for (let j = 0; j < horario[i].registro.length; j++) {
+        if (horario[i].registro[j].maestro == maestro.Nombre) {
+          this.Horario.Maestros.push(maestro.IdUsuario);
+          this.Horario.Maestros = this.eliminarDuplicados(this.Horario.Maestros);
+          return;
+        }
+      }
+    }
+
+    for (let i = 0; i < horarioR.length; i++) {
+      for (let j = 0; j < horarioR[i].registro.length; j++) {
+        if (horarioR[i].registro[j].maestro == maestro.Nombre) {
+          this.Horario.Maestros.push(maestro.IdUsuario);
+          this.Horario.Maestros = this.eliminarDuplicados(this.Horario.Maestros);
+          return;
+        }
+      }
+    }
+
+    try {
+      this.Horario.Maestros.splice(this.Horario.Maestros.indexOf(maestro.IdUsuario), 1);
+    } catch { }
+  }
+
+  adddelMateriaI() {
+    const horario = this.Horario.HorarioIrregular;
+    const horarioR = this.Horario.HorarioRegular;
+    const materia = this.MateriasIrregulares[this.MateriaIrregular];
+
+    for (let i = 0; i < horario.length; i++) {
+      for (let j = 0; j < horario[i].registro.length; j++) {
+        if (horario[i].registro[j].texto == materia.Nombre) {
+          this.Horario.Materias.push(materia.IdMateria);
+          this.Horario.Materias = this.eliminarDuplicados(this.Horario.Materias);
+          return;
+        }
+      }
+    }
+
+    for (let i = 0; i < horarioR.length; i++) {
+      for (let j = 0; j < horarioR[i].registro.length; j++) {
+        if (horarioR[i].registro[j].texto == materia.Nombre) {
+          this.Horario.Materias.push(materia.IdMateria);
+          this.Horario.Materias = this.eliminarDuplicados(this.Horario.Materias);
+          return;
+        }
+      }
+    }
+
+    try {
+      this.Horario.Materias.splice(this.Horario.Materias.indexOf(materia.IdMateria), 1);
+    } catch { }
+  }
+
   guardarHorario() {
     if (this.horarioRegularHabilitado) {
       const horasMateria = this.Materias[this.MateriaRegular].Horas;
@@ -902,6 +1025,9 @@ export class HorarioComponent {
           confirmButtonText: 'Aceptar'
         }).then((result) => {
           if (result.isConfirmed) {
+            this.adddelMaestro();
+            this.adddelMateria();
+
             let rutaDoc = doc(this.firestore, "Horario", this.Horario.IdHorario);
             setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Horario)));
 
@@ -926,6 +1052,8 @@ export class HorarioComponent {
 
             this.iniciarRegistro(false);
             this.cambiosRecientes = false;
+
+            console.log(this.Horario);
 
             Swal.fire({
               position: 'center',
@@ -973,6 +1101,9 @@ export class HorarioComponent {
           confirmButtonText: 'Aceptar'
         }).then((result) => {
           if (result.isConfirmed) {
+            this.adddelMaestroI();
+            this.adddelMateriaI();
+
             let rutaDoc = doc(this.firestore, "Horario", this.Horario.IdHorario);
             setDoc(rutaDoc, JSON.parse(JSON.stringify(this.Horario)));
 
@@ -992,6 +1123,8 @@ export class HorarioComponent {
 
             this.iniciarRegistro(false);
             this.cambiosRecientesI = false;
+
+            console.log(this.Horario);
 
             Swal.fire({
               position: 'center',

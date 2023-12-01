@@ -184,6 +184,8 @@ export class Horario {
     public Periodo: number = 0;                                                    //Periodo al que pertenece el horario.
     public Carrera: string = "";                                                   //Carrera a la que pertenece el horario.
     public Ciclo: string = "";                                                     //Ciclo escolar al que pertenece el horario.
+    public Maestros: string[] = new Array();                                       //Maestros que imparten en el horario.
+    public Materias: string[] = new Array();                                       //Materias que se imparten en el horario.
     public HorarioRegular: RegistroHorario[] = new Array();                        //Registros de las celdas del horario regular.
     public HorarioIrregular: RegistroHorario[] = new Array();                      //Registros de las celdas del horario irregular.
 
