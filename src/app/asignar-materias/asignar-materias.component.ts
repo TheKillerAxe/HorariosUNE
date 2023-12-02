@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
-import { Materia, Usuario } from '../database/database';
+import { DisponibilidadMaestro, Horario, Materia, Usuario } from '../database/database';
 import { Firestore } from '@angular/fire/firestore';
 import { collection, query, where, collectionData } from '@angular/fire/firestore';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, setDoc } from 'firebase/firestore';
 import { Carrera } from '../database/database';
 
 import Swal from 'sweetalert2';
@@ -16,6 +16,8 @@ import Swal from 'sweetalert2';
 export class AsignarMateriasComponent {
   Usuario: Usuario = new Usuario();
   docenteSeleccionado: Usuario = new Usuario();
+  Horario: Horario = new Horario();
+  Disponibilidad: DisponibilidadMaestro = new DisponibilidadMaestro();
 
   Carreras: Carrera[] = new Array();
   Materias: Materia[] = new Array();
@@ -75,6 +77,24 @@ export class AsignarMateriasComponent {
     }
 
     (document.getElementById('periodo') as HTMLInputElement).disabled = false;
+  }
+
+  obtenerHorario() {
+    const HorarioCol = collection(this.firestore, "Horario");
+    const Query = query(HorarioCol,
+      where("Carrera", "==", this.Carreras[this.Carrera].IdCarrera),
+      where("Periodo", "==", this.Periodo)
+    );
+
+    let flag = true;
+    collectionData(Query).subscribe((snapHorarios) => {
+      if (flag) {
+        flag = false;
+        if (snapHorarios.length > 0) {
+          this.Horario.setData(snapHorarios[0]);
+        }
+      }
+    });
   }
 
   buscarMaterias() {
@@ -152,6 +172,23 @@ export class AsignarMateriasComponent {
     this.Maestro = profesor.Nombre;
   }
 
+  obtenerDisponibilidad(profesor: Usuario) {
+    const DisponibilidadCol = collection(this.firestore, "DisponibilidadMaestro");
+    const Query = query(DisponibilidadCol,
+      where("IdDisponibilidad", "==", `${profesor.IdUsuario}_${this.Horario.Ciclo}`)
+    );
+
+    let flag = true;
+    collectionData(Query).subscribe((snapDisp) => {
+      if (flag) {
+        flag = false;
+        if (snapDisp.length > 0) {
+          this.Disponibilidad.setData(snapDisp[0]);
+        }
+      }
+    });
+  }
+
   eliminarDuplicados<T>(array: T[]) {
     const result: T[] = [];
     for (const item of array) {
@@ -195,6 +232,8 @@ export class AsignarMateriasComponent {
   }
 
   borrarMateria(i: number) {
+    this.obtenerDisponibilidad(this.Asignados[i]);
+    
     Swal.fire({
       position: 'center',
       icon: 'warning',
@@ -205,18 +244,48 @@ export class AsignarMateriasComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         const docente = this.Asignados[i];
-        const materia = this.Materias[this.Materia].IdMateria;
-        console.log(docente);
+        console.log(this.Disponibilidad);
 
-        docente.Materias.splice(docente.Materias.indexOf(materia), 1);
+        const materia = this.Materias[this.Materia];
+        const horarioR = this.Horario.HorarioRegular;
+        const horarioI = this.Horario.HorarioIrregular;
+        const disp = this.Disponibilidad.Disponibilidad;
+
+        for (let i = 0; i < horarioR.length; i++) {
+          for (let j = 0; j < horarioR[i].registro.length; j++) {
+            if (horarioR[i].registro[j].maestro == docente.Nombre && horarioR[i].registro[j].texto == materia.Nombre) {
+              horarioR[i].registro[j].salon = disp[i].registro[j].aula = "";
+              horarioR[i].registro[j].maestro = "";
+              horarioR[i].registro[j].texto = disp[i].registro[j].materia = "";
+              disp[i].registro[j].carrera = "";
+              disp[i].registro[j].disponible = true;
+              docente.Horas++;
+            } else if (horarioI[i].registro[j].maestro == docente.Nombre && horarioI[i].registro[j].texto == materia.Nombre) {
+              horarioI[i].registro[j].salon = disp[i].registro[j].aula = "";
+              horarioI[i].registro[j].maestro = "";
+              horarioI[i].registro[j].texto = disp[i].registro[j].materia = "";
+              disp[i].registro[j].carrera = "";
+              disp[i].registro[j].disponible = true;
+              docente.Horas++;
+            }
+          }
+        }
+
+        this.Horario.HorarioRegular = horarioR;
+        this.Horario.HorarioIrregular = horarioI;
+        this.Disponibilidad.Disponibilidad = disp;
+
+        docente.Materias.splice(docente.Materias.indexOf(materia.IdMateria), 1);
         this.Asignados.splice(i, 1);
 
         let rutaDoc = doc(this.firestore, "Usuario", docente.IdUsuario);
-        let data = {
-          Materias: docente.Materias
-        };
+        setDoc(rutaDoc, JSON.parse(JSON.stringify(docente)));
 
-        updateDoc(rutaDoc, data);
+        let rutaDoc1 = doc(this.firestore, "Horario", this.Horario.IdHorario);
+        setDoc(rutaDoc1, JSON.parse(JSON.stringify(this.Horario)));
+
+        let rutaDoc2 = doc(this.firestore, "DisponibilidadMaestro", this.Disponibilidad.IdDisponibilidad);
+        setDoc(rutaDoc2, JSON.parse(JSON.stringify(this.Disponibilidad)));
       }
     });
   }

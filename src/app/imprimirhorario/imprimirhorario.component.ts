@@ -56,6 +56,7 @@ export class ImprimirhorarioComponent {
 
   obtenerCiclos() {
     (document.getElementById('periodo') as HTMLInputElement).disabled = true;
+    this.Horario.Carrera = this.Carreras[this.Carrera].IdCarrera;
     this.Horario.Ciclo = "";
     this.Horario.Periodo = 0;
 

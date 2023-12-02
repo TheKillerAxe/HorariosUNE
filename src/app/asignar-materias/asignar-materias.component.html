@@ -9,7 +9,7 @@
 <div style="margin-left: 10%; width: 80%; margin-top: 2%;" class="parent">
   <div class="div2">
     <label class="texto" for="tipoDocente">Periodo:</label><br>
-    <select class="inputcss" id="periodo" name="periodo" disabled="true" (change)="limpiarMaterias()"
+    <select class="inputcss" id="periodo" name="periodo" disabled="true" (change)="obtenerHorario()" (change)="limpiarMaterias()"
       [(ngModel)]="Periodo">
       <option [value]="0" disabled selected hidden>-- Seleccionar Periodo--</option>
       <option *ngFor="let periodo of Periodos" [value]="periodo">{{periodo}}</option>
@@ -86,7 +86,7 @@
       <tr>
         <th scope="col">Nombre</th>
         <th scope="col">Tipo de Docente</th>
-        <th scope="col">Horas Disponibles</th>
+        <th scope="col">Horas</th>
         <th scope="col">Correo</th>
         <th scope="col">Acciones</th>
       </tr>
