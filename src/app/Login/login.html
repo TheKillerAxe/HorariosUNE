@@ -12,31 +12,25 @@
     </div>
   </div>
   <!--Columna 2-->
-  
+
   <div class="obj2">
     <form>
       <div style="align-items: center; justify-content: center; display: flex;">
         <img style="width: 80%; margin-top: 10%; margin-bottom: 2%;" src="https://imgur.com/Qxrhuhm.png" alt="">
       </div>
       <h4 style="text-align: center; padding-bottom: 5%; font-size: 25px; font-family: 'Roboto Slab';">Generación de
-          Horarios</h4>
-      <!-- <div class="group">
-        <input type="text" [(ngModel)]="Usuario.NombreUsuario" name="usuario">
-        <span class="highlight"></span><span class="bar"></span>
-        <label style="font-family:'Roboto Slab'">Usuario</label>
-      </div> -->
+        Horarios</h4>
       <div class="group">
         <input type="text" [(ngModel)]="Usuario.NombreUsuario" name="usuario" id="usuario" placeholder="">
         <label for="usuario" style="font-family: 'Roboto Slab'">Usuario</label>
       </div>
-      
+
       <div class="group">
-        <!-- <input type="password" [(ngModel)]="Usuario.Contrasena" name="contraseña">
-        <span class="highlight"></span><span class="bar"></span>
-        <label style="font-family:'Roboto Slab'">Contraseña</label> -->
         <input type="password" [(ngModel)]="Usuario.Contrasena" name="contrasena" id="contrasena" placeholder="">
         <label for="usuario" style="font-family: 'Roboto Slab'">Contraseña</label>
-        <button (click)="login()" class="button buttonBlue" style="font-family:'Roboto Slab'; font-size: 20px;">Entrar</button>
+        <button (click)="login()" class="button buttonBlue"
+          style="font-family:'Roboto Slab'; font-size: 20px; margin-bottom: 10px;">Entrar</button>
+        <a class="forgot" (click)="navigate('recuperar')">Olvidé Mi Contraseña</a>
       </div>
     </form>
   </div>
@@ -184,8 +178,8 @@
     background: #ffffff;
     border: 1px solid #ebebeb;
     /* box-shadow: rgba(0, 0, 0, 0.14902) 2px 2px 2px 2px, rgba(0, 0, 0, 0.09804) 2px 2px 2px 2px; */
-    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    box-shadow: 0 20px 50px 0 rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.2);
     border-radius: 5%;
   }
 
@@ -236,27 +230,27 @@
   } */
 
   /* Estilo para el input cuando está enfocado o tiene contenido */
-input:focus,
-input:not(:placeholder-shown) {
-  border-bottom: 2px solid #B60D44;
-}
+  input:focus,
+  input:not(:placeholder-shown) {
+    border-bottom: 2px solid #B60D44;
+  }
 
-/* Estilo para el label cuando el input tiene contenido */
-input:not(:placeholder-shown) + label,
-input:focus + label {
-  top: -20px;
-  transform: scale(0.75);
-  color: #B60D44;
-}
+  /* Estilo para el label cuando el input tiene contenido */
+  input:not(:placeholder-shown)+label,
+  input:focus+label {
+    top: -20px;
+    transform: scale(0.75);
+    color: #B60D44;
+  }
 
-/* Estilo para el label en condiciones normales (sin contenido) */
-label {
-  position: absolute;
-  pointer-events: none;
-  left: 5px;
-  top: 10px;
-  transition: all 0.2s ease;
-}
+  /* Estilo para el label en condiciones normales (sin contenido) */
+  label {
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: all 0.2s ease;
+  }
 
 
 
@@ -365,7 +359,4 @@ label {
   .buttonBlue:hover {
     background: #c02659;
   }
-
-
-
 </style>

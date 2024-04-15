@@ -9,6 +9,7 @@ import { Usuario } from '../database/database';
 })
 export class MenuDocentesComponent {
   Usuario : Usuario = new Usuario();
+  Handle = true;
 
   constructor(public router: Router) {
     if (history.state.IdUsuario != '' && history.state.IdUsuario != undefined) {

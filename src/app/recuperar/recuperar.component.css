@@ -1,0 +1,285 @@
+.divP {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .obj1,
+  .obj2 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 768px) {
+    .divP {
+      flex-direction: row;
+    }
+
+    .obj1,
+    .obj2 {
+      width: 50%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .obj2 form {
+      margin: 0 auto;
+      width: 60%;
+    }
+  }
+  .container {
+    position: relative;
+    width: 100%;
+    background-color: #ffffff;
+  }
+
+  .div6 {
+    height: 39%;
+    width: 18%;
+    position: absolute;
+    top: 0;
+    left: 37%;
+    z-index: 3;
+    background: linear-gradient(to top right, #B60D44, #B60D44, #460080);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .div5 {
+    height: 39%;
+    width: 25%;
+    position: absolute;
+    top: 0;
+    left: 55%;
+    background-color: #ffffff;
+    z-index: 3;
+  }
+
+  .div4 {
+    height: 16%;
+    width: 23%;
+    position: absolute;
+    top: 39%;
+    left: 55%;
+    background-color: #B60D44;
+    z-index: 3;
+    /* Asegura que div3 esté por encima de otros elementos */
+  }
+
+  .div3 {
+    height: 45%;
+    width: 27%;
+    position: absolute;
+    top: 55%;
+    left: 78%;
+    background-color: #B60D44;
+    z-index: 2;
+  }
+
+  .div2 {
+    height: 55%;
+    width: 29%;
+    position: absolute;
+    top: 0;
+    left: 78%;
+    background-color: #ffffff;
+    z-index: 1;
+  }
+
+  body {
+
+    font-family: Helvetica;
+    background: #eee;
+    -webkit-font-smoothing: antialiased;
+    border-radius: 5%;
+  }
+
+  hgroup {
+    text-align: center;
+    margin-top: 4em;
+  }
+
+  h1,
+  h3 {
+    font-weight: 300;
+  }
+
+  h1 {
+    color: #636363;
+  }
+
+  h3 {
+    color: #B60D44;
+  }
+
+  form {
+    margin-top: 15%;
+    margin-left: 15%;
+    width: 50%;
+    height: 65%;
+    padding: 2em 2em 2em 2em;
+    background: #ffffff;
+    border: 1px solid #ebebeb;
+    /* box-shadow: rgba(0, 0, 0, 0.14902) 2px 2px 2px 2px, rgba(0, 0, 0, 0.09804) 2px 2px 2px 2px; */
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5%;
+  }
+
+  .group {
+    position: relative;
+    margin-bottom: 45px;
+  }
+
+  input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    -webkit-appearance: none;
+    display: block;
+    background: #ffffff;
+    color: #636363;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #757575;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  /* Estilo para el input cuando está enfocado o tiene contenido */
+  input:focus,
+  input:not(:placeholder-shown) {
+    border-bottom: 2px solid #B60D44;
+  }
+
+  /* Estilo para el label cuando el input tiene contenido */
+  input:not(:placeholder-shown)+label,
+  input:focus+label {
+    top: -20px;
+    transform: scale(0.75);
+    color: #B60D44;
+  }
+
+  /* Estilo para el label en condiciones normales (sin contenido) */
+  label {
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: all 0.2s ease;
+  }
+
+
+
+  /* Underline */
+
+  .bar {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  .bar:before,
+  .bar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 1px;
+    position: absolute;
+    background: #B60D44;
+    transition: all 0.2s ease;
+  }
+
+  .bar:before {
+    left: 50%;
+  }
+
+  .bar:after {
+    right: 50%;
+  }
+
+
+  /* active */
+
+  input:focus~.bar:before,
+  input:focus~.bar:after {
+    width: 50%;
+  }
+
+
+  /* Highlight */
+
+  .highlight {
+    position: absolute;
+    height: 60%;
+    width: 100px;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+
+  /* active */
+
+  input:focus~.highlight {
+    animation: inputHighlighter 0.3s ease;
+  }
+
+
+  /* Animations */
+
+  @keyframes inputHighlighter {
+    from {
+      background: #B60D44;
+    }
+
+    to {
+      width: 0;
+      background: transparent;
+    }
+  }
+
+
+  /* Button */
+
+  .button {
+    height: 35%;
+    position: relative;
+    display: block;
+    /* Cambiado el margen superior a 5% */
+    padding: 12px 24px;
+    width: 40%;
+    margin-left: 5%;
+    margin-right: 5%;
+    vertical-align: middle;
+    color: #fff;
+    font-size: 16px;
+    line-height: 100%;
+    text-align: center;
+    letter-spacing: 1px;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .button:focus {
+    outline: 0;
+  }
+
+  .buttonBlue {
+    background: #B60D44;
+    height: 53px;
+  }
+
+  .buttonBlue:hover {
+    background: #c02659;
+  }

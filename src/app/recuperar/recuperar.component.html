@@ -1,0 +1,18 @@
+<div class="obj2" style="width: 100%;">
+    <form style="margin-top: 50px;">
+        <h4 style="text-align: center; padding-bottom: 5%; font-size: 35px; font-family: 'Roboto Slab';">
+            Recuperación de Datos
+        </h4>
+        <div class="group">
+            <input type="text" style="text-align: center;" [(ngModel)]="Correo" name="correo" id="usuario"
+                placeholder="">
+            <label for="usuario" style="font-family: 'Roboto Slab'; text-align: center;">Correo Institucional</label>
+        </div>
+        <div class="group" style="display: flex;">
+            <button class="button buttonBlue" style="font-family:'Roboto Slab'; font-size: 20px;"
+                (click)="navigate('')">Regresar</button>
+            <button class="button buttonBlue" style="font-family:'Roboto Slab'; font-size: 20px;"
+                (click)="verifyEmail()">Enviar Correo</button>
+        </div>
+    </form>
+</div>

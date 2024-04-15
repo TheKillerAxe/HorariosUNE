@@ -13,6 +13,7 @@ import { DisponibilidadDocenteComponent } from './disponibilidad-docente/disponi
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { HorarioInglesComponent } from './horario-ingles/horario-ingles.component';
 import { AltamateriasComponent } from './altamaterias/altamaterias';
+import { RecuperarComponent } from './recuperar/recuperar.component';
 
 const routes: Routes = [
   { path: "", component: loginComponent },
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: "imprimir", component: ImprimirhorarioComponent },
   { path: "disponibilidad", component: DisponibilidadDocenteComponent },
   { path: "configuracion", component: ConfiguracionComponent },
-  {path: "altamaterias", component: AltamateriasComponent},
+  { path: "altamaterias", component: AltamateriasComponent },
+  { path: "recuperar", component: RecuperarComponent }
 ];
 
 @NgModule({

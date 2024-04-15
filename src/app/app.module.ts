@@ -23,6 +23,7 @@ import { DisponibilidadDocenteComponent } from './disponibilidad-docente/disponi
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { HorarioInglesComponent } from './horario-ingles/horario-ingles.component';
 import { AltamateriasComponent } from './altamaterias/altamaterias';
+import { RecuperarComponent } from './recuperar/recuperar.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AltamateriasComponent } from './altamaterias/altamaterias';
     DisponibilidadDocenteComponent,
     ConfiguracionComponent,
     HorarioInglesComponent,
-    AltamateriasComponent
+    AltamateriasComponent,
+    RecuperarComponent
   ],
   imports: [
     BrowserModule,

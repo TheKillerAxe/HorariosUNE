@@ -9,6 +9,7 @@ import { Usuario } from '../database/database';
 })
 export class navbarComponent {
   @Input() Usuario : Usuario = new Usuario();
+  @Input() Handle : boolean = false;
 
   constructor(public router : Router) { }
 
